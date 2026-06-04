@@ -15,9 +15,9 @@ PPE Essential is a lightweight server-side mod that adds useful commands (like /
 
 ## Supported Versions
 
-| Minecraft | Loader | Mod Version |
-| --- | --- | --- |
-| 1.21.1 | NeoForge 21.1.233+ | 1.1.0-SNAPSHOT |
+- NeoForge 1.21.1
+
+Fabric support and additional Minecraft versions are in progress.
 
 ## Commands
 
