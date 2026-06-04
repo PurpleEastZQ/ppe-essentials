@@ -1,5 +1,8 @@
 # PPE Essential
 
+[![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essential-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essential)
+[![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2FPPE--Essential-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/PPE-Essential)
+
 PPE Essential is a lightweight server-side mod that adds useful commands (like /home /tpa) and admin controls, with highly configurable options and polished multilingual messages.
 
 ![PPE Essential command preview](artwork/ppe-essential-help-preview.png)
