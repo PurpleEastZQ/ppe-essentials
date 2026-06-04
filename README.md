@@ -1,7 +1,6 @@
 # PPE Essential
 
-[![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essential-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essential)
-[![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2FPPE--Essential-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/PPE-Essential)
+[![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essential-00AF5C?style=flat&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essential) [![CurseForge](https://img.shields.io/badge/CurseForge-PPE%20Essential-F16436?style=flat&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/ppe-essential/preview) [![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2FPPE--Essential-181717?style=flat&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/PPE-Essential)
 
 PPE Essential is a lightweight server-side mod that adds useful commands (like /home /tpa) and admin controls, with highly configurable options and polished multilingual messages.
 
