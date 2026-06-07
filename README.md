@@ -2,7 +2,7 @@
 
 [![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essential-00AF5C?style=flat&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essential) [![CurseForge](https://img.shields.io/badge/CurseForge-PPE%20Essential-F16436?style=flat&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/ppe-essential) [![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2FPPE--Essential-181717?style=flat&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/PPE-Essential)
 
-PPE Essential is a lightweight mod that adds useful commands (like /home /tpa) and tweaks, with highly configurable options.
+PPE Essential is a lightweight mod that adds useful commands (like /tpa /repeat) and tweaks, with highly configurable options.
 
 ![PPE Essential command preview](https://raw.githubusercontent.com/PurpleEastZQ/PPE-Essential/master/artwork/ppe-essential-help-preview.png)
 
