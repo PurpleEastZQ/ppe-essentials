@@ -1,10 +1,10 @@
 # PPE Essentials
 
-[![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essentials-00AF5C?style=flat&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essentials) [![CurseForge](https://img.shields.io/badge/CurseForge-PPE%20Essentials-F16436?style=flat&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/ppe-essentials) [![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2FPPE--Essentials-181717?style=flat&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/PPE-Essentials)
+[![Modrinth](https://img.shields.io/badge/Modrinth-PPE%20Essentials-00AF5C?style=flat&logo=modrinth&logoColor=white)](https://modrinth.com/mod/ppe-essentials) [![CurseForge](https://img.shields.io/badge/CurseForge-PPE%20Essentials-F16436?style=flat&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/ppe-essentials) [![GitHub](https://img.shields.io/badge/GitHub-PurpleEastZQ%2Fppe--essentials-181717?style=flat&logo=github&logoColor=white)](https://github.com/PurpleEastZQ/ppe-essentials)
 
 PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat) and tweaks, with highly configurable options.
 
-![PPE Essentials command preview](https://raw.githubusercontent.com/PurpleEastZQ/PPE-Essentials/master/artwork/ppe-essentials-help-preview.png)
+![PPE Essentials command preview](https://raw.githubusercontent.com/PurpleEastZQ/ppe-essentials/master/artwork/ppe-essentials-help-preview.png)
 
 <br>
 
