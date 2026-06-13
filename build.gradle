@@ -13,6 +13,8 @@ def effectiveModId = mod_id.toString()
 def target_loader = (findProperty('target_loader') ?: 'neoforge').toString()
 def target_minecraft_version = (findProperty('target_minecraft_version') ?: minecraft_version).toString()
 def dev_player_name = (findProperty('dev_player_name') ?: 'Dev').toString()
+def sharedBuildRoot = layout.projectDirectory.dir('build')
+layout.buildDirectory = sharedBuildRoot.dir("work/${target_loader}/${target_minecraft_version}")
 def propertyKeyForVersion = { String minecraftVersion, String propertyName ->
     "mc_${minecraftVersion.replaceAll(/[^A-Za-z0-9]/, '_')}_${propertyName}"
 }
@@ -107,7 +109,31 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(gradle_java_version.toInteger())
 
 tasks.withType(JavaCompile).configureEach {
+    inputs.property('ppeTargetLoader', target_loader)
+    inputs.property('ppeTargetMinecraftVersion', target_minecraft_version)
     options.release = target_java_version.toInteger()
+}
+
+tasks.withType(ProcessResources).configureEach {
+    inputs.property('ppeTargetLoader', target_loader)
+    inputs.property('ppeTargetMinecraftVersion', target_minecraft_version)
+}
+
+def finalArchiveTaskName = isFabric && !usesModernFabricBuild ? 'remapJar' : 'jar'
+tasks.matching { task ->
+    task.name == finalArchiveTaskName
+}.configureEach {
+    destinationDirectory = sharedBuildRoot.dir('libs')
+}
+
+tasks.named('clean', Delete).configure {
+    delete sharedBuildRoot.dir('work')
+    delete sharedBuildRoot.dir('libs')
+    delete sharedBuildRoot.dir('classes')
+    delete sharedBuildRoot.dir('resources')
+    delete sharedBuildRoot.dir('generated')
+    delete sharedBuildRoot.dir('tmp')
+    delete sharedBuildRoot.dir('reports')
 }
 
 tasks.withType(JavaExec).configureEach {
@@ -248,7 +274,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     inputs.properties replaceProperties
     expand replaceProperties
     from "src/loaders/neoforge/templates"
-    into "build/generated/sources/modMetadata"
+    into layout.buildDirectory.dir("generated/sources/modMetadata")
 }
 sourceSets.main.resources.srcDir generateModMetadata
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload

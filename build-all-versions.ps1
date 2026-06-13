@@ -60,6 +60,12 @@ $discoveredVersions = [ordered]@{}
 $requestedMinecraftVersions = @($MinecraftVersion)
 $requestedLoaders = @($Loader)
 
+if (-not $properties.Contains('mod_id')) {
+    throw 'The mod_id property is required in gradle.properties.'
+}
+
+$modId = $properties['mod_id']
+
 if ($properties.Contains('minecraft_version')) {
     Add-Version -Set $discoveredVersions -Version $properties['minecraft_version']
 }
@@ -94,6 +100,7 @@ $taskByLoader = @{
 }
 $baseGradleArgs = @('--no-daemon', '--no-configuration-cache') + @($GradleArgs)
 $failures = New-Object System.Collections.Generic.List[object]
+$libsDir = Join-Path $scriptRoot 'build\libs'
 
 Push-Location $scriptRoot
 try {
@@ -102,6 +109,16 @@ try {
         & $gradleWrapper 'clean' @baseGradleArgs
         if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
+        }
+    }
+
+    if (Test-Path -LiteralPath $libsDir) {
+        $previousJars = @(Get-ChildItem -LiteralPath $libsDir -Filter "$modId-*.jar" -File)
+        if ($previousJars.Count -gt 0) {
+            Write-Host "==> Removing $($previousJars.Count) previous mod jar(s)"
+            foreach ($jar in $previousJars) {
+                Remove-Item -LiteralPath $jar.FullName -Force
+            }
         }
     }
 
@@ -146,10 +163,9 @@ if ($failures.Count -gt 0) {
 Write-Host ''
 Write-Host 'All requested builds completed.'
 
-$libsDir = Join-Path $scriptRoot 'build\libs'
 if (Test-Path -LiteralPath $libsDir) {
     Write-Host "Jars in ${libsDir}:"
-    Get-ChildItem -LiteralPath $libsDir -Filter '*.jar' |
+    Get-ChildItem -LiteralPath $libsDir -Filter "$modId-*.jar" |
         Sort-Object Name |
         ForEach-Object { Write-Host " - $($_.Name)" }
 }

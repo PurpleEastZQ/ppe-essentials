@@ -13,6 +13,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.HashMap;
@@ -20,9 +21,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-public class PpeEvents {
+public final class PpeEvents {
     private static final Map<UUID, Integer> BACK_NOTICE_TICKS = new HashMap<>();
     private static final Map<UUID, Integer> FIRST_JOIN_NOTICE_TICKS = new HashMap<>();
+
+    private PpeEvents() {
+    }
 
     public static void clearNoticeQueues() {
         BACK_NOTICE_TICKS.clear();
@@ -90,6 +94,12 @@ public class PpeEvents {
                 && PpeCompat.hasPermission(player, PpeConfig.commandPermission("repeat"))) {
             PpeCommands.rememberCommand(player, event.getParseResults().getReader().getString());
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
+        PpeCommands.clearRuntimeState();
+        clearNoticeQueues();
     }
 
     @SubscribeEvent

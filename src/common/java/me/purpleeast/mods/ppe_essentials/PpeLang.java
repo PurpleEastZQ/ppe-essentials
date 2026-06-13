@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class PpeLang {
+public final class PpeLang {
     public static final Component PREFIX = Component.literal("")
             .append(coloredLiteral("[", 0xAAAAAA))
             .append(coloredLiteral("P", 0xF378F3))
@@ -34,8 +34,7 @@ public class PpeLang {
             "ko_kr", load("ko_kr")
     );
 
-    public static MutableComponent component(String key, Object... args) {
-        return componentForLanguage(PpeConfig.fallbackLanguage(), key, args);
+    private PpeLang() {
     }
 
     public static MutableComponent component(ServerPlayer player, String key, Object... args) {
@@ -51,11 +50,7 @@ public class PpeLang {
     }
 
     public static MutableComponent prefixed(Component component) {
-        return PREFIX.copy().append(component);
-    }
-
-    public static String format(String key, Object... args) {
-        return format(PpeConfig.fallbackLanguage(), key, args);
+        return PpeConfig.messagePrefixEnabled() ? PREFIX.copy().append(component) : component.copy();
     }
 
     public static String languageFor(ServerPlayer player) {

@@ -4,7 +4,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-public class PpeNeoForgeCommands {
+public final class PpeNeoForgeCommands {
+    private PpeNeoForgeCommands() {
+    }
+
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         PpeCommands.registerCommands(event.getDispatcher());

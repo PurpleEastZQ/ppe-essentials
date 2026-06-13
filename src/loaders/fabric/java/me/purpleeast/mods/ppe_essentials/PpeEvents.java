@@ -2,6 +2,7 @@ package me.purpleeast.mods.ppe_essentials;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.network.chat.Style;
@@ -15,9 +16,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-public class PpeEvents {
+public final class PpeEvents {
     private static final Map<UUID, Integer> BACK_NOTICE_TICKS = new HashMap<>();
     private static final Map<UUID, Integer> FIRST_JOIN_NOTICE_TICKS = new HashMap<>();
+
+    private PpeEvents() {
+    }
 
     public static void register() {
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
@@ -40,6 +44,10 @@ public class PpeEvents {
             }
         });
         ServerTickEvents.END_SERVER_TICK.register(PpeEvents::onServerTick);
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            PpeCommands.clearRuntimeState();
+            clearNoticeQueues();
+        });
     }
 
     public static void clearNoticeQueues() {

@@ -79,6 +79,7 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 ## Configuration
 
 All configuration options are located in `config/ppe_essentials-common.toml`.
+The `[PPE]` message prefix is disabled by default. Set `messagePrefixEnabled = true` to show it.
 
 <br>
 
@@ -91,7 +92,9 @@ To build every supported NeoForge and Fabric jar:
 ```
 
 The script discovers supported Minecraft versions from `gradle.properties` and `src/versions/`.
-Use `-Clean` to clean once before the build matrix, or limit the run when needed:
+Before building, it removes previously generated PPE Essentials jars from `build/libs/`.
+Intermediate Gradle outputs are isolated under `build/work/<loader>/<minecraft-version>/` to prevent targets from reusing each other's classes.
+Use `-Clean` to additionally clean all build outputs once before the build matrix, or limit the run when needed:
 
 ```powershell
 .\build-all-versions.ps1 -Clean

@@ -35,12 +35,15 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class PpeCommands {
+public final class PpeCommands {
     private static final int INTERNAL_COMMAND_PERMISSION_LEVEL = 4;
     private static final Map<UUID, PendingRequest> TPA_REQUESTS = new HashMap<>();
     private static final Map<UUID, PendingRequest> TPAHERE_REQUESTS = new HashMap<>();
     private static final Map<UUID, Integer> RTP_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, String> LAST_COMMANDS = new HashMap<>();
+
+    private PpeCommands() {
+    }
 
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         if (enabled("tpa")) {
@@ -221,6 +224,13 @@ public class PpeCommands {
         if (!normalized.isBlank() && !rootCommand(normalized).equalsIgnoreCase("repeat")) {
             LAST_COMMANDS.put(player.getUUID(), normalized);
         }
+    }
+
+    public static void clearRuntimeState() {
+        TPA_REQUESTS.clear();
+        TPAHERE_REQUESTS.clear();
+        RTP_COOLDOWNS.clear();
+        LAST_COMMANDS.clear();
     }
 
     private static int tpa(ServerPlayer sender, ServerPlayer target) {
@@ -516,10 +526,7 @@ public class PpeCommands {
 
     private static int resetAll(ServerPlayer player) {
         PpePlayerData.get(PpeCompat.server(player)).clearPlayerData();
-        TPA_REQUESTS.clear();
-        TPAHERE_REQUESTS.clear();
-        RTP_COOLDOWNS.clear();
-        LAST_COMMANDS.clear();
+        clearRuntimeState();
         PpeEvents.clearNoticeQueues();
         for (ServerPlayer target : PpeCompat.server(player).getPlayerList().getPlayers()) {
             setMayFly(target, target.gameMode.getGameModeForPlayer() == GameType.CREATIVE);
