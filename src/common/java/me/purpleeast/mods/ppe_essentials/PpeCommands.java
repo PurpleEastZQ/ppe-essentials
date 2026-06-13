@@ -226,6 +226,22 @@ public final class PpeCommands {
         }
     }
 
+    public static boolean isFlyEnabled(ServerPlayer player) {
+        return PpePlayerData.get(PpeCompat.server(player)).isFlyEnabled(player.getUUID());
+    }
+
+    public static void restoreFly(ServerPlayer player) {
+        if (isFlyEnabled(player)) {
+            setMayFly(player, true);
+        }
+    }
+
+    public static void restoreFly(ServerPlayer player, boolean wasFlying) {
+        if (isFlyEnabled(player)) {
+            PpeCompat.restoreFlight(player, wasFlying);
+        }
+    }
+
     public static void clearRuntimeState() {
         TPA_REQUESTS.clear();
         TPAHERE_REQUESTS.clear();
@@ -666,20 +682,13 @@ public final class PpeCommands {
     }
 
     private static void keepFlyEnabled(MinecraftServer server) {
-        PpePlayerData data = PpePlayerData.get(server);
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            if (data.isFlyEnabled(player.getUUID())) {
-                setMayFly(player, true);
-            }
+            restoreFly(player);
         }
     }
 
     private static void setMayFly(ServerPlayer player, boolean mayFly) {
-        player.getAbilities().mayfly = mayFly;
-        if (!mayFly) {
-            player.getAbilities().flying = false;
-        }
-        player.onUpdateAbilities();
+        PpeCompat.setMayFly(player, mayFly);
     }
 
     private static String normalizeCommand(String command) {

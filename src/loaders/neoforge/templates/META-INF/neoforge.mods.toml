@@ -11,6 +11,9 @@ logoFile = "ppe_essentials.png"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 
+[[mixins]]
+config = "ppe_essentials.neoforge.mixins.json"
+
 [[dependencies."${mod_id}"]]
 modId = "neoforge"
 type = "required"

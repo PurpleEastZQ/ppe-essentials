@@ -13,6 +13,7 @@ import net.minecraft.server.permissions.Permission;
 import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Abilities;
 
 import java.util.Set;
 
@@ -66,6 +67,50 @@ public final class PpeCompat {
 
     public static boolean hasPermission(ServerPlayer player, int level) {
         return player.permissions().hasPermission(commandPermission(level));
+    }
+
+    public static void setMayFly(ServerPlayer player, boolean mayFly) {
+        Abilities abilities = player.getAbilities();
+        Abilities.Packed current = abilities.pack();
+        abilities.apply(new Abilities.Packed(
+                current.invulnerable(),
+                mayFly && current.flying(),
+                mayFly,
+                current.instabuild(),
+                current.mayBuild(),
+                current.flyingSpeed(),
+                current.walkingSpeed()
+        ));
+        player.onUpdateAbilities();
+    }
+
+    public static boolean isFlying(ServerPlayer player) {
+        return player.getAbilities().pack().flying();
+    }
+
+    public static void restoreFlight(ServerPlayer player, boolean wasFlying) {
+        restoreFlight(player, wasFlying, true);
+    }
+
+    public static void restoreFlightSilently(ServerPlayer player, boolean wasFlying) {
+        restoreFlight(player, wasFlying, false);
+    }
+
+    private static void restoreFlight(ServerPlayer player, boolean wasFlying, boolean sync) {
+        Abilities abilities = player.getAbilities();
+        Abilities.Packed current = abilities.pack();
+        abilities.apply(new Abilities.Packed(
+                current.invulnerable(),
+                wasFlying || current.flying(),
+                true,
+                current.instabuild(),
+                current.mayBuild(),
+                current.flyingSpeed(),
+                current.walkingSpeed()
+        ));
+        if (sync) {
+            player.onUpdateAbilities();
+        }
     }
 
     public static ClickEvent runCommandClick(String command) {

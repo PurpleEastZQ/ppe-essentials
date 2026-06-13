@@ -63,6 +63,39 @@ public final class PpeCompat {
         return player.hasPermissions(level);
     }
 
+    @SuppressWarnings("deprecation")
+    public static void setMayFly(ServerPlayer player, boolean mayFly) {
+        player.getAbilities().mayfly = mayFly;
+        if (!mayFly) {
+            player.getAbilities().flying = false;
+        }
+        player.onUpdateAbilities();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static boolean isFlying(ServerPlayer player) {
+        return player.getAbilities().flying;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void restoreFlight(ServerPlayer player, boolean wasFlying) {
+        restoreFlight(player, wasFlying, true);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void restoreFlightSilently(ServerPlayer player, boolean wasFlying) {
+        restoreFlight(player, wasFlying, false);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static void restoreFlight(ServerPlayer player, boolean wasFlying, boolean sync) {
+        player.getAbilities().mayfly = true;
+        player.getAbilities().flying = wasFlying || player.getAbilities().flying;
+        if (sync) {
+            player.onUpdateAbilities();
+        }
+    }
+
     public static ClickEvent runCommandClick(String command) {
         return new ClickEvent(ClickEvent.Action.RUN_COMMAND, command);
     }

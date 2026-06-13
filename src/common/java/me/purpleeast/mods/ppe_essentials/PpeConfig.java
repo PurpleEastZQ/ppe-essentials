@@ -5,7 +5,7 @@ import java.util.Set;
 
 public final class PpeConfig {
     static final String FILE_NAME = "ppe_essentials-common.toml";
-    private static final String DEFAULT_COMMENT_PREFIX = " Default: ";
+    private static final String DEFAULT_VALUE_COMMENT_PREFIX = " Default: ";
 
     private static final Set<String> SUPPORTED_LANGUAGES = Set.of(
             "en_us", "zh_cn", "zh_tw", "zh_hk", "ru_ru", "de_de", "fr_fr", "ja_jp", "ko_kr"
@@ -268,7 +268,7 @@ public final class PpeConfig {
     }
 
     private static String defaultComment(Object value) {
-        return DEFAULT_COMMENT_PREFIX + formatValue(value);
+        return DEFAULT_VALUE_COMMENT_PREFIX + formatValue(value);
     }
 
     private static String formatValue(Object value) {

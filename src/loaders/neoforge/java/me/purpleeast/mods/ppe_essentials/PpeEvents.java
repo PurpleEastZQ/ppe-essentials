@@ -49,17 +49,22 @@ public final class PpeEvents {
 
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player && PpePlayerData.get(PpeCompat.server(player)).markBackNoticeShown(player.getUUID())) {
-            BACK_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 10);
+        if (event.getEntity() instanceof ServerPlayer player) {
+            PpeCommands.restoreFly(player);
+            if (PpePlayerData.get(PpeCompat.server(player)).markBackNoticeShown(player.getUUID())) {
+                BACK_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 10);
+            }
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player
-                && PpeConfig.firstJoinNotice()
-                && !PpePlayerData.get(PpeCompat.server(player)).hasFirstJoinNoticeShown(player.getUUID())) {
-            FIRST_JOIN_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 40);
+        if (event.getEntity() instanceof ServerPlayer player) {
+            PpeCommands.restoreFly(player);
+            if (PpeConfig.firstJoinNotice()
+                    && !PpePlayerData.get(PpeCompat.server(player)).hasFirstJoinNoticeShown(player.getUUID())) {
+                FIRST_JOIN_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 40);
+            }
         }
     }
 

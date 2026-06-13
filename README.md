@@ -67,7 +67,7 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 | `/trash` | Open a temporary trash inventory that clears on close. |
 | `/suicide` | Kill yourself. |
 | `/heal [player]` | Heal yourself or another player. |
-| `/fly [player]` | Toggle flight for yourself or another player. |
+| `/fly [player]` | Toggle persistent flight for yourself or another player. Flight remains available after joining, respawning, or changing game mode. |
 | `/god [player]` | Toggle god mode for yourself or another player. |
 | `/repeat <times> [command]` | Repeat your last command or a specified command. |
 | `/ppe-ess help` | Show the command list. Disabled or unavailable commands are shown in red. |

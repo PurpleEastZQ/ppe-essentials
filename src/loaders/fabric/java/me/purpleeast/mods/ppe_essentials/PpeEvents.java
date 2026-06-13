@@ -33,12 +33,14 @@ public final class PpeEvents {
                 !(entity instanceof ServerPlayer player && PpePlayerData.get(PpeCompat.server(player)).isGodEnabled(player.getUUID()))
         );
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+            PpeCommands.restoreFly(newPlayer);
             if (PpePlayerData.get(PpeCompat.server(newPlayer)).markBackNoticeShown(newPlayer.getUUID())) {
                 BACK_NOTICE_TICKS.put(newPlayer.getUUID(), PpeCompat.server(newPlayer).getTickCount() + 10);
             }
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayer player = handler.player;
+            PpeCommands.restoreFly(player);
             if (PpeConfig.firstJoinNotice() && !PpePlayerData.get(server).hasFirstJoinNoticeShown(player.getUUID())) {
                 FIRST_JOIN_NOTICE_TICKS.put(player.getUUID(), server.getTickCount() + 40);
             }

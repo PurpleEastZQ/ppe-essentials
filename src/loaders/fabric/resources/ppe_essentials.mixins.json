@@ -9,6 +9,8 @@
     "EndermanLeaveBlockGoalMixin",
     "EndermanTakeBlockGoalMixin",
     "RavagerMixin",
+    "ServerPlayerAbilityRefreshMixin",
+    "ServerPlayerGameModeMixin",
     "ServerPlayerMixin"
   ],
   "injectors": {
