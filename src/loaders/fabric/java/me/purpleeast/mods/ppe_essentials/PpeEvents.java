@@ -46,6 +46,7 @@ public final class PpeEvents {
             }
         });
         ServerTickEvents.END_SERVER_TICK.register(PpeEvents::onServerTick);
+        ServerLifecycleEvents.SERVER_STARTED.register(PpePlayerData::get);
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             PpeCommands.clearRuntimeState();
             clearNoticeQueues();

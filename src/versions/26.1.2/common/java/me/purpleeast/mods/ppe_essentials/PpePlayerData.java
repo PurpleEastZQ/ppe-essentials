@@ -6,23 +6,57 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 public class PpePlayerData extends PpePlayerDataStore {
-    private static final String NAME = PpeEssentials.MODID + "_player_data";
+    private static final String NAME = "player_data";
     private static final Codec<PpePlayerData> CODEC = CompoundTag.CODEC.xmap(PpePlayerData::load, PpePlayerData::saveTag);
-    private static final SavedDataType<PpePlayerData> TYPE = new SavedDataType<>(Identifier.withDefaultNamespace(NAME), PpePlayerData::new, CODEC, null);
+    private static final SavedDataType<PpePlayerData> TYPE = new SavedDataType<>(
+            Identifier.fromNamespaceAndPath(PpeEssentials.MODID, NAME),
+            PpePlayerData::new,
+            CODEC,
+            null
+    );
 
     public static PpePlayerData get(MinecraftServer server) {
-        return server.getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(TYPE);
+        Path currentDataPath = PpePlayerDataLegacyImporter.currentDataPath(server);
+        if (!Files.exists(currentDataPath)) {
+            PpePlayerDataLegacyImporter.ImportResult imported = PpePlayerDataLegacyImporter.importLegacyData(server);
+            if (imported != null) {
+                server.getDataStorage().set(TYPE, imported.data());
+                server.getDataStorage().saveAndJoin();
+                if (Files.isRegularFile(currentDataPath)) {
+                    PpePlayerDataLegacyImporter.deleteLegacyData(imported);
+                } else {
+                    PpeEssentials.LOGGER.error(
+                            "PPE Essentials player data migration did not create {}; legacy data was not deleted",
+                            currentDataPath
+                    );
+                }
+                return imported.data();
+            }
+        }
+        boolean migrationNeeded = PpePlayerDataMigrations.backupIfNeeded(server, currentDataPath);
+        PpePlayerData data = server.getDataStorage().computeIfAbsent(TYPE);
+        if (migrationNeeded) {
+            data.setDirty();
+            server.getDataStorage().saveAndJoin();
+            PpeEssentials.LOGGER.info(
+                    "Migrated PPE Essentials player data to schema version {}",
+                    PpePlayerDataMigrations.CURRENT_SCHEMA_VERSION
+            );
+        }
+        return data;
     }
 
-    private static PpePlayerData load(CompoundTag tag) {
+    static PpePlayerData load(CompoundTag tag) {
+        boolean migrated = PpePlayerDataMigrations.migrate(tag);
         PpePlayerData data = new PpePlayerData();
         data.readLocationMap(list(tag, "homes"), data.homes);
         data.readLocationMap(list(tag, "deathBacks"), data.deathBacks);
@@ -34,11 +68,15 @@ public class PpePlayerData extends PpePlayerDataStore {
         data.readUuidSet(list(tag, "god"), data.god);
         data.readUuidSet(list(tag, "backNotice"), data.backNotice);
         data.readUuidSet(list(tag, "firstJoinNotice"), data.firstJoinNotice);
+        if (migrated) {
+            data.setDirty();
+        }
         return data;
     }
 
     private CompoundTag saveTag() {
         CompoundTag tag = new CompoundTag();
+        tag.putInt(PpePlayerDataMigrations.SCHEMA_VERSION_KEY, PpePlayerDataMigrations.CURRENT_SCHEMA_VERSION);
         tag.put("homes", writeLocationMap(homes));
         tag.put("deathBacks", writeLocationMap(deathBacks));
         tag.put("teleportBacks", writeLocationMap(teleportBacks));

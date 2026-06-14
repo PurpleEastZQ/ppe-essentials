@@ -13,6 +13,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
@@ -99,6 +100,11 @@ public final class PpeEvents {
                 && PpeCompat.hasPermission(player, PpeConfig.commandPermission("repeat"))) {
             PpeCommands.rememberCommand(player, event.getParseResults().getReader().getString());
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerStarted(ServerStartedEvent event) {
+        PpePlayerData.get(event.getServer());
     }
 
     @SubscribeEvent

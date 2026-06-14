@@ -16,13 +16,26 @@ public class PpePlayerData extends PpePlayerDataStore {
     private static final String NAME = PpeEssentials.MODID + "_player_data";
 
     public static PpePlayerData get(MinecraftServer server) {
-        return server.getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(
+        boolean migrationNeeded = PpePlayerDataMigrations.backupIfNeeded(server);
+        var storage = server.getLevel(Level.OVERWORLD).getDataStorage();
+        PpePlayerData data = storage.computeIfAbsent(
                 new SavedData.Factory<>(PpePlayerData::new, PpePlayerData::load, null),
                 NAME
         );
+        if (migrationNeeded) {
+            data.setDirty();
+            storage.save();
+            PpePlayerDataMigrations.awaitSaved(server);
+            PpeEssentials.LOGGER.info(
+                    "Migrated PPE Essentials player data to schema version {}",
+                    PpePlayerDataMigrations.CURRENT_SCHEMA_VERSION
+            );
+        }
+        return data;
     }
 
     private static PpePlayerData load(CompoundTag tag, HolderLookup.Provider provider) {
+        boolean migrated = PpePlayerDataMigrations.migrate(tag);
         PpePlayerData data = new PpePlayerData();
         data.readLocationMap(tag.getList("homes", Tag.TAG_COMPOUND), data.homes);
         data.readLocationMap(tag.getList("deathBacks", Tag.TAG_COMPOUND), data.deathBacks);
@@ -34,11 +47,15 @@ public class PpePlayerData extends PpePlayerDataStore {
         data.readUuidSet(tag.getList("god", Tag.TAG_COMPOUND), data.god);
         data.readUuidSet(tag.getList("backNotice", Tag.TAG_COMPOUND), data.backNotice);
         data.readUuidSet(tag.getList("firstJoinNotice", Tag.TAG_COMPOUND), data.firstJoinNotice);
+        if (migrated) {
+            data.setDirty();
+        }
         return data;
     }
 
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider provider) {
+        tag.putInt(PpePlayerDataMigrations.SCHEMA_VERSION_KEY, PpePlayerDataMigrations.CURRENT_SCHEMA_VERSION);
         tag.put("homes", writeLocationMap(homes));
         tag.put("deathBacks", writeLocationMap(deathBacks));
         tag.put("teleportBacks", writeLocationMap(teleportBacks));
