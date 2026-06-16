@@ -2,9 +2,11 @@ package me.purpleeast.mods.ppe_essentials;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +48,16 @@ public final class PpeCompat {
     }
 
     public static void playSound(ServerPlayer player, SoundEvent sound, SoundSource source, float volume, float pitch) {
-        level(player).playSound(null, player.getX(), player.getY(), player.getZ(), sound, source, volume, pitch);
+        player.connection.send(new ClientboundSoundPacket(
+                BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound),
+                source,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                volume,
+                pitch,
+                player.getRandom().nextLong()
+        ));
     }
 
     public static void kill(ServerPlayer player) {
