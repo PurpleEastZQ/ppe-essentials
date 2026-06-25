@@ -6,8 +6,6 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 ![PPE Essentials command preview](https://raw.githubusercontent.com/PurpleEastZQ/ppe-essentials/master/artwork/ppe-essentials-help-preview.png)
 
-<br>
-
 ## Features
 
 - Server-side only mod (Can still be installed on your client for singleplayer use.)
@@ -18,14 +16,10 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 - Multilingual support with automatic client language detection and a configurable `fallbackLanguage`.
 - Persistent player data for homes, warps, back locations, fly, god mode, and notice triggers.
 
-<br>
-
 ## Supported Versions
 
 - NeoForge 1.21.1, 1.21.11, 26.1.2
 - Fabric 1.21.1, 1.21.11, 26.1.2
-
-<br>
 
 ## Commands
 
@@ -45,8 +39,6 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 | `/back` or `/dback` | Return to your last death location. |
 | `/tback` | Return to your previous teleport location. |
 
-<br>
-
 ### Homes And Warps
 
 | Command | Description |
@@ -57,8 +49,6 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 | `/setwarp <name>` | Create a server warp. |
 | `/warp <name>` | Teleport to a server warp. |
 | `/delwarp <name>` | Delete a server warp. |
-
-<br>
 
 ### Utility And Admin
 
@@ -74,13 +64,9 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 | `/ppe-ess reset all` | Clear all player data. |
 | `/ppe-ess reset notice` | Clear notice trigger data. |
 
-<br>
-
 ## Configuration
 
 All configuration options are located in `config/ppe_essentials-common.toml`.
-
-<br>
 
 ## Building & Installation
 
