@@ -1,0 +1,46 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Minecraft run directories and generated runtime data
+runs/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code / Eclipse
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# Codex
+.codex/
+
+# Logs, crash dumps, and profiling output
+*.log
+logs/
+crash-reports/
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# Artwork
+*.psd
+
+# Docs
+docs/

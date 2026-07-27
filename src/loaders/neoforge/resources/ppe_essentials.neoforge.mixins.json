@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "me.purpleeast.mods.ppe_essentials.mixin",
+  "mixins": [
+    "ServerPlayerGameModeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

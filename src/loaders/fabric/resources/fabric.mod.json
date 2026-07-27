@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PurpleEastZQ/PPE-Essentials",
+    "sources": "https://github.com/PurpleEastZQ/PPE-Essentials"
+  },
+  "license": "${mod_license}",
+  "icon": "ppe_essentials.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.purpleeast.mods.ppe_essentials.PpeEssentials"
+    ]
+  },
+  "mixins": [
+    "ppe_essentials.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_api_version}",
+    "minecraft": "${fabric_minecraft_version_range}",
+    "java": ">=${target_java_version}"
+  }
+}
