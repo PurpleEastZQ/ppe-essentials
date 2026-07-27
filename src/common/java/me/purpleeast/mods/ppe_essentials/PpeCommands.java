@@ -19,6 +19,7 @@ import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.food.FoodData;
@@ -28,8 +29,10 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.level.Level;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,10 +40,12 @@ import java.util.concurrent.CompletableFuture;
 
 public final class PpeCommands {
     private static final int INTERNAL_COMMAND_PERMISSION_LEVEL = 4;
+    private static final int TELEPORT_SOUND_DELAY_TICKS = 1;
     private static final Map<UUID, PendingRequest> TPA_REQUESTS = new HashMap<>();
     private static final Map<UUID, PendingRequest> TPAHERE_REQUESTS = new HashMap<>();
     private static final Map<UUID, Integer> RTP_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, String> LAST_COMMANDS = new HashMap<>();
+    private static final List<PendingSound> PENDING_SOUNDS = new ArrayList<>();
 
     private PpeCommands() {
     }
@@ -214,6 +219,7 @@ public final class PpeCommands {
         expireRequests(server, tick, TPA_REQUESTS, "ppe_essentials.tpa.timeout.sender", "ppe_essentials.tpa.timeout.target");
         expireRequests(server, tick, TPAHERE_REQUESTS, "ppe_essentials.tpahere.timeout.sender", "ppe_essentials.tpahere.timeout.target");
         RTP_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() <= tick);
+        playPendingSounds(server, tick);
         if (tick % 20 == 0) {
             keepFlyEnabled(server);
         }
@@ -247,6 +253,7 @@ public final class PpeCommands {
         TPAHERE_REQUESTS.clear();
         RTP_COOLDOWNS.clear();
         LAST_COMMANDS.clear();
+        PENDING_SOUNDS.clear();
     }
 
     private static int tpa(ServerPlayer sender, ServerPlayer target) {
@@ -447,7 +454,7 @@ public final class PpeCommands {
             teleport(player, location.get());
             send(player, "ppe_essentials.home.success");
             title(player, "ppe_essentials.home.title", "ppe_essentials.home.subtitle", player.getName());
-            PpeCompat.playSound(player, SoundEvents.VILLAGER_CELEBRATE, SoundSource.PLAYERS, 1.0F, 1.5F);
+            playSoundLater(player, SoundEvents.VILLAGER_CELEBRATE, SoundSource.PLAYERS, 1.0F, 1.5F, TELEPORT_SOUND_DELAY_TICKS);
             return 1;
         }
 
@@ -666,7 +673,34 @@ public final class PpeCommands {
     }
 
     private static void teleportSound(ServerPlayer player) {
-        PpeCompat.playSound(player, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        playSoundLater(player, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F, TELEPORT_SOUND_DELAY_TICKS);
+    }
+
+    private static void playSoundLater(ServerPlayer player, SoundEvent sound, SoundSource source, float volume, float pitch, int delayTicks) {
+        PENDING_SOUNDS.add(new PendingSound(
+                player.getUUID(),
+                sound,
+                source,
+                volume,
+                pitch,
+                PpeCompat.server(player).getTickCount() + delayTicks
+        ));
+    }
+
+    private static void playPendingSounds(MinecraftServer server, int tick) {
+        Iterator<PendingSound> iterator = PENDING_SOUNDS.iterator();
+        while (iterator.hasNext()) {
+            PendingSound sound = iterator.next();
+            if (sound.playTick() > tick) {
+                continue;
+            }
+
+            iterator.remove();
+            ServerPlayer player = server.getPlayerList().getPlayer(sound.player());
+            if (player != null) {
+                PpeCompat.playSound(player, sound.sound(), sound.source(), sound.volume(), sound.pitch());
+            }
+        }
     }
 
     private static CompletableFuture<Suggestions> suggestWarps(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
@@ -721,5 +755,8 @@ public final class PpeCommands {
     }
 
     private record PendingRequest(UUID requester, int expireTick) {
+    }
+
+    private record PendingSound(UUID player, SoundEvent sound, SoundSource source, float volume, float pitch, int playTick) {
     }
 }
