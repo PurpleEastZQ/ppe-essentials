@@ -37,12 +37,26 @@ final class PpeConfigBackend {
             return;
         }
 
+        migrateLegacyConfig(path);
         try {
             resetDefaults();
             parse(Files.readAllLines(path, StandardCharsets.UTF_8));
             updateLastLoaded(path);
         } catch (IOException exception) {
             PpeEssentials.LOGGER.warn("Failed to load PPE Essentials config: {}", path, exception);
+        }
+    }
+
+    private static void migrateLegacyConfig(Path path) {
+        try {
+            if (PpeConfigMigration.removeUnknownOptions(path)) {
+                PpeEssentials.LOGGER.info(
+                        "Removed unknown settings from PPE Essentials config; backup: {}",
+                        PpeConfigMigration.backupPath(path)
+                );
+            }
+        } catch (IOException exception) {
+            PpeEssentials.LOGGER.warn("Failed to migrate PPE Essentials config: {}", path, exception);
         }
     }
 

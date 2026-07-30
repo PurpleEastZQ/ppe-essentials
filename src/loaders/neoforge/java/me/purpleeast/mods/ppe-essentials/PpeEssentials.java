@@ -16,6 +16,7 @@ public class PpeEssentials {
     public PpeEssentials(IEventBus modEventBus, ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(PpeNeoForgeCommands.class);
         NeoForge.EVENT_BUS.register(PpeEvents.class);
+        PpeConfig.load();
         modContainer.registerConfig(ModConfig.Type.COMMON, PpeConfigBackend.SPEC);
     }
 }

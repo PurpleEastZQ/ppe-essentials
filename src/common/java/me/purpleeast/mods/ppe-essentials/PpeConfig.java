@@ -108,6 +108,9 @@ public final class PpeConfig {
             TELEPORT_REQUEST_TIMEOUT_SECONDS,
             ALLOW_SELF_TELEPORT_REQUESTS
     );
+    private static final Set<String> VALUE_KEYS = Set.copyOf(
+            VALUES.stream().map(ValueDefinition::key).toList()
+    );
 
     private static final List<String> COMMAND_COMMENTS = List.of(
             " Command settings.",
@@ -140,6 +143,9 @@ public final class PpeConfig {
             command("heal", true, 4),
             command("fly", true, 4),
             command("god", true, 4)
+    );
+    private static final Set<String> COMMAND_NAMES = Set.copyOf(
+            COMMANDS.stream().map(CommandDefinition::name).toList()
     );
 
     private static final Map<String, String> DERIVED_COMMANDS = Map.of(
@@ -228,6 +234,14 @@ public final class PpeConfig {
 
     static List<CommandDefinition> commands() {
         return COMMANDS;
+    }
+
+    static boolean isValueKey(String key) {
+        return VALUE_KEYS.contains(key);
+    }
+
+    static boolean isCommandName(String name) {
+        return COMMAND_NAMES.contains(name);
     }
 
     private static ValueDefinition stringValue(

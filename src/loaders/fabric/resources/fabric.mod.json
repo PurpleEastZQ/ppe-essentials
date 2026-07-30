@@ -23,8 +23,8 @@
     "ppe_essentials.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${fabric_loader_version}",
-    "fabric-api": ">=${fabric_api_version}",
+    "fabricloader": ">=${fabric_loader_min_version}",
+    "fabric-api": ">=${fabric_api_min_version}",
     "minecraft": "${fabric_minecraft_version_range}",
     "java": ">=${target_java_version}"
   }

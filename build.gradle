@@ -70,7 +70,9 @@ def effectiveNeoVersion = versionedProperty('neo_version')
 def effectiveNeoVersionRange = versionedProperty('neo_version_range')
 def effectiveLoaderVersionRange = versionedProperty('loader_version_range')
 def effectiveFabricLoaderVersion = versionedProperty('fabric_loader_version')
+def effectiveFabricLoaderMinVersion = versionedProperty('fabric_loader_min_version', 'fabric_loader_min_version', effectiveFabricLoaderVersion)
 def effectiveFabricApiVersion = versionedProperty('fabric_api_version')
+def effectiveFabricApiMinVersion = versionedProperty('fabric_api_min_version', 'fabric_api_min_version', effectiveFabricApiVersion)
 def effectiveParchmentMinecraftVersion = versionedProperty('parchment_minecraft_version', 'parchment_minecraft_version', target_minecraft_version)
 def effectiveParchmentMappingsVersion = versionedProperty('parchment_mappings_version', 'parchment_mappings_version', '')
 def mixinCompatibilityLevel = "JAVA_${target_java_version}"
@@ -285,8 +287,8 @@ if (isFabric) {
     tasks.named('processResources', ProcessResources).configure {
         var replaceProperties = [minecraft_version             : target_minecraft_version,
                                  fabric_minecraft_version_range: effectiveFabricMinecraftVersionRange,
-                                 fabric_loader_version        : effectiveFabricLoaderVersion,
-                                 fabric_api_version           : effectiveFabricApiVersion,
+                                 fabric_loader_min_version    : effectiveFabricLoaderMinVersion,
+                                 fabric_api_min_version       : effectiveFabricApiMinVersion,
                                  target_java_version          : target_java_version,
                                  mixin_compatibility_level    : mixinCompatibilityLevel,
                                  mod_id                       : mod_id,

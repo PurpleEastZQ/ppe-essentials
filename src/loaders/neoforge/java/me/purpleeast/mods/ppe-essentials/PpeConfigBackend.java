@@ -1,7 +1,11 @@
 package me.purpleeast.mods.ppe_essentials;
 
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -39,6 +43,21 @@ final class PpeConfigBackend {
     }
 
     static void load() {
+        Path path = FMLPaths.CONFIGDIR.get().resolve(PpeConfig.FILE_NAME);
+        if (!Files.exists(path)) {
+            return;
+        }
+
+        try {
+            if (PpeConfigMigration.removeUnknownOptions(path)) {
+                PpeEssentials.LOGGER.info(
+                        "Removed unknown settings from PPE Essentials config; backup: {}",
+                        PpeConfigMigration.backupPath(path)
+                );
+            }
+        } catch (IOException exception) {
+            PpeEssentials.LOGGER.warn("Failed to migrate PPE Essentials config: {}", path, exception);
+        }
     }
 
     static String stringValue(PpeConfig.ValueDefinition definition) {

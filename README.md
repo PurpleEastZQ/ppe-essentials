@@ -71,6 +71,8 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 All configuration options are located in `config/ppe_essentials-common.toml`.
 Derived commands share the `enabled` and `permissionLevel` values of their core command:
 `tpaa`, `tpad`, and `tpaauto` follow `tpa`; `tpaherea` and `tpahered` follow `tpahere`; `dback` follows `back`.
+On startup, options and sections that are not part of the current configuration schema are removed automatically.
+Before the first cleanup, the original file is copied to `ppe_essentials-common.toml.pre-config-migration.bak`.
 
 ## Building & Installation
 
@@ -102,3 +104,5 @@ For single-target builds, pass PowerShell project properties by quoting the whol
 Built jars are generated under `build/libs/`. Put the matching jar into your `mods` folder.
 
 Fabric requires Fabric API.
+Build dependencies are pinned to current stable releases for each supported Minecraft version.
+Published minimum NeoForge, Fabric Loader, and Fabric API versions are declared separately so dependency upgrades do not unnecessarily raise the installation baseline.

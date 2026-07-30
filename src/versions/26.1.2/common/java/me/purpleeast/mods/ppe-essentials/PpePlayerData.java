@@ -7,8 +7,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import net.minecraft.world.level.storage.LevelResource;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
@@ -25,23 +25,9 @@ public class PpePlayerData extends PpePlayerDataStore {
     );
 
     public static PpePlayerData get(MinecraftServer server) {
-        Path currentDataPath = PpePlayerDataLegacyImporter.currentDataPath(server);
-        if (!Files.exists(currentDataPath)) {
-            PpePlayerDataLegacyImporter.ImportResult imported = PpePlayerDataLegacyImporter.importLegacyData(server);
-            if (imported != null) {
-                server.getDataStorage().set(TYPE, imported.data());
-                server.getDataStorage().saveAndJoin();
-                if (Files.isRegularFile(currentDataPath)) {
-                    PpePlayerDataLegacyImporter.deleteLegacyData(imported);
-                } else {
-                    PpeEssentials.LOGGER.error(
-                            "PPE Essentials player data migration did not create {}; legacy data was not deleted",
-                            currentDataPath
-                    );
-                }
-                return imported.data();
-            }
-        }
+        Path currentDataPath = server.getWorldPath(LevelResource.DATA)
+                .resolve(PpeEssentials.MODID)
+                .resolve("player_data.dat");
         boolean migrationNeeded = PpePlayerDataMigrations.backupIfNeeded(server, currentDataPath);
         PpePlayerData data = server.getDataStorage().computeIfAbsent(TYPE);
         if (migrationNeeded) {
