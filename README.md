@@ -11,8 +11,9 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 - Server-side only mod (Can still be installed on your client for singleplayer use.)
 - Configurable command toggles, permission levels and more.
 - Configurable protection against creeper, enderman, and ravager block damage.
-- No extra dependencies, ready out of the box.
+- Ready out of the box; Fabric only requires Fabric API.
 - Polished messages with clickable buttons, titles, and sounds.
+- Player-selection menus for `/tpa` and `/tpahere` when no target is provided.
 - Multilingual support with automatic client language detection and a configurable `fallbackLanguage`.
 - Persistent player data for homes, warps, back locations, fly, god mode, and notice triggers.
 
@@ -20,8 +21,6 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 - NeoForge 1.21.1, 26.1.2
 - Fabric 1.21.1, 26.1.2
-
-1.21.11 is no longer supported.
 
 ## Commands
 
@@ -69,43 +68,24 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 ## Configuration
 
 All configuration options are located in `config/ppe_essentials-common.toml`.
-Derived commands share the `enabled` and `permissionLevel` values of their core command:
-`tpaa`, `tpad`, and `tpaauto` follow `tpa`; `tpaherea` and `tpahered` follow `tpahere`; `dback` follows `back`.
-On startup, options and sections that are not part of the current configuration schema are removed automatically.
-Before the first cleanup, the original file is copied to `ppe_essentials-common.toml.pre-config-migration.bak`.
 
-## Building & Installation
+## Installation & Building
 
-To build every supported NeoForge and Fabric jar:
+Download the jar matching your Minecraft version and mod loader, then place it in the `mods` folder.
 
-```powershell
-build-all-versions.ps1
-```
+Fabric installations also require Fabric API.
 
-The script discovers supported Minecraft versions from `gradle.properties` and `src/versions/`.
-Before building, it removes previously generated PPE Essentials jars from `build/libs/`.
-Intermediate Gradle outputs are isolated under `build/work/<loader>/<minecraft-version>/` to prevent targets from reusing each other's classes.
-Use `-Clean` to additionally clean all build outputs once before the build matrix, or limit the run when needed:
+To build all supported versions from source using JDK 25:
 
 ```powershell
-.\build-all-versions.ps1 -Clean
-.\build-all-versions.ps1 -MinecraftVersion 26.1.2 -Loader fabric
+.\build-all-versions.ps1
 ```
 
-For single-target builds, pass PowerShell project properties by quoting the whole `-P...` argument:
+To build a single target:
 
 ```powershell
-.\gradlew.bat buildNeoForge --no-daemon
-.\gradlew.bat buildFabric --no-daemon
-.\gradlew.bat buildNeoForge "-Ptarget_minecraft_version=26.1.2" --no-daemon
-.\gradlew.bat buildFabric "-Ptarget_minecraft_version=26.1.2" --no-daemon
+.\gradlew.bat buildNeoForge --no-daemon --no-configuration-cache
+.\gradlew.bat buildFabric "-Ptarget_minecraft_version=26.1.2" --no-daemon --no-configuration-cache
 ```
 
-Built jars are generated under `build/libs/`. Put the matching jar into your `mods` folder.
-
-Fabric requires Fabric API.
-Build dependencies are pinned to current stable releases for each supported Minecraft version.
-Published minimum NeoForge, Fabric Loader, and Fabric API versions are declared separately so dependency upgrades do not unnecessarily raise the installation baseline.
-
-Development client and server runs automatically include spark. Fabric development clients additionally load Mod Menu; Fabric Loader ignores this client-only mod in server runs.
-These development-only tools are not included in published PPE Essentials jars and are not installation dependencies.
+Built jars are generated under `build/libs/`.
