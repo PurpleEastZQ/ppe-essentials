@@ -2,6 +2,7 @@ package me.purpleeast.mods.ppe_essentials;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
@@ -10,6 +11,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ResolvableProfile;
 
 public final class PpeCompat {
     private PpeCompat() {
@@ -106,5 +109,13 @@ public final class PpeCompat {
 
     public static HoverEvent showTextHover(Component text) {
         return new HoverEvent(HoverEvent.Action.SHOW_TEXT, text);
+    }
+
+    public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
+        PpeTeleportMenu.open(player, here, page);
+    }
+
+    public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {
+        head.set(DataComponents.PROFILE, new ResolvableProfile(player.getGameProfile()));
     }
 }

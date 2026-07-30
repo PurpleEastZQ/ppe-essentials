@@ -29,11 +29,11 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 | Command | Description |
 | --- | --- |
-| `/tpa <player>` | Request to teleport to another player. |
+| `/tpa [player]` | Request to teleport to another player, or open the player menu when omitted. |
 | `/tpaa` | Accept a pending TPA request. |
 | `/tpad` | Deny a pending TPA request. |
 | `/tpaauto` | Toggle automatic TPA acceptance. |
-| `/tpahere <player>` | Request another player to teleport to you. |
+| `/tpahere [player]` | Request another player to teleport to you, or open the player menu when omitted. |
 | `/tpaherea` | Accept a pending TPAhere request. |
 | `/tpahered` | Deny a pending TPAhere request. |
 | `/rtp` | Randomly teleport nearby. |
@@ -106,3 +106,6 @@ Built jars are generated under `build/libs/`. Put the matching jar into your `mo
 Fabric requires Fabric API.
 Build dependencies are pinned to current stable releases for each supported Minecraft version.
 Published minimum NeoForge, Fabric Loader, and Fabric API versions are declared separately so dependency upgrades do not unnecessarily raise the installation baseline.
+
+Development client and server runs automatically include spark. Fabric development clients additionally load Mod Menu; Fabric Loader ignores this client-only mod in server runs.
+These development-only tools are not included in published PPE Essentials jars and are not installation dependencies.

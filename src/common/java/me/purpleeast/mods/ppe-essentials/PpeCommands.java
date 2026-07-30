@@ -30,6 +30,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -52,6 +53,7 @@ public final class PpeCommands {
         if (enabled("tpa")) {
             dispatcher.register(Commands.literal("tpa")
                     .requires(source -> canUse(source, "tpa"))
+                    .executes(context -> openTeleportMenu(context.getSource().getPlayerOrException(), TeleportRequestType.TPA))
                     .then(Commands.argument("player", EntityArgument.player())
                             .executes(context -> tpa(context.getSource().getPlayerOrException(), EntityArgument.getPlayer(context, "player")))));
         }
@@ -74,6 +76,7 @@ public final class PpeCommands {
         if (enabled("tpahere")) {
             dispatcher.register(Commands.literal("tpahere")
                     .requires(source -> canUse(source, "tpahere"))
+                    .executes(context -> openTeleportMenu(context.getSource().getPlayerOrException(), TeleportRequestType.TPAHERE))
                     .then(Commands.argument("player", EntityArgument.player())
                             .executes(context -> tpahere(context.getSource().getPlayerOrException(), EntityArgument.getPlayer(context, "player")))));
         }
@@ -260,6 +263,11 @@ public final class PpeCommands {
         return sendTeleportRequest(sender, target, TeleportRequestType.TPA);
     }
 
+    private static int openTeleportMenu(ServerPlayer player, TeleportRequestType type) {
+        PpeCompat.openTeleportMenu(player, type == TeleportRequestType.TPAHERE, 0);
+        return 1;
+    }
+
     private static int acceptTpa(ServerPlayer target) {
         return respondToTeleportRequest(target, TeleportRequestType.TPA, true);
     }
@@ -276,6 +284,43 @@ public final class PpeCommands {
 
     private static int tpahere(ServerPlayer sender, ServerPlayer target) {
         return sendTeleportRequest(sender, target, TeleportRequestType.TPAHERE);
+    }
+
+    static List<ServerPlayer> teleportMenuTargets(ServerPlayer player) {
+        return PpeCompat.server(player).getPlayerList().getPlayers().stream()
+                .filter(target -> PpeConfig.allowSelfTeleportRequests() || !target.getUUID().equals(player.getUUID()))
+                .sorted(Comparator.comparing(PpeCompat::profileName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+    }
+
+    static boolean requestTeleportFromMenu(ServerPlayer sender, UUID targetId, boolean here) {
+        TeleportRequestType type = here ? TeleportRequestType.TPAHERE : TeleportRequestType.TPA;
+        if (!commandAvailable(sender, type.languagePrefix)) {
+            return false;
+        }
+
+        ServerPlayer target = PpeCompat.server(sender).getPlayerList().getPlayer(targetId);
+        if (target == null) {
+            send(sender, "ppe_essentials.teleport_menu.player.offline");
+            return false;
+        }
+
+        return sendTeleportRequest(sender, target, type) > 0;
+    }
+
+    static boolean canToggleTpaAutoFromMenu(ServerPlayer player) {
+        return commandAvailable(player, "tpaauto");
+    }
+
+    static boolean isTpaAutoEnabled(ServerPlayer player) {
+        return canToggleTpaAutoFromMenu(player)
+                && PpePlayerData.get(PpeCompat.server(player)).isTpaAuto(player.getUUID());
+    }
+
+    static void toggleTpaAutoFromMenu(ServerPlayer player) {
+        if (commandAvailable(player, "tpaauto")) {
+            tpaAuto(player);
+        }
     }
 
     private static int acceptTpahere(ServerPlayer target) {

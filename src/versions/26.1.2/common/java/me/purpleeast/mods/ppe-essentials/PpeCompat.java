@@ -2,6 +2,7 @@ package me.purpleeast.mods.ppe_essentials;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,8 @@ import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Abilities;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ResolvableProfile;
 
 import java.util.Set;
 
@@ -73,11 +76,11 @@ public final class PpeCompat {
     }
 
     public static boolean hasPermission(CommandSourceStack source, int level) {
-        return source.permissions().hasPermission(commandPermission(level));
+        return level <= 0 || source.permissions().hasPermission(commandPermission(level));
     }
 
     public static boolean hasPermission(ServerPlayer player, int level) {
-        return player.permissions().hasPermission(commandPermission(level));
+        return level <= 0 || player.permissions().hasPermission(commandPermission(level));
     }
 
     public static void setMayFly(ServerPlayer player, boolean mayFly) {
@@ -134,6 +137,14 @@ public final class PpeCompat {
 
     public static HoverEvent showTextHover(Component text) {
         return new HoverEvent.ShowText(text);
+    }
+
+    public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
+        PpeTeleportMenu.open(player, here, page);
+    }
+
+    public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {
+        head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(player.getGameProfile()));
     }
 
     private static Permission commandPermission(int level) {

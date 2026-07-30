@@ -75,6 +75,9 @@ def effectiveFabricApiVersion = versionedProperty('fabric_api_version')
 def effectiveFabricApiMinVersion = versionedProperty('fabric_api_min_version', 'fabric_api_min_version', effectiveFabricApiVersion)
 def effectiveParchmentMinecraftVersion = versionedProperty('parchment_minecraft_version', 'parchment_minecraft_version', target_minecraft_version)
 def effectiveParchmentMappingsVersion = versionedProperty('parchment_mappings_version', 'parchment_mappings_version', '')
+def effectiveSparkVersion = versionedProperty("${target_loader}_spark_version")
+def effectiveModMenuVersion = isFabric ? versionedProperty('mod_menu_version') : null
+def effectiveFabricPermissionsApiVersion = isFabric ? versionedProperty('fabric_permissions_api_version') : null
 def mixinCompatibilityLevel = "JAVA_${target_java_version}"
 def ensureRunDirectory = { String path ->
     def directory = project.file(path)
@@ -98,6 +101,13 @@ if (isNeoForge) {
 
 repositories {
     mavenLocal()
+    maven {
+        name = 'Modrinth'
+        url = uri('https://api.modrinth.com/maven')
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
     if (isFabric) {
         maven { url = 'https://maven.fabricmc.net/' }
         mavenCentral()
@@ -249,6 +259,10 @@ sourceSets {
 
 
 dependencies {
+    if (isNeoForge) {
+        runtimeOnly "maven.modrinth:spark:${effectiveSparkVersion}"
+    }
+
     if (isFabric) {
         minecraft "com.mojang:minecraft:${target_minecraft_version}"
         if (!usesModernFabricBuild) {
@@ -257,6 +271,11 @@ dependencies {
         def fabricDependencyConfiguration = usesModernFabricBuild ? 'implementation' : 'modImplementation'
         add(fabricDependencyConfiguration, "net.fabricmc:fabric-loader:${effectiveFabricLoaderVersion}")
         add(fabricDependencyConfiguration, "net.fabricmc.fabric-api:fabric-api:${effectiveFabricApiVersion}")
+
+        def fabricLocalRuntimeConfiguration = usesModernFabricBuild ? 'localRuntime' : 'modLocalRuntime'
+        add(fabricLocalRuntimeConfiguration, "maven.modrinth:spark:${effectiveSparkVersion}")
+        add(fabricLocalRuntimeConfiguration, "maven.modrinth:fabric-permissions-api:${effectiveFabricPermissionsApiVersion}")
+        add(fabricLocalRuntimeConfiguration, "maven.modrinth:modmenu:${effectiveModMenuVersion}")
     }
 }
 
