@@ -18,8 +18,10 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 ## Supported Versions
 
-- NeoForge 1.21.1, 1.21.11, 26.1.2
-- Fabric 1.21.1, 1.21.11, 26.1.2
+- NeoForge 1.21.1, 26.1.2
+- Fabric 1.21.1, 26.1.2
+
+1.21.11 is no longer supported.
 
 ## Commands
 
@@ -67,6 +69,8 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 ## Configuration
 
 All configuration options are located in `config/ppe_essentials-common.toml`.
+Derived commands share the `enabled` and `permissionLevel` values of their core command:
+`tpaa`, `tpad`, and `tpaauto` follow `tpa`; `tpaherea` and `tpahered` follow `tpahere`; `dback` follows `back`.
 
 ## Building & Installation
 
@@ -83,7 +87,7 @@ Use `-Clean` to additionally clean all build outputs once before the build matri
 
 ```powershell
 .\build-all-versions.ps1 -Clean
-.\build-all-versions.ps1 -MinecraftVersion 1.21.11 -Loader fabric
+.\build-all-versions.ps1 -MinecraftVersion 26.1.2 -Loader fabric
 ```
 
 For single-target builds, pass PowerShell project properties by quoting the whole `-P...` argument:
@@ -91,8 +95,6 @@ For single-target builds, pass PowerShell project properties by quoting the whol
 ```powershell
 .\gradlew.bat buildNeoForge --no-daemon
 .\gradlew.bat buildFabric --no-daemon
-.\gradlew.bat buildNeoForge "-Ptarget_minecraft_version=1.21.11" --no-daemon
-.\gradlew.bat buildFabric "-Ptarget_minecraft_version=1.21.11" --no-daemon
 .\gradlew.bat buildNeoForge "-Ptarget_minecraft_version=26.1.2" --no-daemon
 .\gradlew.bat buildFabric "-Ptarget_minecraft_version=26.1.2" --no-daemon
 ```

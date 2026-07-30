@@ -1,10 +1,6 @@
 package me.purpleeast.mods.ppe_essentials;
 
-import net.minecraft.network.chat.Style;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
@@ -17,33 +13,20 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
-
 public final class PpeEvents {
-    private static final Map<UUID, Integer> BACK_NOTICE_TICKS = new HashMap<>();
-    private static final Map<UUID, Integer> FIRST_JOIN_NOTICE_TICKS = new HashMap<>();
-
     private PpeEvents() {
-    }
-
-    public static void clearNoticeQueues() {
-        BACK_NOTICE_TICKS.clear();
-        FIRST_JOIN_NOTICE_TICKS.clear();
     }
 
     @SubscribeEvent
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            PpePlayerData.get(PpeCompat.server(player)).setDeathBack(player.getUUID(), PpeLocation.of(player));
+            PpeRuntimeEvents.onPlayerDeath(player);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerDamage(LivingIncomingDamageEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player && PpePlayerData.get(PpeCompat.server(player)).isGodEnabled(player.getUUID())) {
+        if (event.getEntity() instanceof ServerPlayer player && !PpeRuntimeEvents.allowsPlayerDamage(player)) {
             event.setCanceled(true);
         }
     }
@@ -51,21 +34,14 @@ public final class PpeEvents {
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            PpeCommands.restoreFly(player);
-            if (PpePlayerData.get(PpeCompat.server(player)).markBackNoticeShown(player.getUUID())) {
-                BACK_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 10);
-            }
+            PpeRuntimeEvents.onPlayerRespawn(player);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            PpeCommands.restoreFly(player);
-            if (PpeConfig.firstJoinNotice()
-                    && !PpePlayerData.get(PpeCompat.server(player)).hasFirstJoinNoticeShown(player.getUUID())) {
-                FIRST_JOIN_NOTICE_TICKS.put(player.getUUID(), PpeCompat.server(player).getTickCount() + 40);
-            }
+            PpeRuntimeEvents.onPlayerLogin(player);
         }
     }
 
@@ -104,52 +80,16 @@ public final class PpeEvents {
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
-        PpePlayerData.get(event.getServer());
+        PpeRuntimeEvents.onServerStarted(event.getServer());
     }
 
     @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
-        PpeCommands.clearRuntimeState();
-        clearNoticeQueues();
+        PpeRuntimeEvents.onServerStopped();
     }
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
-        MinecraftServer server = event.getServer();
-        Iterator<Map.Entry<UUID, Integer>> backIterator = BACK_NOTICE_TICKS.entrySet().iterator();
-        while (backIterator.hasNext()) {
-            Map.Entry<UUID, Integer> entry = backIterator.next();
-            if (entry.getValue() > server.getTickCount()) {
-                continue;
-            }
-
-            backIterator.remove();
-            ServerPlayer player = server.getPlayerList().getPlayer(entry.getKey());
-            if (player != null) {
-                PpeCompat.playSound(player, SoundEvents.CHICKEN_EGG, SoundSource.PLAYERS, 1.0F, 1.2F);
-                player.sendSystemMessage(PpeLang.prefixedComponent(player, "ppe_essentials.back.notice")
-                        .withStyle(Style.EMPTY
-                                .withClickEvent(PpeCompat.suggestCommandClick("/back"))
-                                .withHoverEvent(PpeCompat.showTextHover(PpeLang.component(player, "ppe_essentials.back.notice.tooltip")))));
-            }
-        }
-
-        Iterator<Map.Entry<UUID, Integer>> joinIterator = FIRST_JOIN_NOTICE_TICKS.entrySet().iterator();
-        while (joinIterator.hasNext()) {
-            Map.Entry<UUID, Integer> entry = joinIterator.next();
-            if (entry.getValue() > server.getTickCount()) {
-                continue;
-            }
-
-            joinIterator.remove();
-            ServerPlayer player = server.getPlayerList().getPlayer(entry.getKey());
-            if (player != null && PpePlayerData.get(server).markFirstJoinNoticeShown(player.getUUID())) {
-                PpeCompat.playSound(player, SoundEvents.CHICKEN_EGG, SoundSource.PLAYERS, 1.0F, 1.2F);
-                player.sendSystemMessage(PpeLang.prefixedComponent(player, "ppe_essentials.first_join.notice")
-                        .withStyle(Style.EMPTY
-                                .withClickEvent(PpeCompat.runCommandClick("/ppe-ess help"))
-                                .withHoverEvent(PpeCompat.showTextHover(PpeLang.component(player, "ppe_essentials.first_join.notice.tooltip")))));
-            }
-        }
+        PpeRuntimeEvents.onServerTick(event.getServer());
     }
 }

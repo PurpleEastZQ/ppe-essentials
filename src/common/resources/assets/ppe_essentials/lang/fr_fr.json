@@ -5,6 +5,7 @@
   "ppe_essentials.request.deny.tooltip": "§c§lCliquer pour refuser !",
   "ppe_essentials.teleport.missing_dimension": "§cLa dimension cible n'existe pas, téléportation impossible",
   "ppe_essentials.teleport.request.self_disabled": "§cLes demandes de téléportation à vous-même sont désactivées",
+  "ppe_essentials.teleport.request.response_unavailable": "§c%s ne peut pas utiliser les commandes requises pour accepter et refuser",
   "ppe_essentials.tpa.auto.target": "§aVous avez automatiquement accepté la demande §eTPA §ade §b%s",
   "ppe_essentials.tpa.auto.sender": "§b%s §aa automatiquement accepté votre demande §eTPA",
   "ppe_essentials.tpa.request.target": "§b%s §asouhaite se téléporter à votre position §7(utilisez §6/tpaauto §7pour accepter automatiquement)",

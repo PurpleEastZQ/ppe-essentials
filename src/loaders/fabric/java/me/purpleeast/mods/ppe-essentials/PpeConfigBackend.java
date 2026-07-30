@@ -13,12 +13,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 final class PpeConfigBackend {
+    private static final long RELOAD_CHECK_INTERVAL_NANOS = 1_000_000_000L;
     private static final Map<String, PpeConfig.ValueDefinition> DEFINITIONS = PpeConfig.values().stream()
             .collect(Collectors.toUnmodifiableMap(PpeConfig.ValueDefinition::key, Function.identity()));
     private static final Map<String, Object> VALUES = new LinkedHashMap<>();
     private static final Map<String, CommandValue> COMMANDS = new LinkedHashMap<>();
 
     private static long lastLoadedModifiedMillis = Long.MIN_VALUE;
+    private static long lastReloadCheckNanos = Long.MIN_VALUE;
 
     static {
         resetDefaults();
@@ -76,6 +78,13 @@ final class PpeConfigBackend {
     }
 
     private static void reloadIfChanged() {
+        long currentNanos = System.nanoTime();
+        if (lastReloadCheckNanos != Long.MIN_VALUE
+                && currentNanos - lastReloadCheckNanos < RELOAD_CHECK_INTERVAL_NANOS) {
+            return;
+        }
+        lastReloadCheckNanos = currentNanos;
+
         Path path = configPath();
         if (!Files.exists(path)) {
             return;

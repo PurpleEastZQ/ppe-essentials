@@ -5,6 +5,7 @@
   "ppe_essentials.request.deny.tooltip": "§c§lKlicken, um abzulehnen!",
   "ppe_essentials.teleport.missing_dimension": "§cDie Ziel-Dimension existiert nicht, Teleport fehlgeschlagen",
   "ppe_essentials.teleport.request.self_disabled": "§cTeleport-Anfragen an dich selbst sind deaktiviert",
+  "ppe_essentials.teleport.request.response_unavailable": "§c%s kann die erforderlichen Annehmen- und Ablehnen-Befehle nicht verwenden",
   "ppe_essentials.tpa.auto.target": "§aDu hast die §eTPA§a-Anfrage von §b%s §aautomatisch angenommen",
   "ppe_essentials.tpa.auto.sender": "§b%s §ahat deine §eTPA§a-Anfrage automatisch angenommen",
   "ppe_essentials.tpa.request.target": "§b%s §amöchte sich zu deiner Position teleportieren §7(nutze §6/tpaauto §7für automatisches Annehmen)",

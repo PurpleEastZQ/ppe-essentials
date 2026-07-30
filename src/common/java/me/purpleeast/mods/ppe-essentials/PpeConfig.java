@@ -1,6 +1,7 @@
 package me.purpleeast.mods.ppe_essentials;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public final class PpeConfig {
@@ -111,21 +112,19 @@ public final class PpeConfig {
     private static final List<String> COMMAND_COMMENTS = List.of(
             " Command settings.",
             " enabled: whether the command is registered when the server starts. Changes require a server restart.",
-            " permissionLevel: required OP permission level. Use 0 to allow everyone. Changes apply without restart."
+            " permissionLevel: required OP permission level. Use 0 to allow everyone. Changes apply without restart.",
+            " Derived commands are not configured separately: tpaa, tpad, and tpaauto follow tpa;",
+            " tpaherea and tpahered follow tpahere; dback follows back.",
+            " TPA and TPAhere requests require the target to have access to both matching accept and deny commands.",
+            " Stored TPA auto-accept state only applies while the tpaauto command is enabled and accessible."
     );
 
     private static final List<CommandDefinition> COMMANDS = List.of(
             command("tpa", true, 0),
-            command("tpaa", true, 0),
-            command("tpad", true, 0),
-            command("tpaauto", true, 0),
             command("tpahere", true, 0),
-            command("tpaherea", true, 0),
-            command("tpahered", true, 0),
             command("rtp", true, 0),
             command("spawn", true, 0),
             command("back", true, 0),
-            command("dback", true, 0),
             command("tback", true, 0),
             command("sethome", true, 0),
             command("delhome", true, 0),
@@ -141,6 +140,15 @@ public final class PpeConfig {
             command("heal", true, 4),
             command("fly", true, 4),
             command("god", true, 4)
+    );
+
+    private static final Map<String, String> DERIVED_COMMANDS = Map.of(
+            "tpaa", "tpa",
+            "tpad", "tpa",
+            "tpaauto", "tpa",
+            "tpaherea", "tpahere",
+            "tpahered", "tpahere",
+            "dback", "back"
     );
 
     private PpeConfig() {
@@ -203,11 +211,11 @@ public final class PpeConfig {
     }
 
     public static boolean commandEnabled(String command) {
-        return PpeConfigBackend.commandEnabled(command);
+        return PpeConfigBackend.commandEnabled(configCommand(command));
     }
 
     public static int commandPermission(String command) {
-        return PpeConfigBackend.commandPermission(command);
+        return PpeConfigBackend.commandPermission(configCommand(command));
     }
 
     static List<ValueDefinition> values() {
@@ -265,6 +273,10 @@ public final class PpeConfig {
 
     private static CommandDefinition command(String name, boolean enabled, int permissionLevel) {
         return new CommandDefinition(name, enabled, permissionLevel);
+    }
+
+    private static String configCommand(String command) {
+        return DERIVED_COMMANDS.getOrDefault(command, command);
     }
 
     private static String defaultComment(Object value) {

@@ -5,6 +5,7 @@
   "ppe_essentials.request.deny.tooltip": "§c§lClick to deny!",
   "ppe_essentials.teleport.missing_dimension": "§cThe target dimension does not exist, teleport failed",
   "ppe_essentials.teleport.request.self_disabled": "§cSending teleport requests to yourself is disabled",
+  "ppe_essentials.teleport.request.response_unavailable": "§c%s cannot use the required accept and deny commands",
   "ppe_essentials.tpa.auto.target": "§aYou automatically accepted §b%s§a's §eTPA §arequest",
   "ppe_essentials.tpa.auto.sender": "§b%s §aautomatically accepted your §eTPA §arequest",
   "ppe_essentials.tpa.request.target": "§b%s §awants to teleport to your location §7(use §6/tpaauto §7to auto-accept)",

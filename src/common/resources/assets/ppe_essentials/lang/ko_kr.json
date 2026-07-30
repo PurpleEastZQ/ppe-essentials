@@ -5,6 +5,7 @@
   "ppe_essentials.request.deny.tooltip": "§c§l클릭하여 거절!",
   "ppe_essentials.teleport.missing_dimension": "§c대상 차원이 존재하지 않아 순간이동할 수 없습니다",
   "ppe_essentials.teleport.request.self_disabled": "§c자기 자신에게 순간이동 요청을 보내는 것은 비활성화되어 있습니다",
+  "ppe_essentials.teleport.request.response_unavailable": "§c%s 님은 필요한 수락 및 거절 명령어를 사용할 수 없습니다",
   "ppe_essentials.tpa.auto.target": "§b%s §a님의 §eTPA §a요청을 자동으로 수락했습니다",
   "ppe_essentials.tpa.auto.sender": "§b%s §a님이 당신의 §eTPA §a요청을 자동으로 수락했습니다",
   "ppe_essentials.tpa.request.target": "§b%s §a님이 당신의 위치로 순간이동하려고 합니다 §7(§6/tpaauto §7로 자동 수락 가능)",

@@ -41,8 +41,6 @@ import java.util.concurrent.CompletableFuture;
 public final class PpeCommands {
     private static final int INTERNAL_COMMAND_PERMISSION_LEVEL = 4;
     private static final int TELEPORT_SOUND_DELAY_TICKS = 1;
-    private static final Map<UUID, PendingRequest> TPA_REQUESTS = new HashMap<>();
-    private static final Map<UUID, PendingRequest> TPAHERE_REQUESTS = new HashMap<>();
     private static final Map<UUID, Integer> RTP_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, String> LAST_COMMANDS = new HashMap<>();
     private static final List<PendingSound> PENDING_SOUNDS = new ArrayList<>();
@@ -216,8 +214,9 @@ public final class PpeCommands {
 
     public static void onServerTick(MinecraftServer server) {
         int tick = server.getTickCount();
-        expireRequests(server, tick, TPA_REQUESTS, "ppe_essentials.tpa.timeout.sender", "ppe_essentials.tpa.timeout.target");
-        expireRequests(server, tick, TPAHERE_REQUESTS, "ppe_essentials.tpahere.timeout.sender", "ppe_essentials.tpahere.timeout.target");
+        for (TeleportRequestType type : TeleportRequestType.values()) {
+            expireRequests(server, tick, type);
+        }
         RTP_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() <= tick);
         playPendingSounds(server, tick);
         if (tick % 20 == 0) {
@@ -249,71 +248,24 @@ public final class PpeCommands {
     }
 
     public static void clearRuntimeState() {
-        TPA_REQUESTS.clear();
-        TPAHERE_REQUESTS.clear();
+        for (TeleportRequestType type : TeleportRequestType.values()) {
+            type.requests().clear();
+        }
         RTP_COOLDOWNS.clear();
         LAST_COMMANDS.clear();
         PENDING_SOUNDS.clear();
     }
 
     private static int tpa(ServerPlayer sender, ServerPlayer target) {
-        if (!PpeConfig.allowSelfTeleportRequests() && sender.getUUID().equals(target.getUUID())) {
-            send(sender, "ppe_essentials.teleport.request.self_disabled");
-            return 0;
-        }
-
-        PpePlayerData data = PpePlayerData.get(PpeCompat.server(sender));
-        if (data.isTpaAuto(target.getUUID())) {
-            send(target, "ppe_essentials.tpa.auto.target", sender.getName());
-            send(sender, "ppe_essentials.tpa.auto.sender", target.getName());
-            teleport(sender, PpeCompat.level(target), target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
-            teleportSound(sender);
-            teleportSound(target);
-            return 1;
-        }
-
-        if (!TPA_REQUESTS.containsKey(target.getUUID())) {
-            int timeoutSeconds = PpeConfig.teleportRequestTimeoutSeconds();
-            TPA_REQUESTS.put(target.getUUID(), new PendingRequest(sender.getUUID(), PpeCompat.server(sender).getTickCount() + secondsToTicks(timeoutSeconds)));
-            send(target, "ppe_essentials.tpa.request.target", sender.getName());
-            sendRaw(target, prefixedRequestButtons(target, "tpaa", "tpad"));
-            send(target, "ppe_essentials.tpa.request.commands");
-            bell(target);
-            send(sender, "ppe_essentials.tpa.request.sender", target.getName(), timeoutSeconds);
-            return 1;
-        }
-
-        send(sender, "ppe_essentials.tpa.request.busy");
-        return 0;
+        return sendTeleportRequest(sender, target, TeleportRequestType.TPA);
     }
 
     private static int acceptTpa(ServerPlayer target) {
-        PendingRequest request = TPA_REQUESTS.remove(target.getUUID());
-        ServerPlayer requester = request == null ? null : PpeCompat.server(target).getPlayerList().getPlayer(request.requester());
-        if (requester == null) {
-            send(target, "ppe_essentials.tpa.accept.none");
-            return 0;
-        }
-
-        teleport(requester, PpeCompat.level(target), target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
-        send(target, "ppe_essentials.tpa.accept.target", requester.getName());
-        send(requester, "ppe_essentials.tpa.accept.sender", target.getName());
-        teleportSound(target);
-        teleportSound(requester);
-        return 1;
+        return respondToTeleportRequest(target, TeleportRequestType.TPA, true);
     }
 
     private static int denyTpa(ServerPlayer target) {
-        PendingRequest request = TPA_REQUESTS.remove(target.getUUID());
-        ServerPlayer requester = request == null ? null : PpeCompat.server(target).getPlayerList().getPlayer(request.requester());
-        if (requester == null) {
-            send(target, "ppe_essentials.tpa.deny.none");
-            return 0;
-        }
-
-        send(target, "ppe_essentials.tpa.deny.target", requester.getName());
-        send(requester, "ppe_essentials.tpa.deny.sender", target.getName());
-        return 1;
+        return respondToTeleportRequest(target, TeleportRequestType.TPA, false);
     }
 
     private static int tpaAuto(ServerPlayer player) {
@@ -323,52 +275,94 @@ public final class PpeCommands {
     }
 
     private static int tpahere(ServerPlayer sender, ServerPlayer target) {
+        return sendTeleportRequest(sender, target, TeleportRequestType.TPAHERE);
+    }
+
+    private static int acceptTpahere(ServerPlayer target) {
+        return respondToTeleportRequest(target, TeleportRequestType.TPAHERE, true);
+    }
+
+    private static int denyTpahere(ServerPlayer target) {
+        return respondToTeleportRequest(target, TeleportRequestType.TPAHERE, false);
+    }
+
+    private static int sendTeleportRequest(ServerPlayer sender, ServerPlayer target, TeleportRequestType type) {
         if (!PpeConfig.allowSelfTeleportRequests() && sender.getUUID().equals(target.getUUID())) {
             send(sender, "ppe_essentials.teleport.request.self_disabled");
             return 0;
         }
 
-        if (!TPAHERE_REQUESTS.containsKey(target.getUUID())) {
-            int timeoutSeconds = PpeConfig.teleportRequestTimeoutSeconds();
-            TPAHERE_REQUESTS.put(target.getUUID(), new PendingRequest(sender.getUUID(), PpeCompat.server(sender).getTickCount() + secondsToTicks(timeoutSeconds)));
-            send(target, "ppe_essentials.tpahere.request.target", sender.getName());
-            sendRaw(target, prefixedRequestButtons(target, "tpaherea", "tpahered"));
-            send(target, "ppe_essentials.tpahere.request.commands");
-            bell(target);
-            send(sender, "ppe_essentials.tpahere.request.sender", target.getName(), timeoutSeconds);
+        if (type == TeleportRequestType.TPA
+                && commandAvailable(target, "tpaauto")
+                && PpePlayerData.get(PpeCompat.server(sender)).isTpaAuto(target.getUUID())) {
+            teleport(sender, PpeCompat.level(target), target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
+            notifyParticipants(
+                    target, "ppe_essentials.tpa.auto.target", sender.getName(),
+                    sender, "ppe_essentials.tpa.auto.sender", target.getName()
+            );
+            teleportSounds(target, sender);
             return 1;
         }
 
-        send(sender, "ppe_essentials.tpahere.request.busy");
-        return 0;
-    }
-
-    private static int acceptTpahere(ServerPlayer target) {
-        PendingRequest request = TPAHERE_REQUESTS.remove(target.getUUID());
-        ServerPlayer requester = request == null ? null : PpeCompat.server(target).getPlayerList().getPlayer(request.requester());
-        if (requester == null) {
-            send(target, "ppe_essentials.tpahere.accept.none");
+        if (!canRespondToTeleportRequest(target, type)) {
+            send(sender, "ppe_essentials.teleport.request.response_unavailable", target.getName());
             return 0;
         }
 
-        teleport(target, PpeCompat.level(requester), requester.getX(), requester.getY(), requester.getZ(), requester.getYRot(), requester.getXRot());
-        send(target, "ppe_essentials.tpahere.accept.target", requester.getName());
-        send(requester, "ppe_essentials.tpahere.accept.sender", target.getName());
-        teleportSound(target);
-        teleportSound(requester);
+        if (type.requests().containsKey(target.getUUID())) {
+            send(sender, type.key("request.busy"));
+            return 0;
+        }
+
+        int timeoutSeconds = PpeConfig.teleportRequestTimeoutSeconds();
+        type.requests().put(
+                target.getUUID(),
+                new PendingRequest(sender.getUUID(), PpeCompat.server(sender).getTickCount() + secondsToTicks(timeoutSeconds))
+        );
+        send(target, type.key("request.target"), sender.getName());
+        sendRaw(target, prefixedRequestButtons(target, type.acceptCommand(), type.denyCommand()));
+        send(target, type.key("request.commands"));
+        bell(target);
+        if (!sender.getUUID().equals(target.getUUID())) {
+            send(sender, type.key("request.sender"), target.getName(), timeoutSeconds);
+        }
         return 1;
     }
 
-    private static int denyTpahere(ServerPlayer target) {
-        PendingRequest request = TPAHERE_REQUESTS.remove(target.getUUID());
-        ServerPlayer requester = request == null ? null : PpeCompat.server(target).getPlayerList().getPlayer(request.requester());
-        if (requester == null) {
-            send(target, "ppe_essentials.tpahere.deny.none");
+    private static int respondToTeleportRequest(ServerPlayer target, TeleportRequestType type, boolean accepted) {
+        PendingRequest request = type.requests().remove(target.getUUID());
+        if (request == null) {
+            send(target, type.key(accepted ? "accept.none" : "deny.none"));
             return 0;
         }
 
-        send(target, "ppe_essentials.tpahere.deny.target", requester.getName());
-        send(requester, "ppe_essentials.tpahere.deny.sender", target.getName());
+        MinecraftServer server = PpeCompat.server(target);
+        if (request.expireTick() <= server.getTickCount()) {
+            notifyExpiredRequest(server, target.getUUID(), request, type);
+            return 0;
+        }
+
+        ServerPlayer requester = server.getPlayerList().getPlayer(request.requester());
+        if (requester == null) {
+            send(target, type.key(accepted ? "accept.none" : "deny.none"));
+            return 0;
+        }
+
+        String action = accepted ? "accept" : "deny";
+        if (accepted) {
+            if (type.movesRequester()) {
+                teleport(requester, PpeCompat.level(target), target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
+            } else {
+                teleport(target, PpeCompat.level(requester), requester.getX(), requester.getY(), requester.getZ(), requester.getYRot(), requester.getXRot());
+            }
+        }
+        notifyParticipants(
+                target, type.key(action + ".target"), requester.getName(),
+                requester, type.key(action + ".sender"), target.getName()
+        );
+        if (accepted) {
+            teleportSounds(target, requester);
+        }
         return 1;
     }
 
@@ -409,7 +403,9 @@ public final class PpeCommands {
     private static int back(ServerPlayer player) {
         Optional<PpeLocation> location = PpePlayerData.get(PpeCompat.server(player)).deathBack(player.getUUID());
         if (location.isPresent()) {
-            teleport(player, location.get());
+            if (!teleport(player, location.get())) {
+                return 0;
+            }
             send(player, "ppe_essentials.back.success");
             teleportSound(player);
             return 1;
@@ -422,7 +418,9 @@ public final class PpeCommands {
     private static int tback(ServerPlayer player) {
         Optional<PpeLocation> location = PpePlayerData.get(PpeCompat.server(player)).teleportBack(player.getUUID());
         if (location.isPresent()) {
-            teleport(player, location.get());
+            if (!teleport(player, location.get())) {
+                return 0;
+            }
             send(player, "ppe_essentials.tback.success");
             teleportSound(player);
             return 1;
@@ -451,7 +449,9 @@ public final class PpeCommands {
     private static int home(ServerPlayer player) {
         Optional<PpeLocation> location = PpePlayerData.get(PpeCompat.server(player)).home(player.getUUID());
         if (location.isPresent()) {
-            teleport(player, location.get());
+            if (!teleport(player, location.get())) {
+                return 0;
+            }
             send(player, "ppe_essentials.home.success");
             title(player, "ppe_essentials.home.title", "ppe_essentials.home.subtitle", player.getName());
             playSoundLater(player, SoundEvents.VILLAGER_CELEBRATE, SoundSource.PLAYERS, 1.0F, 1.5F, TELEPORT_SOUND_DELAY_TICKS);
@@ -483,7 +483,9 @@ public final class PpeCommands {
     private static int warp(ServerPlayer player, String name) {
         Optional<PpeLocation> location = PpePlayerData.get(PpeCompat.server(player)).warp(name);
         if (location.isPresent()) {
-            teleport(player, location.get());
+            if (!teleport(player, location.get())) {
+                return 0;
+            }
             send(player, "ppe_essentials.warp.success", name);
             teleportSound(player);
             return 1;
@@ -550,7 +552,7 @@ public final class PpeCommands {
     private static int resetAll(ServerPlayer player) {
         PpePlayerData.get(PpeCompat.server(player)).clearPlayerData();
         clearRuntimeState();
-        PpeEvents.clearNoticeQueues();
+        PpeRuntimeEvents.clearNoticeQueues();
         for (ServerPlayer target : PpeCompat.server(player).getPlayerList().getPlayers()) {
             setMayFly(target, target.gameMode.getGameModeForPlayer() == GameType.CREATIVE);
         }
@@ -560,7 +562,7 @@ public final class PpeCommands {
 
     private static int resetNotice(ServerPlayer player) {
         PpePlayerData.get(PpeCompat.server(player)).clearNoticeData();
-        PpeEvents.clearNoticeQueues();
+        PpeRuntimeEvents.clearNoticeQueues();
         send(player, "ppe_essentials.reset.notice.success");
         return 1;
     }
@@ -614,8 +616,8 @@ public final class PpeCommands {
         return 1;
     }
 
-    private static void expireRequests(MinecraftServer server, int tick, Map<UUID, PendingRequest> requests, String senderKey, String targetKey) {
-        Iterator<Map.Entry<UUID, PendingRequest>> iterator = requests.entrySet().iterator();
+    private static void expireRequests(MinecraftServer server, int tick, TeleportRequestType type) {
+        Iterator<Map.Entry<UUID, PendingRequest>> iterator = type.requests().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<UUID, PendingRequest> entry = iterator.next();
             if (entry.getValue().expireTick() > tick) {
@@ -623,22 +625,35 @@ public final class PpeCommands {
             }
 
             iterator.remove();
-            ServerPlayer target = server.getPlayerList().getPlayer(entry.getKey());
-            ServerPlayer requester = server.getPlayerList().getPlayer(entry.getValue().requester());
-            if (requester != null) {
-                send(requester, senderKey);
-            }
-            if (target != null) {
-                send(target, targetKey);
-            }
+            notifyExpiredRequest(server, entry.getKey(), entry.getValue(), type);
         }
     }
 
-    private static void teleport(ServerPlayer player, PpeLocation location) {
-        location.resolve(PpeCompat.server(player)).ifPresentOrElse(
-                level -> teleport(player, level, location.x(), location.y(), location.z(), location.yRot(), location.xRot()),
-                () -> send(player, "ppe_essentials.teleport.missing_dimension")
-        );
+    private static void notifyExpiredRequest(
+            MinecraftServer server,
+            UUID targetId,
+            PendingRequest request,
+            TeleportRequestType type
+    ) {
+        ServerPlayer target = server.getPlayerList().getPlayer(targetId);
+        ServerPlayer requester = server.getPlayerList().getPlayer(request.requester());
+        if (target != null) {
+            send(target, type.key("timeout.target"));
+        }
+        if (requester != null && !requester.getUUID().equals(targetId)) {
+            send(requester, type.key("timeout.sender"));
+        }
+    }
+
+    private static boolean teleport(ServerPlayer player, PpeLocation location) {
+        Optional<ServerLevel> level = location.resolve(PpeCompat.server(player));
+        if (level.isEmpty()) {
+            send(player, "ppe_essentials.teleport.missing_dimension");
+            return false;
+        }
+
+        teleport(player, level.get(), location.x(), location.y(), location.z(), location.yRot(), location.xRot());
+        return true;
     }
 
     private static void teleport(ServerPlayer player, ServerLevel level, double x, double y, double z, float yRot, float xRot) {
@@ -658,6 +673,39 @@ public final class PpeCommands {
                         .withClickEvent(PpeCompat.runCommandClick("/" + denyCommand))
                         .withHoverEvent(PpeCompat.showTextHover(PpeLang.component(player, "ppe_essentials.request.deny.tooltip")))));
         return PpeLang.prefixed(message);
+    }
+
+    private static boolean canRespondToTeleportRequest(ServerPlayer target, TeleportRequestType type) {
+        return commandAvailable(target, type.acceptCommand())
+                && commandAvailable(target, type.denyCommand());
+    }
+
+    private static boolean commandAvailable(ServerPlayer player, String command) {
+        CommandSourceStack source = player.createCommandSourceStack();
+        return enabled(command)
+                && PpeCompat.server(player).getCommands().getDispatcher().getRoot().getChild(command) != null
+                && canUse(source, command);
+    }
+
+    private static void notifyParticipants(
+            ServerPlayer first,
+            String firstKey,
+            Object firstArgument,
+            ServerPlayer second,
+            String secondKey,
+            Object secondArgument
+    ) {
+        send(first, firstKey, firstArgument);
+        if (!first.getUUID().equals(second.getUUID())) {
+            send(second, secondKey, secondArgument);
+        }
+    }
+
+    private static void teleportSounds(ServerPlayer first, ServerPlayer second) {
+        teleportSound(first);
+        if (!first.getUUID().equals(second.getUUID())) {
+            teleportSound(second);
+        }
     }
 
     private static void send(ServerPlayer player, String key, Object... args) {
@@ -752,6 +800,44 @@ public final class PpeCommands {
     }
 
     private record HelpCommand(String configKey, String display) {
+    }
+
+    private enum TeleportRequestType {
+        TPA("tpa", "tpaa", "tpad", true),
+        TPAHERE("tpahere", "tpaherea", "tpahered", false);
+
+        private final String languagePrefix;
+        private final String acceptCommand;
+        private final String denyCommand;
+        private final boolean movesRequester;
+        private final Map<UUID, PendingRequest> requests = new HashMap<>();
+
+        TeleportRequestType(String languagePrefix, String acceptCommand, String denyCommand, boolean movesRequester) {
+            this.languagePrefix = languagePrefix;
+            this.acceptCommand = acceptCommand;
+            this.denyCommand = denyCommand;
+            this.movesRequester = movesRequester;
+        }
+
+        private String key(String suffix) {
+            return "ppe_essentials." + languagePrefix + "." + suffix;
+        }
+
+        private String acceptCommand() {
+            return acceptCommand;
+        }
+
+        private String denyCommand() {
+            return denyCommand;
+        }
+
+        private boolean movesRequester() {
+            return movesRequester;
+        }
+
+        private Map<UUID, PendingRequest> requests() {
+            return requests;
+        }
     }
 
     private record PendingRequest(UUID requester, int expireTick) {

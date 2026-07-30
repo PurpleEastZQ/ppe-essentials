@@ -5,6 +5,7 @@
   "ppe_essentials.request.deny.tooltip": "§c§lクリックして拒否！",
   "ppe_essentials.teleport.missing_dimension": "§c対象のディメンションが存在しないため、テレポートできません",
   "ppe_essentials.teleport.request.self_disabled": "§c自分自身へのテレポートリクエストは無効です",
+  "ppe_essentials.teleport.request.response_unavailable": "§c%s は必要な承認・拒否コマンドを使用できません",
   "ppe_essentials.tpa.auto.target": "§b%s §aからの §eTPA §aリクエストを自動承認しました",
   "ppe_essentials.tpa.auto.sender": "§b%s §aがあなたの §eTPA §aリクエストを自動承認しました",
   "ppe_essentials.tpa.request.target": "§b%s §aがあなたの場所へテレポートしたがっています §7(§6/tpaauto §7で自動承認できます)",
