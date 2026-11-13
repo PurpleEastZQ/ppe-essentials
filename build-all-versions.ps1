@@ -112,16 +112,6 @@ try {
         }
     }
 
-    if (Test-Path -LiteralPath $libsDir) {
-        $previousJars = @(Get-ChildItem -LiteralPath $libsDir -Filter "$modId-*.jar" -File)
-        if ($previousJars.Count -gt 0) {
-            Write-Host "==> Removing $($previousJars.Count) previous mod jar(s)"
-            foreach ($jar in $previousJars) {
-                Remove-Item -LiteralPath $jar.FullName -Force
-            }
-        }
-    }
-
     foreach ($version in $versions) {
         foreach ($loaderName in $requestedLoaders) {
             $normalizedLoader = $loaderName.ToLowerInvariant()

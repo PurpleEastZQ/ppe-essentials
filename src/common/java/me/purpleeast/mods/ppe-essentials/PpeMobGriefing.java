@@ -1,8 +1,8 @@
 package me.purpleeast.mods.ppe_essentials;
 
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.level.Explosion;
 
@@ -15,7 +15,7 @@ public final class PpeMobGriefing {
 
     public static boolean shouldPreventBlockGriefing(Entity entity) {
         return entity instanceof Creeper && PpeConfig.preventCreeperBlockDamage()
-                || entity instanceof EnderMan && PpeConfig.preventEndermanBlockDamage()
+                || PpeConfig.preventEndermanBlockDamage() && EntityType.getKey(entity.getType()).toString().equals("minecraft:enderman")
                 || entity instanceof Ravager && PpeConfig.preventRavagerBlockDamage();
     }
 

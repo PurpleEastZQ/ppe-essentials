@@ -113,7 +113,7 @@ final class PpeTeleportMenuContent {
             container.setItem(i - first, playerHead(target));
         }
 
-        ItemStack divider = namedItem(Items.GRAY_STAINED_GLASS_PANE, "ppe_essentials.teleport_menu.blank");
+        ItemStack divider = namedItem(PpeCompat.teleportMenuDivider(), "ppe_essentials.teleport_menu.blank");
         for (int slot = PLAYERS_PER_PAGE; slot < MENU_SIZE; slot++) {
             container.setItem(slot, divider.copy());
         }

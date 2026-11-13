@@ -3,7 +3,6 @@ package me.purpleeast.mods.ppe_essentials;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -17,6 +16,6 @@ public class PpeEssentials {
         NeoForge.EVENT_BUS.register(PpeNeoForgeCommands.class);
         NeoForge.EVENT_BUS.register(PpeEvents.class);
         PpeConfig.load();
-        modContainer.registerConfig(ModConfig.Type.COMMON, PpeConfigBackend.SPEC);
+        PpeNeoForgeConfig.register(modContainer);
     }
 }

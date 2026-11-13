@@ -11,7 +11,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 
 /**
@@ -116,6 +118,10 @@ public final class PpeCompat {
 
     public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
         PpeTeleportMenu.open(player, here, page);
+    }
+
+    public static Item teleportMenuDivider() {
+        return Items.GRAY_STAINED_GLASS_PANE;
     }
 
     public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {

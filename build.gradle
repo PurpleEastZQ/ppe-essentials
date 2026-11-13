@@ -78,6 +78,10 @@ def effectiveParchmentMappingsVersion = versionedProperty('parchment_mappings_ve
 def effectiveSparkVersion = versionedProperty("${target_loader}_spark_version")
 def effectiveModMenuVersion = isFabric ? versionedProperty('mod_menu_version') : null
 def effectiveFabricPermissionsApiVersion = isFabric ? versionedProperty('fabric_permissions_api_version') : null
+def compatibilityVersion = versionedProperty('compatibility_version', null, target_minecraft_version)
+def versionSourceDirs = { String scope ->
+    [compatibilityVersion, target_minecraft_version].unique().collect { "src/versions/${it}/${scope}" }
+}
 def mixinCompatibilityLevel = "JAVA_${target_java_version}"
 def ensureRunDirectory = { String path ->
     def directory = project.file(path)
@@ -93,6 +97,10 @@ def runDirectory = { String loaderName, String runName ->
 
 if (isNeoForge) {
     apply plugin: 'net.neoforged.moddev'
+    def neoFormRuntimeVersion = versionedProperty('neoform_runtime_version')
+    if (neoFormRuntimeVersion != null) {
+        neoFormRuntime.version.set(neoFormRuntimeVersion)
+    }
 } else if (isFabric) {
     apply plugin: usesModernFabricBuild ? 'net.fabricmc.fabric-loom' : 'fabric-loom'
 } else {
@@ -237,12 +245,11 @@ loom {
 sourceSets {
     main {
         java {
-            setSrcDirs([
-                    'src/common/java',
-                    "src/versions/${target_minecraft_version}/common/java",
-                    "src/loaders/${target_loader}/java",
-                    "src/versions/${target_minecraft_version}/${target_loader}/java"
-            ])
+            setSrcDirs(['src/common/java', "src/loaders/${target_loader}/java"]
+                    + (versionSourceDirs('common') + versionSourceDirs(target_loader)).collect { "${it}/java" })
+            if (!isMinecraftAtLeast(target_minecraft_version, 26, 3)) {
+                srcDir "src/loaders/${target_loader}/legacy/java"
+            }
         }
         resources {
             setSrcDirs([

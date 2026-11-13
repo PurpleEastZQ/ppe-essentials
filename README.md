@@ -19,8 +19,8 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 ## Supported Versions
 
-- NeoForge 1.21.1, 26.1.2
-- Fabric 1.21.1, 26.1.2
+- NeoForge 1.21.1, 26.1.2, 26.3
+- Fabric 1.21.1, 26.1.2, 26.3
 
 ## Commands
 

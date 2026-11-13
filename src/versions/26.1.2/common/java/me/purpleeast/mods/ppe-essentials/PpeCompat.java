@@ -8,6 +8,7 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +18,7 @@ import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Abilities;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
 
@@ -144,6 +146,10 @@ public final class PpeCompat {
 
     public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
         PpeTeleportMenu.open(player, here, page);
+    }
+
+    public static Item teleportMenuDivider() {
+        return BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace("gray_stained_glass_pane"));
     }
 
     public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {
