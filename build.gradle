@@ -9,10 +9,9 @@ plugins {
 version = mod_version
 group = mod_group_id
 
-def effectiveModId = mod_id.toString()
 def target_loader = (findProperty('target_loader') ?: 'neoforge').toString()
 def target_minecraft_version = (findProperty('target_minecraft_version') ?: minecraft_version).toString()
-def dev_player_name = (findProperty('dev_player_name') ?: 'Dev').toString()
+def gradleWrapper = System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows') ? 'gradlew.bat' : 'gradlew'
 def sharedBuildRoot = layout.projectDirectory.dir('build')
 layout.buildDirectory = sharedBuildRoot.dir("work/${target_loader}/${target_minecraft_version}")
 def propertyKeyForVersion = { String minecraftVersion, String propertyName ->
@@ -27,15 +26,6 @@ def versionedProperty = { String propertyName, String fallbackPropertyName = pro
         return project.property(fallbackPropertyName).toString()
     }
     return defaultValue
-}
-def defaultTargetJavaVersion = { String minecraftVersion ->
-    def parts = minecraftVersion.tokenize('.').collect { part ->
-        def digits = part.takeWhile { it >= '0' && it <= '9' }
-        digits.isBlank() ? 0 : digits.toInteger()
-    }
-    int major = parts.size() > 0 ? parts[0] : 0
-    int minor = parts.size() > 1 ? parts[1] : 0
-    major > 26 || (major == 26 && minor >= 1) ? 25 : 21
 }
 def minecraftVersionPart = { String minecraftVersion, int index ->
     def parts = minecraftVersion.tokenize('.').collect { part ->
@@ -60,7 +50,7 @@ def defaultFabricMinecraftVersionRange = { String minecraftVersion ->
     ">=${minecraftVersion} <${major}.${minor + 1}"
 }
 def target_java_version = (findProperty('target_java_version')
-        ?: versionedProperty('target_java_version', null, defaultTargetJavaVersion(target_minecraft_version).toString())).toString()
+        ?: versionedProperty('target_java_version', null, isMinecraftAtLeast(target_minecraft_version, 26, 1) ? '25' : '21')).toString()
 def isNeoForge = target_loader == 'neoforge'
 def isFabric = target_loader == 'fabric'
 def usesModernFabricBuild = isFabric && isMinecraftAtLeast(target_minecraft_version, 26, 1)
@@ -75,9 +65,6 @@ def effectiveFabricApiVersion = versionedProperty('fabric_api_version')
 def effectiveFabricApiMinVersion = versionedProperty('fabric_api_min_version', 'fabric_api_min_version', effectiveFabricApiVersion)
 def effectiveParchmentMinecraftVersion = versionedProperty('parchment_minecraft_version', 'parchment_minecraft_version', target_minecraft_version)
 def effectiveParchmentMappingsVersion = versionedProperty('parchment_mappings_version', 'parchment_mappings_version', '')
-def effectiveSparkVersion = versionedProperty("${target_loader}_spark_version")
-def effectiveModMenuVersion = isFabric ? versionedProperty('mod_menu_version') : null
-def effectiveFabricPermissionsApiVersion = isFabric ? versionedProperty('fabric_permissions_api_version') : null
 def compatibilityVersion = versionedProperty('compatibility_version', null, target_minecraft_version)
 def versionSourceDirs = { String scope ->
     [compatibilityVersion, target_minecraft_version].unique().collect { "src/versions/${it}/${scope}" }
@@ -109,13 +96,6 @@ if (isNeoForge) {
 
 repositories {
     mavenLocal()
-    maven {
-        name = 'Modrinth'
-        url = uri('https://api.modrinth.com/maven')
-        content {
-            includeGroup 'maven.modrinth'
-        }
-    }
     if (isFabric) {
         maven { url = 'https://maven.fabricmc.net/' }
         mavenCentral()
@@ -172,37 +152,10 @@ neoForge {
     }
 
     runs {
-        client {
-            client()
-            gameDirectory = runDirectory('neoforge', 'client')
-            programArguments.addAll '--username', dev_player_name
-
-            systemProperty 'neoforge.enabledGameTestNamespaces', effectiveModId
-        }
-
         server {
             server()
             gameDirectory = runDirectory('neoforge', 'server')
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', effectiveModId
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
-            gameDirectory = runDirectory('neoforge', 'gameTestServer')
-            systemProperty 'neoforge.enabledGameTestNamespaces', effectiveModId
-        }
-
-        data {
-            data()
-            gameDirectory = runDirectory('neoforge', 'data')
-
-            programArguments.addAll '--mod', effectiveModId, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/common/resources/').getAbsolutePath()
-        }
-
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
         }
     }
 
@@ -227,18 +180,16 @@ if (isNeoForge) {
 if (isFabric) {
 loom {
     runs {
-        client {
-            def clientRunDirectory = runDirectoryPath('fabric', 'client')
-            ensureRunDirectory(clientRunDirectory)
-            runDir clientRunDirectory
-            programArgs '--username', dev_player_name
-        }
+        remove(getByName('client'))
         server {
             def serverRunDirectory = runDirectoryPath('fabric', 'server')
             ensureRunDirectory(serverRunDirectory)
             runDir serverRunDirectory
         }
     }
+}
+tasks.matching { it.name in ['runClient', 'runClientRenderDoc'] }.configureEach {
+    enabled = false
 }
 }
 
@@ -256,20 +207,14 @@ sourceSets {
                     'src/common/resources',
                     "src/versions/${target_minecraft_version}/common/resources",
                     "src/loaders/${target_loader}/resources",
-                    "src/versions/${target_minecraft_version}/${target_loader}/resources",
-                    'src/generated/resources'
+                    "src/versions/${target_minecraft_version}/${target_loader}/resources"
             ])
-            exclude '**/.gitkeep'
         }
     }
 }
 
 
 dependencies {
-    if (isNeoForge) {
-        runtimeOnly "maven.modrinth:spark:${effectiveSparkVersion}"
-    }
-
     if (isFabric) {
         minecraft "com.mojang:minecraft:${target_minecraft_version}"
         if (!usesModernFabricBuild) {
@@ -278,11 +223,6 @@ dependencies {
         def fabricDependencyConfiguration = usesModernFabricBuild ? 'implementation' : 'modImplementation'
         add(fabricDependencyConfiguration, "net.fabricmc:fabric-loader:${effectiveFabricLoaderVersion}")
         add(fabricDependencyConfiguration, "net.fabricmc.fabric-api:fabric-api:${effectiveFabricApiVersion}")
-
-        def fabricLocalRuntimeConfiguration = usesModernFabricBuild ? 'localRuntime' : 'modLocalRuntime'
-        add(fabricLocalRuntimeConfiguration, "maven.modrinth:spark:${effectiveSparkVersion}")
-        add(fabricLocalRuntimeConfiguration, "maven.modrinth:fabric-permissions-api:${effectiveFabricPermissionsApiVersion}")
-        add(fabricLocalRuntimeConfiguration, "maven.modrinth:modmenu:${effectiveModMenuVersion}")
     }
 }
 
@@ -338,7 +278,6 @@ tasks.register('buildNeoForge') {
 
 def buildFabricDelegated = isFabric ? null : tasks.register('buildFabricDelegated', Exec) {
     notCompatibleWithConfigurationCache('Runs a separate Fabric-targeted Gradle invocation.')
-    def gradleWrapper = System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows') ? 'gradlew.bat' : 'gradlew'
     commandLine project.file(gradleWrapper).absolutePath, '-Ptarget_loader=fabric', "-Ptarget_minecraft_version=${target_minecraft_version}", 'build', '--no-daemon', '--no-configuration-cache'
 }
 
@@ -347,18 +286,13 @@ def delegatedGradleTask = { String name, String taskName, String loader ->
         group = 'minecraft runs'
         description = "Runs ${taskName} for the ${loader} target."
         notCompatibleWithConfigurationCache('Runs a separate loader-targeted Gradle invocation.')
-        def gradleWrapper = System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows') ? 'gradlew.bat' : 'gradlew'
         commandLine project.file(gradleWrapper).absolutePath, "-Ptarget_loader=${loader}", "-Ptarget_minecraft_version=${target_minecraft_version}", taskName, '--no-daemon', '--no-configuration-cache'
         standardInput = System.in
     }
 }
 
 if (isNeoForge) {
-    delegatedGradleTask('runNeoForgeClient', 'runClient', 'neoforge')
     delegatedGradleTask('runNeoForgeServer', 'runServer', 'neoforge')
-    delegatedGradleTask('runNeoForgeGameTestServer', 'runGameTestServer', 'neoforge')
-    delegatedGradleTask('runNeoForgeData', 'runData', 'neoforge')
-    delegatedGradleTask('runFabricClient', 'runClient', 'fabric')
     delegatedGradleTask('runFabricServer', 'runServer', 'fabric')
 }
 

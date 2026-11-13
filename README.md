@@ -89,3 +89,13 @@ To build a single target:
 ```
 
 Built jars are generated under `build/libs/`.
+
+## Headless Multiplayer Tests
+
+On Windows with Java 25 and Go 1.25.4 or later, build the 26.3 release JARs, then run the multiplayer smoke tests. Use `-AcceptEula` after accepting the [Minecraft EULA](https://www.minecraft.net/en-us/eula).
+
+```powershell
+.\tests\headless\run.ps1 -AcceptEula
+```
+
+The runner starts disposable loopback servers for Fabric and NeoForge. Two headless clients open and click both teleport menus, accept the requests, and check which player moved. Use `-Loader fabric` or `-Loader neoforge` to test one loader. Test files and logs are stored under `runs/headless/`.

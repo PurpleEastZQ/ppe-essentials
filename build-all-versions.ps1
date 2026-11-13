@@ -94,10 +94,6 @@ if ($versions.Count -eq 0) {
     throw 'No Minecraft versions were found. Pass -MinecraftVersion or add versions to gradle.properties/src/versions.'
 }
 
-$taskByLoader = @{
-    neoforge = 'buildNeoForge'
-    fabric = 'buildFabric'
-}
 $baseGradleArgs = @('--no-daemon', '--no-configuration-cache') + @($GradleArgs)
 $failures = New-Object System.Collections.Generic.List[object]
 $libsDir = Join-Path $scriptRoot 'build\libs'
@@ -115,8 +111,7 @@ try {
     foreach ($version in $versions) {
         foreach ($loaderName in $requestedLoaders) {
             $normalizedLoader = $loaderName.ToLowerInvariant()
-            $taskName = $taskByLoader[$normalizedLoader]
-            $gradleCommandArgs = @("-Ptarget_minecraft_version=$version", $taskName) + $baseGradleArgs
+            $gradleCommandArgs = @("-Ptarget_minecraft_version=$version", "-Ptarget_loader=$normalizedLoader", 'build') + $baseGradleArgs
 
             Write-Host "==> Building $normalizedLoader for Minecraft $version"
             & $gradleWrapper @gradleCommandArgs
