@@ -69,11 +69,9 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 All configuration options are located in `config/ppe_essentials-common.toml`.
 
-## Installation & Building
+## Building
 
-Download the jar matching your Minecraft version and mod loader, then place it in the `mods` folder.
-
-Fabric installations also require Fabric API.
+Fabric version also require Fabric API.
 
 To build all supported versions from source using JDK 25:
 
@@ -89,13 +87,3 @@ To build a single target:
 ```
 
 Built jars are generated under `build/libs/`.
-
-## Headless Multiplayer Tests
-
-On Windows with Java 25 and Go 1.25.4 or later, build the 26.3 release JARs, then run the multiplayer smoke tests. Use `-AcceptEula` after accepting the [Minecraft EULA](https://www.minecraft.net/en-us/eula).
-
-```powershell
-.\tests\headless\run.ps1 -AcceptEula
-```
-
-The runner starts disposable loopback servers for Fabric and NeoForge. Two headless clients open and click both teleport menus, accept the requests, and check which player moved. Use `-Loader fabric` or `-Loader neoforge` to test one loader. Test files and logs are stored under `runs/headless/`.
