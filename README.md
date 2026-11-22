@@ -24,54 +24,11 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 ## Commands
 
-### Teleport
-
-| Command | Description |
-| --- | --- |
-| `/tpa [player]` | Request to teleport to another player, or open the player menu when omitted. |
-| `/tpaa` | Accept a pending TPA request. |
-| `/tpad` | Deny a pending TPA request. |
-| `/tpaauto` | Toggle automatic TPA acceptance. |
-| `/tpahere [player]` | Request another player to teleport to you, or open the player menu when omitted. |
-| `/tpaherea` | Accept a pending TPAhere request. |
-| `/tpahered` | Deny a pending TPAhere request. |
-| `/rtp` | Randomly teleport nearby. |
-| `/spawn` | Teleport to world spawn. |
-| `/back` or `/dback` | Return to your last death location. |
-| `/tback` | Return to your previous teleport location. |
-
-### Homes And Warps
-
-| Command | Description |
-| --- | --- |
-| `/home [tp]` | Teleport home. |
-| `/home set` | Set your home at your current location. |
-| `/home del` | Delete your home. |
-| `/warp [tp] <name>` | Teleport to a server warp. |
-| `/warp set <name>` | Create or update a server warp at your current location. |
-| `/warp delete <name>` | Delete a server warp. |
-
-Warp names support Unicode and spaces. Tab completion inserts a double-quoted name with any embedded quotes or backslashes escaped. For example, `/warp tp "主城 广场"`.
-
-### Utility And Admin
-
-| Command | Description |
-| --- | --- |
-| `/trash` | Open a temporary trash inventory that clears on close. |
-| `/suicide` | Kill yourself. |
-| `/heal [player]` | Heal yourself or another player. |
-| `/fly [player]` | Toggle persistent flight for yourself or another player. |
-| `/god [player]` | Toggle god mode for yourself or another player. |
-| `/repeat <times> [command]` | Repeat a specified command or the initiating player's last command, using the current command context. |
-| `/ppe-ess help` | Show the command list. Disabled or unavailable commands are shown in red. |
-| `/ppe-ess reset all` | Clear all player data. |
-| `/ppe-ess reset notice` | Clear notice trigger data. |
-
-Player actions use the player selected by `execute as`. Permissions and command feedback use the original source. The console can specify a target for `/heal`, `/fly`, and `/god`.
+Run `/ppe-ess help` to see the command list and availability. Use Tab completion for subcommands, arguments, and quoted warp names.
 
 ## Configuration
 
-All configuration options are located in `config/ppe_essentials-common.toml`. The existing `sethome`, `delhome`, `setwarp`, and `delwarp` settings control their corresponding subcommands.
+Edit `config/ppe_essentials-common.toml` to configure the mod.
 
 ## Building
 
