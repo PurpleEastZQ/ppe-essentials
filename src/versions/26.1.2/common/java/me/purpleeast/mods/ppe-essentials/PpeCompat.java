@@ -1,5 +1,10 @@
 package me.purpleeast.mods.ppe_essentials;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import com.mojang.authlib.properties.PropertyMap;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -23,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Isolates Minecraft 26.1.2 API calls from the shared command and event code.
@@ -76,16 +82,25 @@ public final class PpeCompat {
         player.teleportTo(level, x, y, z, Set.of(), yRot, xRot, false);
     }
 
+    static ServerPlayer senderPlayer(CommandSourceStack source, CommandSource sender) {
+        ServerPlayer executor = source.getPlayer();
+        if (executor != null && executor.commandSource() == sender) {
+            return executor;
+        }
+        for (ServerPlayer player : source.getServer().getPlayerList().getPlayers()) {
+            if (player.commandSource() == sender) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public static CommandSourceStack withPermission(CommandSourceStack source, int level) {
         return source.withPermission(LevelBasedPermissionSet.forLevel(PermissionLevel.byId(level)));
     }
 
     public static boolean hasPermission(CommandSourceStack source, int level) {
         return level <= 0 || source.permissions().hasPermission(commandPermission(level));
-    }
-
-    public static boolean hasPermission(ServerPlayer player, int level) {
-        return level <= 0 || player.permissions().hasPermission(commandPermission(level));
     }
 
     public static void setMayFly(ServerPlayer player, boolean mayFly) {
@@ -150,6 +165,11 @@ public final class PpeCompat {
 
     public static Item teleportMenuDivider() {
         return BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace("gray_stained_glass_pane"));
+    }
+
+    public static void setTexturedHeadProfile(ItemStack head, UUID id, String value) {
+        var properties = new PropertyMap(ImmutableMultimap.of("textures", new Property("textures", value)));
+        head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(new GameProfile(id, "PPE", properties)));
     }
 
     public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {

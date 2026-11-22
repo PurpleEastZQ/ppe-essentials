@@ -57,9 +57,11 @@ public final class PpeLang {
     }
 
     public static String languageFor(ServerPlayer player) {
-        String clientLanguage = player.clientInformation().language();
-        if (LANGUAGES.containsKey(clientLanguage)) {
-            return clientLanguage;
+        if (player != null) {
+            String clientLanguage = player.clientInformation().language();
+            if (LANGUAGES.containsKey(clientLanguage)) {
+                return clientLanguage;
+            }
         }
 
         String configuredLanguage = PpeConfig.fallbackLanguage();

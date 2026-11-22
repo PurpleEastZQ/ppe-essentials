@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§aTeleported to your home",
   "ppe_essentials.home.title": "§aWelcome home",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§cYou have not set a home, use §6/sethome §cto set one",
+  "ppe_essentials.home.none": "§cYou have not set a home, use §6/home set §cto set one",
   "ppe_essentials.suicide.broadcast": "§b%s §7couldn't take it anymore",
   "ppe_essentials.trash.title": "§c§lclears when closed",
   "ppe_essentials.warp.success": "§aTeleported to §e%s",

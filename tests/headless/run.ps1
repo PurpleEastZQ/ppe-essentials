@@ -11,7 +11,7 @@ param(
 $ErrorActionPreference = 'Stop'
 if (!$AcceptEula) { throw 'Accept the Minecraft EULA before running the test servers.' }
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$java = (Get-Command java -CommandType Application).Source
+$java = (Get-Command java -CommandType Application | Select-Object -First 1).Source
 $go = (Get-Command go -CommandType Application).Source
 $properties = ConvertFrom-StringData (Get-Content -LiteralPath (Join-Path $repo 'gradle.properties') -Raw)
 $work = Join-Path $repo "runs\headless\$([Guid]::NewGuid().ToString('N'))"
@@ -44,7 +44,7 @@ foreach ($target in $Loader | Select-Object -Unique) {
         'view-distance=3', 'simulation-distance=3', 'spawn-protection=0',
         'gamemode=creative', 'difficulty=peaceful'
     ) | Set-Content -LiteralPath "$server\server.properties"
-    '[{"uuid":"11079b6e-f264-3a24-9aba-832694e0063f","name":"PPE_TestA","level":4,"bypassesPlayerLimit":false}]' |
+    '[{"uuid":"11079b6e-f264-3a24-9aba-832694e0063f","name":"PPE_TestA","level":4,"bypassesPlayerLimit":false},{"uuid":"54486276-0ea2-34fb-86bf-10acdacf32f1","name":"PPE_TestB","level":2,"bypassesPlayerLimit":false}]' |
         Set-Content -LiteralPath "$server\ops.json"
 
     if ($target -eq 'fabric') {

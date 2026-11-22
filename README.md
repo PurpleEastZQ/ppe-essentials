@@ -44,12 +44,14 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 | Command | Description |
 | --- | --- |
-| `/sethome` | Set your home. |
-| `/home` | Teleport home. |
-| `/delhome` | Delete your home. |
-| `/setwarp <name>` | Create a server warp. |
-| `/warp <name>` | Teleport to a server warp. |
-| `/delwarp <name>` | Delete a server warp. |
+| `/home [tp]` | Teleport home. |
+| `/home set` | Set your home at your current location. |
+| `/home del` | Delete your home. |
+| `/warp [tp] <name>` | Teleport to a server warp. |
+| `/warp set <name>` | Create or update a server warp at your current location. |
+| `/warp delete <name>` | Delete a server warp. |
+
+Warp names support Unicode and spaces. Tab completion inserts a double-quoted name with any embedded quotes or backslashes escaped. For example, `/warp tp "主城 广场"`.
 
 ### Utility And Admin
 
@@ -60,14 +62,16 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 | `/heal [player]` | Heal yourself or another player. |
 | `/fly [player]` | Toggle persistent flight for yourself or another player. |
 | `/god [player]` | Toggle god mode for yourself or another player. |
-| `/repeat <times> [command]` | Repeat your last command or a specified command. |
+| `/repeat <times> [command]` | Repeat a specified command or the initiating player's last command, using the current command context. |
 | `/ppe-ess help` | Show the command list. Disabled or unavailable commands are shown in red. |
 | `/ppe-ess reset all` | Clear all player data. |
 | `/ppe-ess reset notice` | Clear notice trigger data. |
 
+Player actions use the player selected by `execute as`. Permissions and command feedback use the original source. The console can specify a target for `/heal`, `/fly`, and `/god`.
+
 ## Configuration
 
-All configuration options are located in `config/ppe_essentials-common.toml`.
+All configuration options are located in `config/ppe_essentials-common.toml`. The existing `sethome`, `delhome`, `setwarp`, and `delwarp` settings control their corresponding subcommands.
 
 ## Building
 

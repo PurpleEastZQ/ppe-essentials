@@ -74,11 +74,7 @@ public final class PpeEvents {
 
     @SubscribeEvent
     public static void onCommand(CommandEvent event) {
-        if (PpeConfig.commandEnabled("repeat")
-                && event.getParseResults().getContext().getSource().getEntity() instanceof ServerPlayer player
-                && PpeCompat.hasPermission(player, PpeConfig.commandPermission("repeat"))) {
-            PpeCommands.rememberCommand(player, event.getParseResults().getReader().getString());
-        }
+        PpeCommands.rememberCommand(event.getParseResults());
     }
 
     @SubscribeEvent

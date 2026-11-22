@@ -1,5 +1,8 @@
 package me.purpleeast.mods.ppe_essentials;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -15,6 +18,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
+
+import java.util.UUID;
 
 /**
  * Isolates Minecraft 1.21.1 API calls from the shared command and event code.
@@ -59,16 +64,16 @@ public final class PpeCompat {
         player.teleportTo(level, x, y, z, yRot, xRot);
     }
 
+    static ServerPlayer senderPlayer(CommandSourceStack source, CommandSource sender) {
+        return sender instanceof ServerPlayer player ? player : null;
+    }
+
     public static CommandSourceStack withPermission(CommandSourceStack source, int level) {
         return source.withPermission(level);
     }
 
     public static boolean hasPermission(CommandSourceStack source, int level) {
         return source.hasPermission(level);
-    }
-
-    public static boolean hasPermission(ServerPlayer player, int level) {
-        return player.hasPermissions(level);
     }
 
     @SuppressWarnings("deprecation")
@@ -122,6 +127,12 @@ public final class PpeCompat {
 
     public static Item teleportMenuDivider() {
         return Items.GRAY_STAINED_GLASS_PANE;
+    }
+
+    public static void setTexturedHeadProfile(ItemStack head, UUID id, String value) {
+        var profile = new GameProfile(id, "PPE");
+        profile.getProperties().put("textures", new Property("textures", value));
+        head.set(DataComponents.PROFILE, new ResolvableProfile(profile));
     }
 
     public static void setPlayerHeadProfile(ItemStack head, ServerPlayer player) {

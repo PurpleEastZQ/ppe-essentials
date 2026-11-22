@@ -9,7 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemLore;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,9 @@ import java.util.UUID;
 final class PpeTeleportMenuContent {
     static final int MENU_SIZE = 54;
     static final int PLAYERS_PER_PAGE = 36;
+
+    private static final String PREVIOUS_TEXTURE = "37aee9a75bf0df7897183015cca0b2a7d755c63388ff01752d5f4419fc645";
+    private static final String NEXT_TEXTURE = "682ad1b9cb4dd21259c0d75aa315ff389c3cef752be3949338164bac84a96e";
 
     private static final int PREVIOUS_SLOT = 45;
     private static final int AUTO_ACCEPT_SLOT = 47;
@@ -117,11 +122,7 @@ final class PpeTeleportMenuContent {
         for (int slot = PLAYERS_PER_PAGE; slot < MENU_SIZE; slot++) {
             container.setItem(slot, divider.copy());
         }
-        container.setItem(PREVIOUS_SLOT, buttonItem(
-                Items.ARROW,
-                "ppe_essentials.teleport_menu.previous.name",
-                List.of(text("ppe_essentials.teleport_menu.page", previousPage() + 1))
-        ));
+        container.setItem(PREVIOUS_SLOT, pageButton(PREVIOUS_TEXTURE, "ppe_essentials.teleport_menu.previous.name", previousPage()));
         if (PpeCommands.canToggleTpaAutoFromMenu(owner)) {
             boolean enabled = PpeCommands.isTpaAutoEnabled(owner);
             container.setItem(AUTO_ACCEPT_SLOT, buttonItem(
@@ -144,12 +145,18 @@ final class PpeTeleportMenuContent {
                 "ppe_essentials.teleport_menu.refresh.name",
                 List.of(text("ppe_essentials.teleport_menu.refresh.description"))
         ));
-        container.setItem(NEXT_SLOT, buttonItem(
-                Items.ARROW,
-                "ppe_essentials.teleport_menu.next.name",
-                List.of(text("ppe_essentials.teleport_menu.page", nextPage() + 1))
-        ));
+        container.setItem(NEXT_SLOT, pageButton(NEXT_TEXTURE, "ppe_essentials.teleport_menu.next.name", nextPage()));
         return List.copyOf(visiblePlayers);
+    }
+
+    private ItemStack pageButton(String texture, String nameKey, int destination) {
+        ItemStack head = buttonItem(Items.PLAYER_HEAD, nameKey, List.of(text("ppe_essentials.teleport_menu.page", destination + 1)));
+        head.set(DataComponents.CUSTOM_NAME, text(nameKey).copy().withStyle(style -> style.withBold(true)));
+        head.remove(DataComponents.ATTRIBUTE_MODIFIERS);
+        String skin = "{\"textures\":{\"SKIN\":{\"url\":\"http://textures.minecraft.net/texture/" + texture + "\"}}}";
+        byte[] data = skin.getBytes(StandardCharsets.UTF_8);
+        PpeCompat.setTexturedHeadProfile(head, UUID.nameUUIDFromBytes(data), Base64.getEncoder().encodeToString(data));
+        return head;
     }
 
     private ItemStack playerHead(ServerPlayer target) {
@@ -159,7 +166,7 @@ final class PpeTeleportMenuContent {
                 PpeCompat.profileName(target)
         );
         List<Component> lore = new ArrayList<>();
-        if (!here && PpeCommands.isTpaAutoEnabled(target)) {
+        if (!here && PpeCommands.canAutoAcceptTpa(target)) {
             lore.add(text("ppe_essentials.teleport_menu.player.auto"));
             lore.add(Component.empty());
         }

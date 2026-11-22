@@ -3,6 +3,7 @@
   "package": "me.purpleeast.mods.ppe_essentials.mixin",
   "compatibilityLevel": "${mixin_compatibility_level}",
   "mixins": [
+    "CommandSourceStackAccessor",
     "CommandsMixin",
     "CreeperMixin",
     "CropBlockMixin",

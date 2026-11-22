@@ -2,6 +2,7 @@
   "required": true,
   "package": "me.purpleeast.mods.ppe_essentials.mixin",
   "mixins": [
+    "CommandSourceStackAccessor",
     "ServerPlayerGameModeMixin"
   ],
   "injectors": {

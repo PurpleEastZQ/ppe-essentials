@@ -18,6 +18,7 @@ import (
 	"github.com/go-mclib/client/modules/chat"
 	"github.com/go-mclib/client/modules/inventory"
 	"github.com/go-mclib/client/modules/self"
+	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/packets"
 	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
@@ -114,6 +115,10 @@ func (p *player) selectTarget(ctx context.Context, command, title string) error 
 	if err != nil {
 		return err
 	}
+	head := ns.VarInt(items.ID("minecraft:player_head"))
+	if menu.Slots[45].ItemID != head || menu.Slots[53].ItemID != head {
+		return fmt.Errorf("missing skull-based navigation buttons in %s", title)
+	}
 	// PPE handles the slot as a button, so a normal click leaves the carried item empty.
 	err = p.SendPacket(&packets.C2SContainerClick{
 		WindowID: ns.VarInt(menu.WindowID), StateID: ns.VarInt(menu.StateID), Slot: 0,
@@ -185,6 +190,86 @@ func run(ctx context.Context, address string) error {
 		return err
 	}
 	log.Print("PASS /tpahere menu, request, acceptance, and target teleport")
+	return checkCommands(ctx, requester, target)
+}
+
+func (p *player) commandExpect(ctx context.Context, command, message string) error {
+	if err := p.SendCommand(command); err != nil {
+		return err
+	}
+	return p.expectMessage(ctx, message)
+}
+
+func checkCommands(ctx context.Context, operator, executor *player) error {
+	if err := operator.commandExpect(ctx, "execute as PPE_TestB run heal", "Healed PPE_TestB"); err != nil {
+		return err
+	}
+	if err := executor.expectMessage(ctx, "You were healed by PPE_TestA"); err != nil {
+		return err
+	}
+	if err := executor.commandExpect(ctx, "execute as PPE_TestA run tellraw PPE_TestB "+fmt.Sprintf("%q", "execute check ready"), "execute check ready"); err != nil {
+		return err
+	}
+	if err := executor.SendCommand("execute as PPE_TestA run god"); err != nil {
+		return err
+	}
+	if err := executor.commandExpect(ctx, "tellraw @s "+fmt.Sprintf("%q", "permission check completed"), "permission check completed"); err != nil {
+		return err
+	}
+	if err := operator.commandExpect(ctx, "god", "Enabled god mode for PPE_TestA"); err != nil {
+		return err
+	}
+	if err := operator.commandExpect(ctx, "god", "Disabled god mode for PPE_TestA"); err != nil {
+		return err
+	}
+	log.Print("PASS native execute context, sender feedback, and sender permissions")
+
+	if err := operator.SendCommand("execute as PPE_TestB positioned 60.5 100 36.5 run repeat 1 tp @s ~ ~ ~"); err != nil {
+		return err
+	}
+	if err := executor.waitAt(ctx, 60.5, 36.5); err != nil {
+		return err
+	}
+	if err := operator.SendCommand("execute as PPE_TestB run home set"); err != nil {
+		return err
+	}
+	if err := operator.SendCommand("tp PPE_TestB 80.5 100 36.5"); err != nil {
+		return err
+	}
+	if err := executor.waitAt(ctx, 80.5, 36.5); err != nil {
+		return err
+	}
+	if err := operator.SendCommand("execute as PPE_TestB run home tp"); err != nil {
+		return err
+	}
+	if err := executor.waitAt(ctx, 60.5, 36.5); err != nil {
+		return err
+	}
+	log.Print("PASS repeat preserves executor and position, grouped home commands use the executor's home")
+
+	const warpName = "主城 广场"
+	quoted := fmt.Sprintf("%q", warpName)
+	if err := operator.commandExpect(ctx, "warp set "+quoted, "Set warp "+warpName); err != nil {
+		return err
+	}
+	reply, err := chat.From(operator.Client).SuggestCommandContext(ctx, nil, "/warp tp 主")
+	if err != nil {
+		return err
+	}
+	found := false
+	for _, suggestion := range reply.Matches {
+		found = found || string(suggestion.Text) == quoted
+	}
+	if !found {
+		return fmt.Errorf("missing quoted Unicode warp completion: %v", reply.Matches)
+	}
+	if err := operator.commandExpect(ctx, "warp tp "+warpName, "Teleported to "+warpName); err != nil {
+		return err
+	}
+	if err := operator.commandExpect(ctx, "warp delete "+quoted, "Deleted warp "+warpName); err != nil {
+		return err
+	}
+	log.Print("PASS Unicode warp creation, quoted Tab completion, bare teleport, and quoted deletion")
 	return nil
 }
 

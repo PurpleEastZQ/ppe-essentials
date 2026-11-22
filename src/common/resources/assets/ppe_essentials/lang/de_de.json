@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§aZu deinem Home teleportiert",
   "ppe_essentials.home.title": "§aWillkommen zu Hause",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§cDu hast kein Home gesetzt, nutze §6/sethome§c, um eines zu setzen",
+  "ppe_essentials.home.none": "§cDu hast kein Home gesetzt, nutze §6/home set§c, um eines zu setzen",
   "ppe_essentials.suicide.broadcast": "§b%s §7konnte nicht mehr",
   "ppe_essentials.trash.title": "§c§lwird beim Schließen geleert",
   "ppe_essentials.warp.success": "§aZu §e%s §ateleportiert",

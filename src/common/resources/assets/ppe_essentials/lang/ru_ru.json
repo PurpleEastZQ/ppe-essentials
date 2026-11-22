@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§aТелепортировано к вашему дому",
   "ppe_essentials.home.title": "§aДобро пожаловать домой",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§cВы не установили дом, используйте §6/sethome§c, чтобы сделать это",
+  "ppe_essentials.home.none": "§cВы не установили дом, используйте §6/home set§c, чтобы сделать это",
   "ppe_essentials.suicide.broadcast": "§b%s §7больше не смог продолжать",
   "ppe_essentials.trash.title": "§c§lочищается при закрытии",
   "ppe_essentials.warp.success": "§aТелепортация к §e%s",

@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§a已传送至你的家",
   "ppe_essentials.home.title": "§a欢迎回家",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§c你还没有设置家，使用 §6/sethome §c进行设置",
+  "ppe_essentials.home.none": "§c你还没有设置家，使用 §6/home set §c进行设置",
   "ppe_essentials.suicide.broadcast": "§b%s §7想不开",
   "ppe_essentials.trash.title": "§c§l关闭后自动清理",
   "ppe_essentials.warp.success": "§a已传送至 §e%s",

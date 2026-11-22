@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§a집으로 순간이동했습니다",
   "ppe_essentials.home.title": "§a집에 오신 것을 환영합니다",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§c집을 설정하지 않았습니다. §6/sethome §c명령어로 설정하세요",
+  "ppe_essentials.home.none": "§c집을 설정하지 않았습니다. §6/home set §c명령어로 설정하세요",
   "ppe_essentials.suicide.broadcast": "§b%s §7님은 더 이상 버티지 못했습니다",
   "ppe_essentials.trash.title": "§c§l닫으면 비워짐",
   "ppe_essentials.warp.success": "§e%s§a(으)로 순간이동했습니다",

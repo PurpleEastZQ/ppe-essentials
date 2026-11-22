@@ -70,7 +70,7 @@
   "ppe_essentials.home.success": "§aホームへテレポートしました",
   "ppe_essentials.home.title": "§aおかえりなさい",
   "ppe_essentials.home.subtitle": "§b%s",
-  "ppe_essentials.home.none": "§cホームを設定していません。§6/sethome §cで設定できます",
+  "ppe_essentials.home.none": "§cホームを設定していません。§6/home set §cで設定できます",
   "ppe_essentials.suicide.broadcast": "§b%s §7はもう耐えられませんでした",
   "ppe_essentials.trash.title": "§c§l閉じると消去されます",
   "ppe_essentials.warp.success": "§e%s §aへテレポートしました",
