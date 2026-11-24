@@ -23,6 +23,9 @@ bin/
 # Codex
 .codex/
 
+# Local publishing credentials
+/.env.publish.local
+
 # Logs, crash dumps, and profiling output
 *.log
 logs/
