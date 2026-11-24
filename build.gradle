@@ -1,3 +1,12 @@
+buildscript {
+    if (providers.gradleProperty('ppe_publish').isPresent()) {
+        repositories { gradlePluginPortal() }
+        dependencies {
+            classpath 'me.modmuss50.mod-publish-plugin:me.modmuss50.mod-publish-plugin.gradle.plugin:2.2.1'
+        }
+    }
+}
+
 plugins {
     id 'java-library'
     id 'idea'
@@ -124,6 +133,53 @@ tasks.matching { task ->
     task.name == finalArchiveTaskName
 }.configureEach {
     destinationDirectory = sharedBuildRoot.dir('libs')
+}
+
+if (providers.gradleProperty('ppe_publish').isPresent()) {
+    apply plugin: 'me.modmuss50.mod-publish-plugin'
+
+    def releaseChangelog = providers.environmentVariable('PPE_RELEASE_CHANGELOG')
+    def releasePlatforms = providers.gradleProperty('ppe_publish_platforms').getOrElse('modrinth,curseforge').tokenize(',')
+    def liveRelease = providers.gradleProperty('ppe_publish').get() == 'live'
+    publishMods {
+        file = tasks.named(finalArchiveTaskName).flatMap { it.archiveFile }
+        changelog = releaseChangelog.map { project.file(it).getText('UTF-8') }
+        displayName = "${mod_name} ${mod_version}"
+        type = STABLE
+        modLoaders.add(target_loader)
+        dryRun = !liveRelease
+
+        if ('modrinth' in releasePlatforms) {
+            modrinth {
+                projectId = 'NB24iBsK'
+                accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+                minecraftVersions.add(target_minecraft_version)
+                environment = SERVER_ONLY
+                if (isFabric) {
+                    requires { id = 'P7dR8mSH' }
+                }
+            }
+        }
+        if ('curseforge' in releasePlatforms) {
+            curseforge {
+                projectId = '1564834'
+                accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
+                minecraftVersions.add(target_minecraft_version)
+                javaVersions.add(JavaVersion.toVersion(target_java_version))
+                server = true
+                if (isFabric) {
+                    requires('fabric-api')
+                }
+            }
+        }
+    }
+    if (!liveRelease) {
+        tasks.named('publishMods') {
+            doLast {
+                logger.lifecycle("Previewed ${target_loader} for Minecraft ${target_minecraft_version} (Java ${target_java_version}) on ${releasePlatforms.join(', ')}.")
+            }
+        }
+    }
 }
 
 tasks.named('clean', Delete).configure {
