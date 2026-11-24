@@ -63,13 +63,24 @@ def target_java_version = (findProperty('target_java_version')
 def isNeoForge = target_loader == 'neoforge'
 def isFabric = target_loader == 'fabric'
 def usesModernFabricBuild = isFabric && isMinecraftAtLeast(target_minecraft_version, 26, 1)
-def effectiveMinecraftVersionRange = versionedProperty('minecraft_version_range', 'minecraft_version_range', defaultMinecraftVersionRange(target_minecraft_version))
-def effectiveFabricMinecraftVersionRange = versionedProperty('fabric_minecraft_version_range', 'fabric_minecraft_version_range', defaultFabricMinecraftVersionRange(target_minecraft_version))
+def releaseMinecraftVersions = versionedProperty('release_minecraft_versions', null, target_minecraft_version)
+        .split(',').collect { it.trim() }
+def isMultiVersionRelease = releaseMinecraftVersions.size() > 1
+def archiveMinecraftVersion = isMultiVersionRelease
+        ? "${releaseMinecraftVersions.first()}-${releaseMinecraftVersions.last()}" : target_minecraft_version
+def effectiveMinecraftVersionRange = isMultiVersionRelease
+        ? releaseMinecraftVersions.collect { "[${it}]" }.join(',')
+        : versionedProperty('minecraft_version_range', 'minecraft_version_range', defaultMinecraftVersionRange(target_minecraft_version))
+def effectiveFabricMinecraftVersions = isMultiVersionRelease
+        ? releaseMinecraftVersions
+        : [versionedProperty('fabric_minecraft_version_range', 'fabric_minecraft_version_range', defaultFabricMinecraftVersionRange(target_minecraft_version))]
 def effectiveNeoVersion = versionedProperty('neo_version')
 def effectiveNeoVersionRange = versionedProperty('neo_version_range')
 def effectiveLoaderVersionRange = versionedProperty('loader_version_range')
-def effectiveFabricLoaderVersion = versionedProperty('fabric_loader_version')
-def effectiveFabricLoaderMinVersion = versionedProperty('fabric_loader_min_version', 'fabric_loader_min_version', effectiveFabricLoaderVersion)
+def effectiveFabricLoaderVersion = versionedProperty('fabric_loader_version',
+        usesModernFabricBuild ? 'modern_fabric_loader_version' : 'fabric_loader_version')
+def effectiveFabricLoaderMinVersion = versionedProperty('fabric_loader_min_version',
+        usesModernFabricBuild ? null : 'fabric_loader_min_version', effectiveFabricLoaderVersion)
 def effectiveFabricApiVersion = versionedProperty('fabric_api_version')
 def effectiveFabricApiMinVersion = versionedProperty('fabric_api_min_version', 'fabric_api_min_version', effectiveFabricApiVersion)
 def effectiveParchmentMinecraftVersion = versionedProperty('parchment_minecraft_version', 'parchment_minecraft_version', target_minecraft_version)
@@ -112,7 +123,7 @@ repositories {
 }
 
 base {
-    archivesName = "${mod_id}-${target_loader}-${target_minecraft_version}"
+    archivesName = "${mod_id}-${target_loader}-${archiveMinecraftVersion}"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(gradle_java_version.toInteger())
@@ -153,7 +164,7 @@ if (providers.gradleProperty('ppe_publish').isPresent()) {
             modrinth {
                 projectId = 'NB24iBsK'
                 accessToken = providers.environmentVariable('MODRINTH_TOKEN')
-                minecraftVersions.add(target_minecraft_version)
+                minecraftVersions.addAll(releaseMinecraftVersions)
                 environment = SERVER_ONLY
                 if (isFabric) {
                     requires { id = 'P7dR8mSH' }
@@ -164,7 +175,7 @@ if (providers.gradleProperty('ppe_publish').isPresent()) {
             curseforge {
                 projectId = '1564834'
                 accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
-                minecraftVersions.add(target_minecraft_version)
+                minecraftVersions.addAll(releaseMinecraftVersions)
                 javaVersions.add(JavaVersion.toVersion(target_java_version))
                 server = true
                 if (isFabric) {
@@ -176,7 +187,7 @@ if (providers.gradleProperty('ppe_publish').isPresent()) {
     if (!liveRelease) {
         tasks.named('publishMods') {
             doLast {
-                logger.lifecycle("Previewed ${target_loader} for Minecraft ${target_minecraft_version} (Java ${target_java_version}) on ${releasePlatforms.join(', ')}.")
+                logger.lifecycle("Previewed ${target_loader} for Minecraft ${releaseMinecraftVersions.join(', ')} (Java ${target_java_version}) on ${releasePlatforms.join(', ')}.")
             }
         }
     }
@@ -254,8 +265,8 @@ sourceSets {
         java {
             setSrcDirs(['src/common/java', "src/loaders/${target_loader}/java"]
                     + (versionSourceDirs('common') + versionSourceDirs(target_loader)).collect { "${it}/java" })
-            if (!isMinecraftAtLeast(target_minecraft_version, 26, 3)) {
-                srcDir "src/loaders/${target_loader}/legacy/java"
+            if (isFabric && !usesModernFabricBuild) {
+                srcDir 'src/loaders/fabric/legacy/java'
             }
         }
         resources {
@@ -308,7 +319,9 @@ neoForge.ideSyncTask generateModMetadata
 if (isFabric) {
     tasks.named('processResources', ProcessResources).configure {
         var replaceProperties = [minecraft_version             : target_minecraft_version,
-                                 fabric_minecraft_version_range: effectiveFabricMinecraftVersionRange,
+                                 fabric_minecraft_versions     : effectiveFabricMinecraftVersions.join('", "'),
+                                 enderman_mixins               : usesModernFabricBuild ? 'EndermanBlockGoalMixin'
+                                         : 'EndermanLeaveBlockGoalMixin", "EndermanTakeBlockGoalMixin',
                                  fabric_loader_min_version    : effectiveFabricLoaderMinVersion,
                                  fabric_api_min_version       : effectiveFabricApiMinVersion,
                                  target_java_version          : target_java_version,

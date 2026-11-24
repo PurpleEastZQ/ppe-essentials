@@ -57,6 +57,7 @@ function Add-Version {
 
 $properties = Read-GradleProperties -Path $propertiesPath
 $discoveredVersions = [ordered]@{}
+$releaseTargets = @{}
 $requestedMinecraftVersions = @($MinecraftVersion)
 $requestedLoaders = @($Loader)
 
@@ -71,6 +72,12 @@ if ($properties.Contains('minecraft_version')) {
 }
 
 foreach ($key in $properties.Keys) {
+    if ($key -match '^mc_(.+?)_release_minecraft_versions$') {
+        $releaseTarget = $matches[1] -replace '_', '.'
+        foreach ($version in $properties[$key].Split(',')) {
+            $releaseTargets[$version.Trim()] = $releaseTarget
+        }
+    }
     if ($key -match '^mc_(.+?)_(neo_version|neo_version_range|fabric_api_version|fabric_loader_version|target_java_version|parchment_minecraft_version|parchment_mappings_version|minecraft_version_range|fabric_minecraft_version_range|loader_version_range)$') {
         Add-Version -Set $discoveredVersions -Version ($matches[1] -replace '_', '.')
     }
@@ -89,6 +96,9 @@ $versions = @(
         $discoveredVersions.Keys
     }
 )
+$versions = @($versions | ForEach-Object {
+    if ($releaseTargets.ContainsKey($_)) { $releaseTargets[$_] } else { $_ }
+} | Select-Object -Unique)
 
 if ($versions.Count -eq 0) {
     throw 'No Minecraft versions were found. Pass -MinecraftVersion or add versions to gradle.properties/src/versions.'

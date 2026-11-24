@@ -2,6 +2,8 @@
 param(
     [ValidateSet('fabric', 'neoforge')]
     [string[]] $Loader = @('fabric', 'neoforge'),
+    [ValidateSet('26.1.2', '26.2', '26.3')]
+    [string] $MinecraftVersion = '26.3',
     [ValidateRange(1024, 65535)]
     [int] $Port = 25578,
     [Parameter(Mandatory)]
@@ -14,6 +16,9 @@ $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $java = (Get-Command java -CommandType Application | Select-Object -First 1).Source
 $go = (Get-Command go -CommandType Application).Source
 $properties = ConvertFrom-StringData (Get-Content -LiteralPath (Join-Path $repo 'gradle.properties') -Raw)
+$profile = 'mc_' + ($MinecraftVersion -replace '\.', '_')
+$releaseVersions = $properties.mc_26_3_release_minecraft_versions.Split(',')
+$archiveVersion = "$($releaseVersions[0])-$($releaseVersions[-1])"
 $work = Join-Path $repo "runs\headless\$([Guid]::NewGuid().ToString('N'))"
 New-Item -ItemType Directory -Path $work -Force | Out-Null
 Write-Host "Test files and logs: $work"
@@ -28,9 +33,9 @@ try {
 }
 
 foreach ($target in $Loader | Select-Object -Unique) {
-    $artifact = Join-Path $repo "build\libs\ppe_essentials-$target-26.3-$($properties.mod_version).jar"
+    $artifact = Join-Path $repo "build\libs\ppe_essentials-$target-$archiveVersion-$($properties.mod_version).jar"
     if (!(Test-Path -LiteralPath $artifact -PathType Leaf)) {
-        throw "Build the 26.3 $target JAR first: $artifact"
+        throw "Build the shared $target JAR first: $artifact"
     }
     $server = Join-Path $work $target
     $mods = New-Item -ItemType Directory -Path (Join-Path $server 'mods') -Force
@@ -53,7 +58,7 @@ foreach ($target in $Loader | Select-Object -Unique) {
     'eula=true' | Set-Content -LiteralPath "$server\eula.txt"
     @(
         'server-ip=127.0.0.1', "server-port=$Port", 'online-mode=false',
-        'enforce-secure-profile=false', 'white-list=false', 'level-type=minecraft:flat',
+        'enforce-secure-profile=false', 'use-native-transport=false', 'white-list=false', 'level-type=minecraft:flat',
         'view-distance=3', 'simulation-distance=3', 'spawn-protection=0',
         'gamemode=creative', 'difficulty=peaceful'
     ) | Set-Content -LiteralPath "$server\server.properties"
@@ -61,13 +66,14 @@ foreach ($target in $Loader | Select-Object -Unique) {
         Set-Content -LiteralPath "$server\ops.json"
 
     if ($target -eq 'fabric') {
-        $fabric = $properties.mc_26_3_fabric_loader_version
-        $api = $properties.mc_26_3_fabric_api_version
-        Invoke-WebRequest -UseBasicParsing -TimeoutSec 60 -Uri "https://meta.fabricmc.net/v2/versions/loader/26.3/$fabric/1.1.1/server/jar" -OutFile "$server\fabric-server.jar"
+        $fabric = $properties["${profile}_fabric_loader_version"]
+        if (!$fabric) { $fabric = $properties.modern_fabric_loader_version }
+        $api = $properties["${profile}_fabric_api_version"]
+        Invoke-WebRequest -UseBasicParsing -TimeoutSec 60 -Uri "https://meta.fabricmc.net/v2/versions/loader/$MinecraftVersion/$fabric/1.1.1/server/jar" -OutFile "$server\fabric-server.jar"
         Invoke-WebRequest -UseBasicParsing -TimeoutSec 60 -Uri "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/$api/fabric-api-$api.jar" -OutFile "$server\mods\fabric-api.jar"
         $launchArguments = '-Xmx2G -jar fabric-server.jar nogui'
     } else {
-        $neo = $properties.mc_26_3_neo_version
+        $neo = $properties["${profile}_neo_version"]
         Invoke-WebRequest -UseBasicParsing -TimeoutSec 60 -Uri "https://maven.neoforged.net/releases/net/neoforged/neoforge/$neo/neoforge-$neo-installer.jar" -OutFile "$server\installer.jar"
         Push-Location $server
         try {
@@ -79,7 +85,7 @@ foreach ($target in $Loader | Select-Object -Unique) {
         $launchArguments = "-Xmx2G @libraries/net/neoforged/neoforge/$neo/win_args.txt nogui"
     }
 
-    Write-Host "Testing Minecraft 26.3 on $target"
+    Write-Host "Testing Minecraft $MinecraftVersion on $target"
     $start = [Diagnostics.ProcessStartInfo]::new($java, $launchArguments)
     $start.WorkingDirectory = $server
     $start.UseShellExecute = $false
@@ -88,21 +94,29 @@ foreach ($target in $Loader | Select-Object -Unique) {
     try {
         $log = Join-Path $server 'logs\latest.log'
         $deadline = [DateTime]::UtcNow.AddMinutes(3)
-        while (!(Test-Path -LiteralPath $log) -or !(Select-String -LiteralPath $log -Pattern 'Done \(' -Quiet)) {
-            if ($process.HasExited -or [DateTime]::UtcNow -gt $deadline) {
-                throw "$target test server did not start. See $log."
+        function Wait-TestLog([string] $Pattern, [string] $Message) {
+            while (!(Test-Path -LiteralPath $log) -or !(Select-String -LiteralPath $log -Pattern $Pattern -Quiet)) {
+                if ($process.HasExited -or [DateTime]::UtcNow -gt $deadline) {
+                    throw "$Message See $log."
+                }
+                Start-Sleep -Milliseconds 400
             }
-            Start-Sleep -Milliseconds 400
         }
-        $process.StandardInput.WriteLine('list')
-        while (!(Select-String -LiteralPath $log -Pattern 'There are .* players online' -Quiet)) {
-            if ($process.HasExited -or [DateTime]::UtcNow -gt $deadline) {
-                throw "$target test server did not begin processing commands. See $log."
-            }
-            Start-Sleep -Milliseconds 400
+        Wait-TestLog 'Done \(' 'The test server did not start.'
+        $deadline = [DateTime]::UtcNow.AddSeconds(30)
+        $process.StandardInput.WriteLine('scoreboard objectives add ppeCompat dummy')
+        $process.StandardInput.WriteLine('repeat 2 scoreboard players add #ppe ppeCompat 1')
+        $process.StandardInput.WriteLine('execute if score #ppe ppeCompat matches 2 run say PPE compatibility smoke')
+        Wait-TestLog '\[Server\] PPE compatibility smoke' 'The test server did not execute /repeat.'
+        $process.StandardInput.WriteLine('difficulty easy')
+        $process.StandardInput.WriteLine('summon minecraft:enderman ~ ~ ~ {NoAI:1b}')
+        Wait-TestLog 'Summoned new Enderman' 'The test server did not summon an enderman.'
+        $process.StandardInput.WriteLine('difficulty peaceful')
+
+        if ($MinecraftVersion -eq '26.3') {
+            & $clientPath -address "127.0.0.1:$Port" -config $configPath
+            if ($LASTEXITCODE) { throw "$target headless test failed. See $log." }
         }
-        & $clientPath -address "127.0.0.1:$Port" -config $configPath
-        if ($LASTEXITCODE) { throw "$target headless test failed. See $log." }
     } finally {
         if (!$process.HasExited) {
             try { $process.StandardInput.WriteLine('stop') }
@@ -116,4 +130,5 @@ foreach ($target in $Loader | Select-Object -Unique) {
             (Get-FileHash -LiteralPath $legacyPath).Hash -ne $legacyHash -or (Test-Path -LiteralPath "$legacyPath.bak")) {
         throw "$target did not persist migrated data while preserving the legacy file."
     }
+    Write-Host "Passed Minecraft $MinecraftVersion on $target"
 }

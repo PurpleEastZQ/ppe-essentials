@@ -1,11 +1,14 @@
 package me.purpleeast.mods.ppe_essentials;
 
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,7 +16,7 @@ final class PpeConfigBackend {
     private static final Map<String, ModConfigSpec.ConfigValue<?>> VALUES = new LinkedHashMap<>();
     private static final Map<String, CommandValue> COMMANDS = new LinkedHashMap<>();
 
-    static final ModConfigSpec SPEC;
+    private static final ModConfigSpec SPEC;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -40,6 +43,15 @@ final class PpeConfigBackend {
     }
 
     private PpeConfigBackend() {
+    }
+
+    static void register(ModContainer modContainer) {
+        // FML 12 renamed COMMON to LOCAL. Keep loading the existing common TOML.
+        ModConfig.Type type = Arrays.stream(ModConfig.Type.values())
+                .filter(value -> value.name().equals("LOCAL"))
+                .findFirst()
+                .orElseGet(() -> ModConfig.Type.valueOf("COMMON"));
+        modContainer.registerConfig(type, SPEC, PpeConfig.FILE_NAME);
     }
 
     static void load() {

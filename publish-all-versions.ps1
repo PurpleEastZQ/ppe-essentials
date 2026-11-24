@@ -5,18 +5,19 @@ Previews or publishes the configured build matrix to Modrinth and CurseForge.
 .DESCRIPTION
 Use one UTF-8 Markdown file for the entire release. The default mode writes a
 local preview under build/work for each target. To upload, use -Publish.
+Each shared JAR is uploaded once with all of its supported Minecraft versions.
 For each selected platform, the script uses MODRINTH_TOKEN or CURSEFORGE_TOKEN
 from the current environment, falling back to NAME=value entries in
 .env.publish.local beside this script.
 
 .EXAMPLE
-.\publish-all-versions.ps1 -Changelog .\release-notes.md
+.\publish-all-versions.ps1 -Changelog .\build\release-notes.md
 
 .EXAMPLE
-.\publish-all-versions.ps1 -Changelog .\release-notes.md -Publish
+.\publish-all-versions.ps1 -Changelog .\build\release-notes.md -Publish
 
 .EXAMPLE
-.\publish-all-versions.ps1 -Changelog .\release-notes.md -Publish -Platform curseforge -Loader fabric -MinecraftVersion 26.3
+.\publish-all-versions.ps1 -Changelog .\build\release-notes.md -Publish -Platform curseforge -Loader fabric -MinecraftVersion 26.3
 #>
 [CmdletBinding()]
 param(
