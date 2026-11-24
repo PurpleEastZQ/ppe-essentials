@@ -1,0 +1,368 @@
+{
+  "ppe_essentials.request.accept": {"text": "[点击接受]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "点击接受！", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[点击拒绝]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "点击拒绝！", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "目标维度不存在，无法传送", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "服务器已禁止向自己发送传送请求", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s 无法使用所需的接受和拒绝命令", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "你已自动接受来自 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "的 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "自动接受了你的 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "请求传送到你的位置 ", "color": "green"},
+    {"text": "(你可以用 ", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "开启自动接受)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(或 ", "color": "gray"},
+    {"text": "/tpaa 接受", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad 拒绝", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "已向 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "发送 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求，有效时间 ", "color": "green"},
+    {"text": "%2$s 秒", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "该玩家已有其他未处理的 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求，无法发送", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "对方长时间没有接受你的 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求，已自动拒绝", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求已过期", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "你已接受来自 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "的 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "接受了你的 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "没有待处理的 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "你已拒绝来自 ", "color": "red"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "的 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "拒绝了你的 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求:(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "没有待处理的传送请求", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "开启", "color": "dark_green", "bold": true},
+    {"text": "自动接受 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "关闭", "color": "red", "bold": true},
+    {"text": "自动接受 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "请求你传送至TA的位置", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(或 ", "color": "gray"},
+    {"text": "/tpaherea 接受", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered 拒绝", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "已向 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "发送 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求，有效时间 ", "color": "green"},
+    {"text": "%2$s 秒", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "该玩家已有其他未处理的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求，无法发送", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "对方长时间没有接受你的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求，已自动拒绝", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求已过期", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "你已接受来自 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "的 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "接受了你的 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "没有待处理的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "你已拒绝来自 ", "color": "red"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "拒绝了你的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求:(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "没有待处理的 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "请求", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "玩家传送: 传送到玩家 ", "color": "dark_green", "bold": true},
+    {"text": "页数: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "玩家传送: 邀请玩家传送过来 ", "color": "dark_green", "bold": true},
+    {"text": "页数: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "该玩家已开启自动接受", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "点击请求传送到该玩家", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "点击请求该玩家传送到你", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "该玩家已离线，请刷新玩家列表", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "自动接受 ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": 已开启", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "自动接受 ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": ", "color": "green"},
+    {"text": "已关闭", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "自动接受其他玩家发来的 ", "color": "gray"},
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "请求", "color": "gray"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "点击关闭自动接受", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "点击开启自动接受", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "上一页", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "下一页", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "第 %1$s 页", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "关闭菜单", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "刷新玩家列表", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "重新读取当前在线玩家", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "请 ", "color": "red"},
+    {"text": "%1$s 秒 ", "color": "yellow"},
+    {"text": "后再使用", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "已进行随机传送", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "传送成功", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "注意安全", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "已传送至世界出生点", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "输入 ", "color": "green"},
+    {"text": "/back ", "color": "gold"},
+    {"text": "即可返回死亡点 ", "color": "green"},
+    {"text": "[点击输入]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "点击输入", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "已返回死亡位置", "color": "green"},
+  "ppe_essentials.back.none": {"text": "你还没有保存的死亡位置", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "已返回你的上一次传送点", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "你还没有已保存的上一次传送点", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "设家成功，使用 ", "color": "green"},
+    {"text": "/home ", "color": "gold"},
+    {"text": "传送", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "删除", "color": "red", "bold": true},
+    {"text": "你的家", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "你还没有设置家", "color": "red"},
+  "ppe_essentials.home.success": {"text": "已传送至你的家", "color": "green"},
+  "ppe_essentials.home.title": {"text": "欢迎回家", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "你还没有设置家，使用 ", "color": "red"},
+    {"text": "/home set ", "color": "gold"},
+    {"text": "进行设置", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "想不开", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "关闭后自动清理", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "已传送至 ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "不存在此地标: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "已设置地标 ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "删除", "color": "red", "bold": true},
+    {"text": "地标 ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "不存在此地标: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "已安装，你可以使用 ", "color": "green"},
+    {"text": "/home /tpa ", "color": "gold"},
+    {"text": "等指令。使用 ", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "查看指令列表 ", "color": "green"},
+    {"text": "[点击查看]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "点击查看 PPE Essentials 帮助", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "可用指令:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "传送: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "家和地标: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "实用: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "管理: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "清除", "color": "red", "bold": true},
+    {"text": "所有玩家数据", "color": "green"}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "已", "color": "green"},
+    {"text": "清除", "color": "red", "bold": true},
+    {"text": "提示触发数据", "color": "green"}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "你还没有命令历史记录", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "不能指定 ", "color": "red"},
+    {"text": "repeat ", "color": "yellow"},
+    {"text": "命令", "color": "red"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "已治疗 ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "你已被 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "治疗", "color": "green"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "已为 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "启用", "color": "dark_green", "bold": true},
+    {"text": "飞行", "color": "green"}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "已为 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "禁用", "color": "red", "bold": true},
+    {"text": "飞行", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "为你", "color": "green"},
+    {"text": "启用", "color": "dark_green", "bold": true},
+    {"text": "了飞行", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "为你", "color": "green"},
+    {"text": "禁用", "color": "red", "bold": true},
+    {"text": "了飞行", "color": "green"}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "已为 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "启用", "color": "dark_green", "bold": true},
+    {"text": "无敌模式", "color": "green"}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "已为 ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "禁用", "color": "red", "bold": true},
+    {"text": "无敌模式", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "为你", "color": "green"},
+    {"text": "启用", "color": "dark_green", "bold": true},
+    {"text": "了无敌模式", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "为你", "color": "green"},
+    {"text": "禁用", "color": "red", "bold": true},
+    {"text": "了无敌模式", "color": "green"}
+  ]}
+}

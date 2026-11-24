@@ -1,0 +1,353 @@
+{
+  "ppe_essentials.request.accept": {"text": "[Zum Annehmen klicken]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "Klicken, um anzunehmen!", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[Zum Ablehnen klicken]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "Klicken, um abzulehnen!", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "Die Ziel-Dimension existiert nicht, Teleport fehlgeschlagen", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "Teleport-Anfragen an dich selbst sind deaktiviert", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s kann die erforderlichen Annehmen- und Ablehnen-Befehle nicht verwenden", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "Du hast die ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage von ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "automatisch angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat deine ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage automatisch angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "möchte sich zu deiner Position teleportieren ", "color": "green"},
+    {"text": "(nutze ", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "für automatisches Annehmen)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(oder ", "color": "gray"},
+    {"text": "/tpaa zum Annehmen", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad zum Ablehnen", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage an ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "gesendet, gültig für ", "color": "green"},
+    {"text": "%2$s Sekunden", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "Dieser Spieler hat bereits eine ausstehende ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "Der andere Spieler hat deine ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage zu lange nicht angenommen, sie wurde automatisch abgelehnt", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage abgelaufen", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "Du hast die ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage von ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat deine ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "Keine ausstehende ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "Du hast die ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage von ", "color": "red"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "abgelehnt", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat deine ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfrage abgelehnt :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "Keine ausstehende Teleport-Anfrage", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "Automatisches Annehmen von ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfragen ist jetzt ", "color": "green"},
+    {"text": "aktiviert", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "Automatisches Annehmen von ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-Anfragen ist jetzt ", "color": "green"},
+    {"text": "deaktiviert", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "möchte, dass du dich zu seiner Position teleportierst", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(oder ", "color": "gray"},
+    {"text": "/tpaherea zum Annehmen", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered zum Ablehnen", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage an ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "gesendet, gültig für ", "color": "green"},
+    {"text": "%2$s Sekunden", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "Dieser Spieler hat bereits eine ausstehende ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "Der andere Spieler hat deine ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage zu lange nicht angenommen, sie wurde automatisch abgelehnt", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage abgelaufen", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "Du hast die ", "color": "green"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage von ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat deine ", "color": "green"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage angenommen", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "Keine ausstehende ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "Du hast die ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage von ", "color": "red"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "abgelehnt", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat deine ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage abgelehnt :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "Keine ausstehende ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-Anfrage", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "Spieler-TP: Zum Spieler ", "color": "dark_green", "bold": true},
+    {"text": "Seite: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "Spieler-TP: Spieler einladen ", "color": "dark_green", "bold": true},
+    {"text": "Seite: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "Dieser Spieler nimmt automatisch an", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "Klicken, um dich zu diesem Spieler zu teleportieren", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "Klicken, um diesen Spieler zu dir einzuladen", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "Der Spieler ist offline; aktualisiere die Liste", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "automatisch annehmen: Aktiv", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "automatisch annehmen: ", "color": "green"},
+    {"text": "Inaktiv", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "Eingehende ", "color": "gray"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": "-Anfragen automatisch annehmen", "color": "gray"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "Klicken, um die automatische Annahme auszuschalten", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "Klicken, um die automatische Annahme einzuschalten", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "Vorherige Seite", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "Nächste Seite", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "Seite %1$s", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "Menü schließen", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "Spielerliste aktualisieren", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "Lädt die aktuell online Spieler neu", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "Bitte warte ", "color": "red"},
+    {"text": "%1$s Sekunden", "color": "yellow"},
+    {"text": ", bevor du das erneut benutzt", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "Zufälliger Teleport durchgeführt", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "Teleportiert", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "Bleib vorsichtig", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "Zum Welt-Spawn teleportiert", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "Nutze ", "color": "green"},
+    {"text": "/back", "color": "gold"},
+    {"text": ", um zu deinem Todespunkt zurückzukehren ", "color": "green"},
+    {"text": "[Zum Ausfüllen klicken]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "Zum Ausfüllen klicken", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "Zu deinem Todesort zurückgekehrt", "color": "green"},
+  "ppe_essentials.back.none": {"text": "Du hast keinen gespeicherten Todesort", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "Zu deiner letzten Teleport-Position zurückgekehrt", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "Du hast keine gespeicherte letzte Teleport-Position", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "Home gesetzt, nutze ", "color": "green"},
+    {"text": "/home", "color": "gold"},
+    {"text": " zum Teleportieren", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "Dein Home wurde ", "color": "green"},
+    {"text": "gelöscht", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "Du hast kein Home gesetzt", "color": "red"},
+  "ppe_essentials.home.success": {"text": "Zu deinem Home teleportiert", "color": "green"},
+  "ppe_essentials.home.title": {"text": "Willkommen zu Hause", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "Du hast kein Home gesetzt, nutze ", "color": "red"},
+    {"text": "/home set", "color": "gold"},
+    {"text": ", um eines zu setzen", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "konnte nicht mehr", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "wird beim Schließen geleert", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "Zu ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "teleportiert", "color": "green"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "Dieser Warp existiert nicht: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "Warp ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "gesetzt", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "Warp ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "wurde ", "color": "green"},
+    {"text": "gelöscht", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "Dieser Warp existiert nicht: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "ist installiert. Du kannst Befehle wie ", "color": "green"},
+    {"text": "/home /tpa ", "color": "gold"},
+    {"text": "nutzen. Nutze ", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "für die Befehlsliste ", "color": "green"},
+    {"text": "[Zum Anzeigen klicken]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "PPE Essentials-Hilfe anzeigen", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "Befehle:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "Teleport: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "Home und Warps: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "Nützliches: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "Admin: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "Alle Spielerdaten wurden ", "color": "green"},
+    {"text": "gelöscht", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "Hinweis-Auslösedaten wurden ", "color": "green"},
+    {"text": "gelöscht", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "Du hast keinen Befehlsverlauf", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "Du kannst den Befehl ", "color": "red"},
+    {"text": "repeat ", "color": "yellow"},
+    {"text": "nicht angeben", "color": "red"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "wurde geheilt", "color": "green"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "Du wurdest von ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "geheilt", "color": "green"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "Fliegen für ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "aktiviert", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "Fliegen für ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "deaktiviert", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat Fliegen für dich ", "color": "green"},
+    {"text": "aktiviert", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat Fliegen für dich ", "color": "green"},
+    {"text": "deaktiviert", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "Godmode für ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "aktiviert", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "Godmode für ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "deaktiviert", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat Godmode für dich ", "color": "green"},
+    {"text": "aktiviert", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "hat Godmode für dich ", "color": "green"},
+    {"text": "deaktiviert", "color": "red", "bold": true}
+  ]}
+}

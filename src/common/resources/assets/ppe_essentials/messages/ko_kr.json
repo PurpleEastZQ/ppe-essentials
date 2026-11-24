@@ -1,0 +1,354 @@
+{
+  "ppe_essentials.request.accept": {"text": "[클릭하여 수락]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "클릭하여 수락!", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[클릭하여 거절]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "클릭하여 거절!", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "대상 차원이 존재하지 않아 순간이동할 수 없습니다", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "자기 자신에게 순간이동 요청을 보내는 것은 비활성화되어 있습니다", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s 님은 필요한 수락 및 거절 명령어를 사용할 수 없습니다", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 자동으로 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 자동으로 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 위치로 순간이동하려고 합니다 ", "color": "green"},
+    {"text": "(", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "로 자동 수락 가능)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(또는 ", "color": "gray"},
+    {"text": "/tpaa 수락", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad 거절", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님에게 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 보냈습니다. 유효 시간: ", "color": "green"},
+    {"text": "%2$s초", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "해당 플레이어에게 이미 대기 중인 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청이 있습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "상대가 당신의 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 너무 오래 수락하지 않아 자동으로 거절되었습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청이 만료되었습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "대기 중인 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청이 없습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 거절했습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청을 거절했습니다 :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "대기 중인 순간이동 요청이 없습니다", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청 자동 수락이 ", "color": "green"},
+    {"text": "활성화", "color": "dark_green", "bold": true},
+    {"text": "되었습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "요청 자동 수락이 ", "color": "green"},
+    {"text": "비활성화", "color": "red", "bold": true},
+    {"text": "되었습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신을 자신의 위치로 순간이동시키려고 합니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(또는 ", "color": "gray"},
+    {"text": "/tpaherea 수락", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered 거절", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님에게 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 보냈습니다. 유효 시간: ", "color": "green"},
+    {"text": "%2$s초", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "해당 플레이어에게 이미 대기 중인 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청이 있습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "상대가 당신의 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 너무 오래 수락하지 않아 자동으로 거절되었습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청이 만료되었습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 수락했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "대기 중인 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청이 없습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 거절했습니다", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청을 거절했습니다 :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "대기 중인 ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "요청이 없습니다", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "플레이어 이동: 플레이어에게 ", "color": "dark_green", "bold": true},
+    {"text": "페이지: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "플레이어 이동: 플레이어 초대 ", "color": "dark_green", "bold": true},
+    {"text": "페이지: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "이 플레이어는 자동 수락을 사용 중입니다", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "클릭하여 이 플레이어에게 이동 요청", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "클릭하여 이 플레이어를 내 위치로 초대", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "플레이어가 오프라인입니다. 목록을 새로고침하세요", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "자동 수락: 활성화", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "자동 수락: ", "color": "green"},
+    {"text": "비활성화", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "요청을 자동으로 수락합니다", "color": "gray"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "클릭하여 자동 수락 끄기", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "클릭하여 자동 수락 켜기", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "이전 페이지", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "다음 페이지", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "%1$s 페이지", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "메뉴 닫기", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "플레이어 목록 새로고침", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "현재 접속 중인 플레이어를 다시 불러옵니다", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "다시 사용하려면 ", "color": "red"},
+    {"text": "%1$s초 ", "color": "yellow"},
+    {"text": "기다려 주세요", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "랜덤 순간이동을 수행했습니다", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "순간이동 완료", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "조심하세요", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "월드 스폰으로 순간이동했습니다", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "/back ", "color": "gold"},
+    {"text": "명령어로 사망 지점으로 돌아갈 수 있습니다 ", "color": "green"},
+    {"text": "[클릭하여 입력]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "클릭하여 입력", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "사망 위치로 돌아왔습니다", "color": "green"},
+  "ppe_essentials.back.none": {"text": "저장된 사망 위치가 없습니다", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "이전 순간이동 위치로 돌아왔습니다", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "저장된 이전 순간이동 위치가 없습니다", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "집을 설정했습니다. ", "color": "green"},
+    {"text": "/home ", "color": "gold"},
+    {"text": "명령어로 이동할 수 있습니다", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "집을 ", "color": "green"},
+    {"text": "삭제", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "집을 설정하지 않았습니다", "color": "red"},
+  "ppe_essentials.home.success": {"text": "집으로 순간이동했습니다", "color": "green"},
+  "ppe_essentials.home.title": {"text": "집에 오신 것을 환영합니다", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "집을 설정하지 않았습니다. ", "color": "red"},
+    {"text": "/home set ", "color": "gold"},
+    {"text": "명령어로 설정하세요", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님은 더 이상 버티지 못했습니다", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "닫으면 비워짐", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "%1$s", "color": "yellow"},
+    {"text": "(으)로 순간이동했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "해당 워프가 없습니다: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "워프를 설정했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "워프 ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "을(를) ", "color": "green"},
+    {"text": "삭제", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "해당 워프가 없습니다: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "이 설치되어 있습니다. ", "color": "green"},
+    {"text": "/home /tpa ", "color": "gold"},
+    {"text": "같은 명령어를 사용할 수 있습니다. ", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "로 명령어 목록을 확인하세요 ", "color": "green"},
+    {"text": "[클릭하여 보기]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "PPE Essentials 도움말 보기", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "명령어:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "순간이동: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "집과 워프: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "유틸리티: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "관리: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "모든 플레이어 데이터를 ", "color": "green"},
+    {"text": "삭제", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "알림 발동 데이터를 ", "color": "green"},
+    {"text": "삭제", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "명령어 기록이 없습니다", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "repeat ", "color": "yellow"},
+    {"text": "명령어는 지정할 수 없습니다", "color": "red"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님을 치료했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신을 치료했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 비행을 ", "color": "green"},
+    {"text": "활성화", "color": "dark_green", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 비행을 ", "color": "green"},
+    {"text": "비활성화", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 비행을 ", "color": "green"},
+    {"text": "활성화", "color": "dark_green", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 비행을 ", "color": "green"},
+    {"text": "비활성화", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 무적 모드를 ", "color": "green"},
+    {"text": "활성화", "color": "dark_green", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님의 무적 모드를 ", "color": "green"},
+    {"text": "비활성화", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 무적 모드를 ", "color": "green"},
+    {"text": "활성화", "color": "dark_green", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "님이 당신의 무적 모드를 ", "color": "green"},
+    {"text": "비활성화", "color": "red", "bold": true},
+    {"text": "했습니다", "color": "green"}
+  ]}
+}

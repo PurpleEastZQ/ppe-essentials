@@ -1,0 +1,356 @@
+{
+  "ppe_essentials.request.accept": {"text": "[クリックして承認]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "クリックして承認！", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[クリックして拒否]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "クリックして拒否！", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "対象のディメンションが存在しないため、テレポートできません", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "自分自身へのテレポートリクエストは無効です", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s は必要な承認・拒否コマンドを使用できません", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "からの ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを自動承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを自動承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの場所へテレポートしたがっています ", "color": "green"},
+    {"text": "(", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "で自動承認できます)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(または ", "color": "gray"},
+    {"text": "/tpaa で承認", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad で拒否", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "へ ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを送信しました。有効時間は ", "color": "green"},
+    {"text": "%2$s 秒", "color": "yellow"},
+    {"text": "です", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "そのプレイヤーにはすでに未処理の ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストがあります", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "相手があなたの ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを長時間承認しなかったため、自動的に拒否されました", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストの期限が切れました", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "からの ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "未処理の ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストはありません", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "からの ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを拒否しました", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストを拒否しました :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "未処理のテレポートリクエストはありません", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストの自動承認を", "color": "green"},
+    {"text": "有効", "color": "dark_green", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "リクエストの自動承認を", "color": "green"},
+    {"text": "無効", "color": "red", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたを自分の場所へテレポートさせたがっています", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(または ", "color": "gray"},
+    {"text": "/tpaherea で承認", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered で拒否", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "へ ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを送信しました。有効時間は ", "color": "green"},
+    {"text": "%2$s 秒", "color": "yellow"},
+    {"text": "です", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "そのプレイヤーにはすでに未処理の ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストがあります", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "相手があなたの ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを長時間承認しなかったため、自動的に拒否されました", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストの期限が切れました", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "からの ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを承認しました", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "未処理の ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストはありません", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "からの ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを拒否しました", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストを拒否しました :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "未処理の ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "リクエストはありません", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "プレイヤー転送: プレイヤーへ ", "color": "dark_green", "bold": true},
+    {"text": "ページ: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "プレイヤー転送: プレイヤーを招待 ", "color": "dark_green", "bold": true},
+    {"text": "ページ: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "このプレイヤーは自動承認を有効にしています", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "クリックしてこのプレイヤーへの転送をリクエスト", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "クリックしてこのプレイヤーをあなたの場所へ招待", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "このプレイヤーはオフラインです。リストを更新してください", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "自動承認: 有効", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "自動承認: ", "color": "green"},
+    {"text": "無効", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "リクエストを自動的に承認します", "color": "gray"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "クリックして自動承認を無効化", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "クリックして自動承認を有効化", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "前のページ", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "次のページ", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "%1$s ページ", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "メニューを閉じる", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "プレイヤーリストを更新", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "現在オンラインのプレイヤーを再読み込み", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "再使用するには ", "color": "red"},
+    {"text": "%1$s 秒 ", "color": "yellow"},
+    {"text": "待ってください", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "ランダムテレポートを実行しました", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "テレポートしました", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "気をつけて", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "ワールドスポーンへテレポートしました", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "/back ", "color": "gold"},
+    {"text": "で死亡地点へ戻れます ", "color": "green"},
+    {"text": "[クリックして入力]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "クリックして入力", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "死亡地点へ戻りました", "color": "green"},
+  "ppe_essentials.back.none": {"text": "保存された死亡地点がありません", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "前回のテレポート地点へ戻りました", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "保存された前回のテレポート地点がありません", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "ホームを設定しました。", "color": "green"},
+    {"text": "/home ", "color": "gold"},
+    {"text": "でテレポートできます", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "ホームを", "color": "green"},
+    {"text": "削除", "color": "red", "bold": true},
+    {"text": "しました", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "ホームを設定していません", "color": "red"},
+  "ppe_essentials.home.success": {"text": "ホームへテレポートしました", "color": "green"},
+  "ppe_essentials.home.title": {"text": "おかえりなさい", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "ホームを設定していません。", "color": "red"},
+    {"text": "/home set ", "color": "gold"},
+    {"text": "で設定できます", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "はもう耐えられませんでした", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "閉じると消去されます", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "へテレポートしました", "color": "green"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "そのワープは存在しません: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "のワープを設定しました", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "ワープ ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "を", "color": "green"},
+    {"text": "削除", "color": "red", "bold": true},
+    {"text": "しました", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "そのワープは存在しません: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "が導入されています。", "color": "green"},
+    {"text": "/home /tpa ", "color": "gold"},
+    {"text": "などのコマンドを使用できます。", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "でコマンド一覧を表示できます ", "color": "green"},
+    {"text": "[クリックして表示]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "PPE Essentials のヘルプを表示", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "コマンド:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "テレポート: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "ホームとワープ: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "便利機能: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "管理: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "すべてのプレイヤーデータを", "color": "green"},
+    {"text": "消去", "color": "red", "bold": true},
+    {"text": "しました", "color": "green"}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "通知の発火データを", "color": "green"},
+    {"text": "消去", "color": "red", "bold": true},
+    {"text": "しました", "color": "green"}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "コマンド履歴がありません", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "repeat ", "color": "yellow"},
+    {"text": "コマンドは指定できません", "color": "red"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "を回復しました", "color": "green"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "に回復されました", "color": "green"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "の飛行を", "color": "green"},
+    {"text": "有効", "color": "dark_green", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "の飛行を", "color": "green"},
+    {"text": "無効", "color": "red", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの飛行を", "color": "green"},
+    {"text": "有効", "color": "dark_green", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの飛行を", "color": "green"},
+    {"text": "無効", "color": "red", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "の無敵モードを", "color": "green"},
+    {"text": "有効", "color": "dark_green", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "の無敵モードを", "color": "green"},
+    {"text": "無効", "color": "red", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの無敵モードを", "color": "green"},
+    {"text": "有効", "color": "dark_green", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "があなたの無敵モードを", "color": "green"},
+    {"text": "無効", "color": "red", "bold": true},
+    {"text": "にしました", "color": "green"}
+  ]}
+}

@@ -1,0 +1,346 @@
+{
+  "ppe_essentials.request.accept": {"text": "[Нажмите, чтобы принять]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "Нажмите, чтобы принять!", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[Нажмите, чтобы отклонить]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "Нажмите, чтобы отклонить!", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "Целевое измерение не существует, телепортация не удалась", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "Запросы телепортации самому себе отключены", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s не может использовать необходимые команды принятия и отклонения", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "Вы автоматически приняли ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос от ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "автоматически принял ваш ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "хочет телепортироваться к вам ", "color": "green"},
+    {"text": "(используйте ", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "для автопринятия)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(или ", "color": "gray"},
+    {"text": "/tpaa принять", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad отклонить", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос отправлен игроку ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": ", действует ", "color": "green"},
+    {"text": "%2$s секунд", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "У этого игрока уже есть ожидающий ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "Другой игрок слишком долго не принимал ваш ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос, поэтому он был автоматически отклонён", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос истёк", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "Вы приняли ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос от ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "принял ваш ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "Нет ожидающего ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запроса", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "Вы отклонили ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос от ", "color": "red"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "отклонил ваш ", "color": "red"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запрос :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "Нет ожидающего запроса на телепортацию", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "Автопринятие ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запросов теперь ", "color": "green"},
+    {"text": "включено", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "Автопринятие ", "color": "green"},
+    {"text": "TPA", "color": "yellow"},
+    {"text": "-запросов теперь ", "color": "green"},
+    {"text": "выключено", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "хочет, чтобы вы телепортировались к нему", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(или ", "color": "gray"},
+    {"text": "/tpaherea принять", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered отклонить", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос отправлен игроку ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": ", действует ", "color": "green"},
+    {"text": "%2$s секунд", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "У этого игрока уже есть ожидающий ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "Другой игрок слишком долго не принимал ваш ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос, поэтому он был автоматически отклонён", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос истёк", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "Вы приняли ", "color": "green"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос от ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "принял ваш ", "color": "green"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "Нет ожидающего ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запроса", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "Вы отклонили ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос от ", "color": "red"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "отклонил ваш ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запрос :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "Нет ожидающего ", "color": "red"},
+    {"text": "TPAhere", "color": "yellow"},
+    {"text": "-запроса", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "Телепорт: К игроку ", "color": "dark_green", "bold": true},
+    {"text": "Страница: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "Телепорт: Пригласить игрока ", "color": "dark_green", "bold": true},
+    {"text": "Страница: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "У игрока включено автопринятие", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "Нажмите, чтобы запросить телепорт к игроку", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "Нажмите, чтобы пригласить игрока к себе", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "Игрок вышел; обновите список игроков", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "Автопринятие ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": Включено", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "Автопринятие ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": ", "color": "green"},
+    {"text": "Выключено", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "Автоматически принимать запросы ", "color": "gray"},
+    {"text": "TPA", "color": "yellow", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "Нажмите, чтобы выключить автопринятие", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "Нажмите, чтобы включить автопринятие", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "Предыдущая страница", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "Следующая страница", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "Страница %1$s", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "Закрыть меню", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "Обновить список игроков", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "Заново загрузить игроков в сети", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "Подождите ", "color": "red"},
+    {"text": "%1$s секунд", "color": "yellow"},
+    {"text": " перед повторным использованием", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "Случайная телепортация выполнена", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "Телепортировано", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "Будьте осторожны", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "Телепортировано на точку появления мира", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "Используйте ", "color": "green"},
+    {"text": "/back", "color": "gold"},
+    {"text": ", чтобы вернуться к месту смерти ", "color": "green"},
+    {"text": "[Нажмите, чтобы вставить]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "Нажмите, чтобы вставить", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "Вы вернулись к месту смерти", "color": "green"},
+  "ppe_essentials.back.none": {"text": "У вас нет сохранённого места смерти", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "Вы вернулись к предыдущей точке телепортации", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "У вас нет сохранённой предыдущей точки телепортации", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "Дом установлен, используйте ", "color": "green"},
+    {"text": "/home", "color": "gold"},
+    {"text": " для телепортации", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "Ваш дом ", "color": "green"},
+    {"text": "удалён", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "Вы не установили дом", "color": "red"},
+  "ppe_essentials.home.success": {"text": "Телепортировано к вашему дому", "color": "green"},
+  "ppe_essentials.home.title": {"text": "Добро пожаловать домой", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "Вы не установили дом, используйте ", "color": "red"},
+    {"text": "/home set", "color": "gold"},
+    {"text": ", чтобы сделать это", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "больше не смог продолжать", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "очищается при закрытии", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "Телепортация к ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "Такого варпа нет: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "Варп ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "установлен", "color": "green"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "Варп ", "color": "green"},
+    {"text": "%1$s ", "color": "yellow"},
+    {"text": "удалён", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "Такого варпа нет: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "установлен. Вы можете использовать команды вроде ", "color": "green"},
+    {"text": "/home /tpa", "color": "gold"},
+    {"text": ". Используйте ", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "для списка команд ", "color": "green"},
+    {"text": "[Нажмите, чтобы открыть]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "Открыть помощь PPE Essentials", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "команды:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "Телепорт: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "Дома и варпы: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "Полезное: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "Админ: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "Все данные игроков ", "color": "green"},
+    {"text": "очищены", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "Данные триггеров уведомлений ", "color": "green"},
+    {"text": "очищены", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "У вас нет истории команд", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "Нельзя указать команду ", "color": "red"},
+    {"text": "repeat", "color": "yellow"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "Игрок ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "исцелён", "color": "green"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "Вас исцелил ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "Полёт для ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "включён", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "Полёт для ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "выключен", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "включил", "color": "dark_green", "bold": true},
+    {"text": " вам полёт", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "выключил", "color": "red", "bold": true},
+    {"text": " вам полёт", "color": "green"}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "Режим бога для ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "включён", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "Режим бога для ", "color": "green"},
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "выключен", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "включил", "color": "dark_green", "bold": true},
+    {"text": " вам режим бога", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "выключил", "color": "red", "bold": true},
+    {"text": " вам режим бога", "color": "green"}
+  ]}
+}

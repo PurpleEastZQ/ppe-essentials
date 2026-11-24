@@ -1,0 +1,353 @@
+{
+  "ppe_essentials.request.accept": {"text": "[Click to accept]", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.accept.tooltip": {"text": "Click to accept!", "color": "dark_green", "bold": true},
+  "ppe_essentials.request.deny": {"text": "[Click to deny]", "color": "red", "bold": true},
+  "ppe_essentials.request.deny.tooltip": {"text": "Click to deny!", "color": "red", "bold": true},
+  "ppe_essentials.teleport.missing_dimension": {"text": "The target dimension does not exist, teleport failed", "color": "red"},
+  "ppe_essentials.teleport.request.self_disabled": {"text": "Sending teleport requests to yourself is disabled", "color": "red"},
+  "ppe_essentials.teleport.request.response_unavailable": {"text": "%1$s cannot use the required accept and deny commands", "color": "red"},
+  "ppe_essentials.tpa.auto.target": {"text": "", "extra": [
+    {"text": "You automatically accepted ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": "'s ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.auto.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "automatically accepted your ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "wants to teleport to your location ", "color": "green"},
+    {"text": "(use ", "color": "gray"},
+    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "to auto-accept)", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
+    {"text": "(or ", "color": "gray"},
+    {"text": "/tpaa to accept", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpad to deny", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
+    {"text": "Sent a ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request to ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": ", valid for ", "color": "green"},
+    {"text": "%2$s seconds", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpa.request.busy": {"text": "", "extra": [
+    {"text": "That player already has another pending ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.sender": {"text": "", "extra": [
+    {"text": "The other player did not accept your ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request for too long, so it was automatically denied", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.timeout.target": {"text": "", "extra": [
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request expired", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.accept.target": {"text": "", "extra": [
+    {"text": "You accepted ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": "'s ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "accepted your ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpa.accept.none": {"text": "", "extra": [
+    {"text": "No pending ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.target": {"text": "", "extra": [
+    {"text": "You denied ", "color": "red"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": "'s ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "denied your ", "color": "red"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "request :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpa.deny.none": {"text": "No pending teleport request", "color": "red"},
+  "ppe_essentials.tpaauto.enabled": {"text": "", "extra": [
+    {"text": "Auto-accepting ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "requests is now ", "color": "green"},
+    {"text": "enabled", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.tpaauto.disabled": {"text": "", "extra": [
+    {"text": "Auto-accepting ", "color": "green"},
+    {"text": "TPA ", "color": "yellow"},
+    {"text": "requests is now ", "color": "green"},
+    {"text": "disabled", "color": "red", "bold": true}
+  ]},
+  "ppe_essentials.tpahere.request.target": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "wants you to teleport to their location", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
+    {"text": "(or ", "color": "gray"},
+    {"text": "/tpaherea to accept", "color": "dark_green"},
+    {"text": " ", "color": "gray"},
+    {"text": "/tpahered to deny", "color": "red"},
+    {"text": ")", "color": "gray"}
+  ]},
+  "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
+    {"text": "Sent a ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request to ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": ", valid for ", "color": "green"},
+    {"text": "%2$s seconds", "color": "yellow"}
+  ]},
+  "ppe_essentials.tpahere.request.busy": {"text": "", "extra": [
+    {"text": "That player already has another pending ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.sender": {"text": "", "extra": [
+    {"text": "The other player did not accept your ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request for too long, so it was automatically denied", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.timeout.target": {"text": "", "extra": [
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request expired", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.accept.target": {"text": "", "extra": [
+    {"text": "You accepted ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": "'s ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "accepted your ", "color": "green"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "green"}
+  ]},
+  "ppe_essentials.tpahere.accept.none": {"text": "", "extra": [
+    {"text": "No pending ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.target": {"text": "", "extra": [
+    {"text": "You denied ", "color": "red"},
+    {"text": "%1$s", "color": "aqua"},
+    {"text": "'s ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.sender": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "denied your ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request :(", "color": "red"}
+  ]},
+  "ppe_essentials.tpahere.deny.none": {"text": "", "extra": [
+    {"text": "No pending ", "color": "red"},
+    {"text": "TPAhere ", "color": "yellow"},
+    {"text": "request", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.tpa.title": {"text": "", "extra": [
+    {"text": "TPA: To Player ", "color": "dark_green", "bold": true},
+    {"text": "Page: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.tpahere.title": {"text": "", "extra": [
+    {"text": "TPA: Invite ", "color": "dark_green", "bold": true},
+    {"text": "Page: %1$s / %2$s", "color": "dark_gray", "bold": true}
+  ]},
+  "ppe_essentials.teleport_menu.blank": {"text": " "},
+  "ppe_essentials.teleport_menu.player.name": {"text": "%1$s", "color": "aqua", "bold": true},
+  "ppe_essentials.teleport_menu.player.auto": {"text": "This player has auto-accept enabled", "color": "green"},
+  "ppe_essentials.teleport_menu.player.tpa": {"text": "Click to request teleporting to this player", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.tpahere": {"text": "Click to request this player teleport to you", "color": "yellow"},
+  "ppe_essentials.teleport_menu.player.offline": {"text": "That player went offline; refresh the player list", "color": "red"},
+  "ppe_essentials.teleport_menu.auto.enabled.name": {"text": "", "extra": [
+    {"text": "Auto-accept ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": Enabled", "color": "green"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disabled.name": {"text": "", "extra": [
+    {"text": "Auto-accept ", "color": "green"},
+    {"text": "TPA", "color": "yellow", "bold": true},
+    {"text": ": ", "color": "green"},
+    {"text": "Disabled", "color": "red"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.description": {"text": "", "extra": [
+    {"text": "Automatically accept incoming ", "color": "gray"},
+    {"text": "TPA ", "color": "yellow", "bold": true},
+    {"text": "requests", "color": "gray"}
+  ]},
+  "ppe_essentials.teleport_menu.auto.disable": {"text": "Click to disable auto-accept", "color": "yellow"},
+  "ppe_essentials.teleport_menu.auto.enable": {"text": "Click to enable auto-accept", "color": "yellow"},
+  "ppe_essentials.teleport_menu.previous.name": {"text": "Previous Page", "color": "yellow"},
+  "ppe_essentials.teleport_menu.next.name": {"text": "Next Page", "color": "yellow"},
+  "ppe_essentials.teleport_menu.page": {"text": "Page %1$s", "color": "gray"},
+  "ppe_essentials.teleport_menu.close": {"text": "Close Menu", "color": "red"},
+  "ppe_essentials.teleport_menu.refresh.name": {"text": "Refresh Player List", "color": "yellow"},
+  "ppe_essentials.teleport_menu.refresh.description": {"text": "Reload the currently online players", "color": "gray"},
+  "ppe_essentials.rtp.cooldown": {"text": "", "extra": [
+    {"text": "Please wait ", "color": "red"},
+    {"text": "%1$s seconds ", "color": "yellow"},
+    {"text": "before using this again", "color": "red"}
+  ]},
+  "ppe_essentials.rtp.success": {"text": "Random teleport completed", "color": "green"},
+  "ppe_essentials.rtp.title": {"text": "Teleported", "color": "green"},
+  "ppe_essentials.rtp.subtitle": {"text": "Stay safe", "color": "white"},
+  "ppe_essentials.spawn.success": {"text": "Teleported to the world spawn", "color": "green"},
+  "ppe_essentials.back.notice": {"text": "", "extra": [
+    {"text": "Use ", "color": "green"},
+    {"text": "/back ", "color": "gold"},
+    {"text": "to return to your death point ", "color": "green"},
+    {"text": "[Click to fill]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.back.notice.tooltip": {"text": "Click to fill", "color": "dark_green", "bold": true},
+  "ppe_essentials.back.success": {"text": "Returned to your death location", "color": "green"},
+  "ppe_essentials.back.none": {"text": "You do not have a saved death location", "color": "red"},
+  "ppe_essentials.tback.success": {"text": "Returned to your previous teleport location", "color": "green"},
+  "ppe_essentials.tback.none": {"text": "You do not have a saved previous teleport location", "color": "red"},
+  "ppe_essentials.sethome.success": {"text": "", "extra": [
+    {"text": "Home set, use ", "color": "green"},
+    {"text": "/home ", "color": "gold"},
+    {"text": "to teleport", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.success": {"text": "", "extra": [
+    {"text": "Deleted", "color": "red", "bold": true},
+    {"text": " your home", "color": "green"}
+  ]},
+  "ppe_essentials.delhome.none": {"text": "You have not set a home", "color": "red"},
+  "ppe_essentials.home.success": {"text": "Teleported to your home", "color": "green"},
+  "ppe_essentials.home.title": {"text": "Welcome home", "color": "green"},
+  "ppe_essentials.home.subtitle": {"text": "%1$s", "color": "aqua"},
+  "ppe_essentials.home.none": {"text": "", "extra": [
+    {"text": "You have not set a home, use ", "color": "red"},
+    {"text": "/home set ", "color": "gold"},
+    {"text": "to set one", "color": "red"}
+  ]},
+  "ppe_essentials.suicide.broadcast": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "couldn't take it anymore", "color": "gray"}
+  ]},
+  "ppe_essentials.trash.title": {"text": "clears when closed", "color": "red", "bold": true},
+  "ppe_essentials.warp.success": {"text": "", "extra": [
+    {"text": "Teleported to ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.warp.none": {"text": "", "extra": [
+    {"text": "No such warp: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.setwarp.success": {"text": "", "extra": [
+    {"text": "Set warp ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.delwarp.success": {"text": "", "extra": [
+    {"text": "Deleted", "color": "red", "bold": true},
+    {"text": " warp ", "color": "green"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.delwarp.none": {"text": "", "extra": [
+    {"text": "No such warp: ", "color": "red"},
+    {"text": "%1$s", "color": "yellow"}
+  ]},
+  "ppe_essentials.first_join.notice": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "is installed. You can use commands like ", "color": "green"},
+    {"text": "/home /tpa", "color": "gold"},
+    {"text": ". Use ", "color": "green"},
+    {"text": "/ppe-ess help ", "color": "gold"},
+    {"text": "to view command list ", "color": "green"},
+    {"text": "[Click to view]", "color": "dark_green", "bold": true}
+  ]},
+  "ppe_essentials.first_join.notice.tooltip": {"text": "Click to view PPE Essentials help", "color": "dark_green", "bold": true},
+  "ppe_essentials.help.header": {"text": "", "extra": [
+    {"text": "PPE Essentials ", "color": "light_purple"},
+    {"text": "commands:", "color": "green"}
+  ]},
+  "ppe_essentials.help.teleport": {"text": "Teleport: ", "color": "gray"},
+  "ppe_essentials.help.home": {"text": "Home and warps: ", "color": "gray"},
+  "ppe_essentials.help.utility": {"text": "Utility: ", "color": "gray"},
+  "ppe_essentials.help.op": {"text": "Admin: ", "color": "gray"},
+  "ppe_essentials.reset.all.success": {"text": "", "extra": [
+    {"text": "Cleared", "color": "red", "bold": true},
+    {"text": " all player data", "color": "green"}
+  ]},
+  "ppe_essentials.reset.notice.success": {"text": "", "extra": [
+    {"text": "Cleared", "color": "red", "bold": true},
+    {"text": " notice trigger data", "color": "green"}
+  ]},
+  "ppe_essentials.repeat.none": {"text": "You have no command history", "color": "red"},
+  "ppe_essentials.repeat.blocked": {"text": "", "extra": [
+    {"text": "You cannot specify the ", "color": "red"},
+    {"text": "repeat ", "color": "yellow"},
+    {"text": "command", "color": "red"}
+  ]},
+  "ppe_essentials.heal.success": {"text": "", "extra": [
+    {"text": "Healed ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.heal.target": {"text": "", "extra": [
+    {"text": "You were healed by ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.fly.enabled": {"text": "", "extra": [
+    {"text": "Enabled", "color": "dark_green", "bold": true},
+    {"text": " flight for ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.fly.disabled": {"text": "", "extra": [
+    {"text": "Disabled", "color": "red", "bold": true},
+    {"text": " flight for ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.fly.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "enabled", "color": "dark_green", "bold": true},
+    {"text": " flight for you", "color": "green"}
+  ]},
+  "ppe_essentials.fly.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "disabled", "color": "red", "bold": true},
+    {"text": " flight for you", "color": "green"}
+  ]},
+  "ppe_essentials.god.enabled": {"text": "", "extra": [
+    {"text": "Enabled", "color": "dark_green", "bold": true},
+    {"text": " god mode for ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.god.disabled": {"text": "", "extra": [
+    {"text": "Disabled", "color": "red", "bold": true},
+    {"text": " god mode for ", "color": "green"},
+    {"text": "%1$s", "color": "aqua"}
+  ]},
+  "ppe_essentials.god.target.enabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "enabled", "color": "dark_green", "bold": true},
+    {"text": " god mode for you", "color": "green"}
+  ]},
+  "ppe_essentials.god.target.disabled": {"text": "", "extra": [
+    {"text": "%1$s ", "color": "aqua"},
+    {"text": "disabled", "color": "red", "bold": true},
+    {"text": " god mode for you", "color": "green"}
+  ]}
+}

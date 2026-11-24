@@ -9,7 +9,7 @@ import (
 	"net"
 	"net/netip"
 	"os"
-	"regexp"
+	"slices"
 	"strings"
 	"time"
 
@@ -19,17 +19,16 @@ import (
 	"github.com/go-mclib/client/modules/inventory"
 	"github.com/go-mclib/client/modules/self"
 	"github.com/go-mclib/data/items"
+	"github.com/go-mclib/data/lang"
 	"github.com/go-mclib/data/packets"
 	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
-
-var legacyFormatting = regexp.MustCompile(`§[0-9a-fk-or]`)
 
 type player struct {
 	*client.Client
 	inventory *inventory.Module
 	position  *self.Module
-	messages  chan string
+	messages  chan ns.TextComponent
 	done      chan error
 }
 
@@ -38,7 +37,7 @@ func join(ctx context.Context, address, username string) (*player, error) {
 		Address: address, Username: username, TreatTransferAsDisconnect: true,
 	})
 	c.Register(inventory.New())
-	p := &player{c, inventory.From(c), self.From(c), make(chan string, 64), make(chan error, 1)}
+	p := &player{c, inventory.From(c), self.From(c), make(chan ns.TextComponent, 64), make(chan error, 1)}
 	spawned := make(chan struct{}, 1)
 	p.position.OnSpawn(func() {
 		select {
@@ -46,10 +45,10 @@ func join(ctx context.Context, address, username string) (*player, error) {
 		default:
 		}
 	})
-	chat.From(c).OnSystemChat(func(message string, overlay bool) {
-		if !overlay {
+	chat.From(c).OnSystemChatEvent(func(event chat.SystemChatEvent) {
+		if !event.Overlay {
 			select {
-			case p.messages <- message:
+			case p.messages <- event.Content:
 			default:
 			}
 		}
@@ -81,17 +80,34 @@ func (p *player) wait(ctx context.Context, label string, satisfied func() bool) 
 }
 
 func (p *player) expectMessage(ctx context.Context, message string) error {
+	return p.expectChat(ctx, message, func(received ns.TextComponent) bool {
+		return strings.Contains(received.Render(lang.Translate), message)
+	})
+}
+
+func (p *player) expectChat(ctx context.Context, message string, matches func(ns.TextComponent) bool) error {
 	return p.wait(ctx, "waiting for "+p.Username+" to receive "+message, func() bool {
 		for {
 			select {
 			case received := <-p.messages:
-				if strings.Contains(legacyFormatting.ReplaceAllString(received, ""), message) {
+				if matches(received) {
 					return true
 				}
 			default:
 				return false
 			}
 		}
+	})
+}
+
+func hasRequestButton(component ns.TextComponent, text, color, command string) bool {
+	if component.Text == text && component.Color == color && component.Bold != nil && *component.Bold &&
+		component.ClickEvent != nil && component.ClickEvent.Action == "run_command" && component.ClickEvent.Command == command &&
+		component.HoverEvent != nil && component.HoverEvent.Action == "show_text" {
+		return true
+	}
+	return slices.ContainsFunc(component.Extra, func(child ns.TextComponent) bool {
+		return hasRequestButton(child, text, color, command)
 	})
 }
 
@@ -161,6 +177,12 @@ func run(ctx context.Context, address string) error {
 		return err
 	}
 	if err := target.expectMessage(ctx, "PPE_TestA wants to teleport to your location"); err != nil {
+		return err
+	}
+	if err := target.expectChat(ctx, "styled TPA accept and deny buttons", func(message ns.TextComponent) bool {
+		return hasRequestButton(message, "[Click to accept]", "dark_green", "/tpaa") &&
+			hasRequestButton(message, "[Click to deny]", "red", "/tpad")
+	}); err != nil {
 		return err
 	}
 	if err := target.commandExpect(ctx, "tpaa", "You accepted PPE_TestA's TPA request"); err != nil {
@@ -265,7 +287,7 @@ func checkCommands(ctx context.Context, operator, executor *player) error {
 	}
 	log.Print("PASS repeat preserves executor and position, uses the sender's history, and grouped home commands use the executor's home")
 
-	const warpName = "主城 广场"
+	const warpName = "主城 $1 %1$s"
 	quoted := fmt.Sprintf("%q", warpName)
 	if err := operator.commandExpect(ctx, "warp set "+quoted, "Set warp "+warpName); err != nil {
 		return err

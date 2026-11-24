@@ -13,6 +13,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import me.purpleeast.mods.ppe_essentials.mixin.CommandSourceStackAccessor;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandResultCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -623,7 +624,8 @@ public final class PpeCommands {
             }
 
             HelpCommand command = commands[i];
-            line.append(Component.literal((canShowAsAvailable(source, command) ? "§6" : "§c") + command.display()));
+            line.append(Component.literal(command.display())
+                    .withStyle(canShowAsAvailable(source, command) ? ChatFormatting.GOLD : ChatFormatting.RED));
         }
         source.sendSuccess(() -> PpeLang.prefixed(line), false);
     }
