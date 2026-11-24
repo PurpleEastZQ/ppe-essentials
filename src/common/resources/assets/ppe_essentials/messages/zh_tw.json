@@ -213,6 +213,7 @@
     {"text": "%1$s 秒 ", "color": "yellow"},
     {"text": "後再使用", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "找不到安全的隨機傳送位置", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "已進行隨機傳送", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "傳送成功", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "注意安全", "color": "white"},

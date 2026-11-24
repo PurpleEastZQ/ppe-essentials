@@ -148,13 +148,17 @@ func (p *player) selectTarget(ctx context.Context, command, title string) error 
 	})
 }
 
-func run(ctx context.Context, address string) error {
+func run(ctx context.Context, address, configPath string) error {
 	requester, err := join(ctx, address, "PPE_TestA")
 	if err != nil {
 		return err
 	}
 	target, err := join(ctx, address, "PPE_TestB")
 	if err != nil {
+		return err
+	}
+
+	if err := checkLegacyData(ctx, requester); err != nil {
 		return err
 	}
 
@@ -215,7 +219,19 @@ func run(ctx context.Context, address string) error {
 		return err
 	}
 	log.Print("PASS /tpahere menu, request, acceptance, and target teleport")
-	return checkCommands(ctx, requester, target)
+	if err := checkCommands(ctx, requester, target); err != nil {
+		return err
+	}
+	if err := checkRandomTeleport(ctx, requester); err != nil {
+		return err
+	}
+	if err := checkSpectatorFlight(ctx, requester); err != nil {
+		return err
+	}
+	if configPath != "" {
+		return checkCommandReload(ctx, requester, configPath)
+	}
+	return nil
 }
 
 func (p *player) commandExpect(ctx context.Context, command, message string) error {
@@ -316,14 +332,22 @@ func checkCommands(ctx context.Context, operator, executor *player) error {
 func main() {
 	address := flag.String("address", "127.0.0.1:25565", "disposable offline-mode 26.3 test server")
 	timeout := flag.Duration("timeout", time.Minute, "total test timeout")
+	legacyPath := flag.String("seed-legacy-data", "", "write a 1.21.1 SavedData fixture and exit")
+	configPath := flag.String("config", "", "disposable config used to verify command reload")
 	flag.Parse()
+	if *legacyPath != "" {
+		if err := seedLegacyData(*legacyPath); err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
 	host, _, err := net.SplitHostPort(*address)
 	ip, parseErr := netip.ParseAddr(host)
 	if err != nil || parseErr != nil || !ip.IsLoopback() {
 		log.Fatal("address must use a loopback IP and port")
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
-	err = run(ctx, *address)
+	err = run(ctx, *address, *configPath)
 	cancel()
 	if err != nil {
 		log.Print(err)

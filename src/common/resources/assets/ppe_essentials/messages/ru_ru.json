@@ -203,6 +203,7 @@
     {"text": "%1$s секунд", "color": "yellow"},
     {"text": " перед повторным использованием", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "Не удалось найти безопасное место для телепортации.", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "Случайная телепортация выполнена", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "Телепортировано", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "Будьте осторожны", "color": "white"},

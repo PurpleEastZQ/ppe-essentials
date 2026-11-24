@@ -201,6 +201,7 @@
     {"text": "%1$s초 ", "color": "yellow"},
     {"text": "기다려 주세요", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "안전한 텔레포트 위치를 찾지 못했습니다.", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "랜덤 순간이동을 수행했습니다", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "순간이동 완료", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "조심하세요", "color": "white"},

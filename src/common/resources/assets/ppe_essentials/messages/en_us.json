@@ -211,6 +211,7 @@
     {"text": "%1$s seconds ", "color": "yellow"},
     {"text": "before using this again", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "Could not find a safe place to teleport.", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "Random teleport completed", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "Teleported", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "Stay safe", "color": "white"},

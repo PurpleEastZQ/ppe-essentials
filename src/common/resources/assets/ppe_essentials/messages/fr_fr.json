@@ -204,6 +204,7 @@
     {"text": "%1$s secondes ", "color": "yellow"},
     {"text": "avant de réutiliser cette commande", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "Aucun emplacement sûr pour la téléportation aléatoire.", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "Téléportation aléatoire effectuée", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "Téléporté", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "Soyez prudent", "color": "white"},

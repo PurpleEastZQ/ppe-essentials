@@ -31,31 +31,28 @@ final class PpeTeleportMenuContent {
     private static final int REFRESH_SLOT = 51;
     private static final int NEXT_SLOT = 53;
 
-    private final SimpleContainer container;
+    private final SimpleContainer container = new SimpleContainer(MENU_SIZE);
     private final ServerPlayer owner;
     private final boolean here;
     private int page;
     private int totalPages;
     private List<UUID> playerSlots = List.of();
 
-    PpeTeleportMenuContent(SimpleContainer container, ServerPlayer owner, boolean here, int requestedPage) {
-        this.container = container;
+    PpeTeleportMenuContent(ServerPlayer owner, boolean here, int requestedPage) {
         this.owner = owner;
         this.here = here;
         refresh(requestedPage);
     }
 
-    static Component title(ServerPlayer player, boolean here, int requestedPage) {
-        int totalPages = pageCount(PpeCommands.teleportMenuTargets(player).size());
-        int page = clampPage(requestedPage, totalPages);
+    Component title() {
         String titleKey = here
                 ? "ppe_essentials.teleport_menu.tpahere.title"
                 : "ppe_essentials.teleport_menu.tpa.title";
-        return PpeLang.component(player, titleKey, page + 1, totalPages);
+        return PpeLang.component(owner, titleKey, page + 1, totalPages);
     }
 
-    static int currentPage(ServerPlayer player, int requestedPage) {
-        return clampPage(requestedPage, pageCount(PpeCommands.teleportMenuTargets(player).size()));
+    SimpleContainer container() {
+        return container;
     }
 
     ServerPlayer owner() {
@@ -214,7 +211,7 @@ final class PpeTeleportMenuContent {
     }
 
     private void reopen(int targetPage) {
-        PpeCompat.openTeleportMenu(owner, here, targetPage);
+        PpeTeleportMenuBase.open(owner, here, targetPage);
     }
 
     private int previousPage() {

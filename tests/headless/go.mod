@@ -5,6 +5,7 @@ go 1.25.4
 require (
 	github.com/go-mclib/client v0.0.0-20261112211548-022b47e95d21
 	github.com/go-mclib/data v0.0.0-20261112211505-360123dc4978
+	github.com/go-mclib/nbt v0.1.1-0.20261112211432-5d6433d23d08
 	github.com/go-mclib/protocol v0.0.0-20261112211446-c9e7c6761849
 )
 
@@ -22,7 +23,6 @@ require (
 	github.com/clipperhouse/stringish v0.1.1 // indirect
 	github.com/clipperhouse/uax29/v2 v2.3.0 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/go-mclib/nbt v0.1.1-0.20261112211432-5d6433d23d08 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect

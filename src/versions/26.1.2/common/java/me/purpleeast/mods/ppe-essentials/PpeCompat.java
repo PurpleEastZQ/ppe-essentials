@@ -17,7 +17,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.permissions.LevelBasedPermissionSet;
 import net.minecraft.server.permissions.Permission;
 import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -78,8 +77,8 @@ public final class PpeCompat {
         player.kill(level(player));
     }
 
-    public static void teleport(ServerPlayer player, ServerLevel level, double x, double y, double z, float yRot, float xRot) {
-        player.teleportTo(level, x, y, z, Set.of(), yRot, xRot, false);
+    public static boolean teleport(ServerPlayer player, ServerLevel level, double x, double y, double z, float yRot, float xRot) {
+        return player.teleportTo(level, x, y, z, Set.of(), yRot, xRot, false);
     }
 
     static ServerPlayer senderPlayer(CommandSourceStack source, CommandSource sender) {
@@ -93,10 +92,6 @@ public final class PpeCompat {
             }
         }
         return null;
-    }
-
-    public static CommandSourceStack withPermission(CommandSourceStack source, int level) {
-        return source.withPermission(LevelBasedPermissionSet.forLevel(PermissionLevel.byId(level)));
     }
 
     public static boolean hasPermission(CommandSourceStack source, int level) {
@@ -116,6 +111,10 @@ public final class PpeCompat {
                 current.walkingSpeed()
         ));
         player.onUpdateAbilities();
+    }
+
+    public static boolean mayFly(ServerPlayer player) {
+        return player.getAbilities().pack().mayFly();
     }
 
     public static boolean isFlying(ServerPlayer player) {
@@ -157,10 +156,6 @@ public final class PpeCompat {
 
     public static HoverEvent showTextHover(Component text) {
         return new HoverEvent.ShowText(text);
-    }
-
-    public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
-        PpeTeleportMenu.open(player, here, page);
     }
 
     public static Item teleportMenuDivider() {

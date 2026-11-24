@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -60,16 +61,12 @@ public final class PpeCompat {
         player.kill();
     }
 
-    public static void teleport(ServerPlayer player, ServerLevel level, double x, double y, double z, float yRot, float xRot) {
-        player.teleportTo(level, x, y, z, yRot, xRot);
+    public static boolean teleport(ServerPlayer player, ServerLevel level, double x, double y, double z, float yRot, float xRot) {
+        return player.teleportTo(level, x, y, z, Set.of(), yRot, xRot);
     }
 
     static ServerPlayer senderPlayer(CommandSourceStack source, CommandSource sender) {
         return sender instanceof ServerPlayer player ? player : null;
-    }
-
-    public static CommandSourceStack withPermission(CommandSourceStack source, int level) {
-        return source.withPermission(level);
     }
 
     public static boolean hasPermission(CommandSourceStack source, int level) {
@@ -83,6 +80,11 @@ public final class PpeCompat {
             player.getAbilities().flying = false;
         }
         player.onUpdateAbilities();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static boolean mayFly(ServerPlayer player) {
+        return player.getAbilities().mayfly;
     }
 
     @SuppressWarnings("deprecation")
@@ -119,10 +121,6 @@ public final class PpeCompat {
 
     public static HoverEvent showTextHover(Component text) {
         return new HoverEvent(HoverEvent.Action.SHOW_TEXT, text);
-    }
-
-    public static void openTeleportMenu(ServerPlayer player, boolean here, int page) {
-        PpeTeleportMenu.open(player, here, page);
     }
 
     public static Item teleportMenuDivider() {

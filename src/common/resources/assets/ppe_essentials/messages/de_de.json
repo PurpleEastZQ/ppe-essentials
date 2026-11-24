@@ -207,6 +207,7 @@
     {"text": "%1$s Sekunden", "color": "yellow"},
     {"text": ", bevor du das erneut benutzt", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "Kein sicherer Ort für die zufällige Teleportation gefunden.", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "Zufälliger Teleport durchgeführt", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "Teleportiert", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "Bleib vorsichtig", "color": "white"},

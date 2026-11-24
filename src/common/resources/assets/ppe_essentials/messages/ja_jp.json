@@ -203,6 +203,7 @@
     {"text": "%1$s 秒 ", "color": "yellow"},
     {"text": "待ってください", "color": "red"}
   ]},
+  "ppe_essentials.rtp.none": {"text": "安全なテレポート先が見つかりませんでした。", "color": "red"},
   "ppe_essentials.rtp.success": {"text": "ランダムテレポートを実行しました", "color": "green"},
   "ppe_essentials.rtp.title": {"text": "テレポートしました", "color": "green"},
   "ppe_essentials.rtp.subtitle": {"text": "気をつけて", "color": "white"},

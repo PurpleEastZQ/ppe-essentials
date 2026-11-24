@@ -36,7 +36,20 @@ foreach ($target in $Loader | Select-Object -Unique) {
     $mods = New-Item -ItemType Directory -Path (Join-Path $server 'mods') -Force
     Copy-Item -LiteralPath $artifact -Destination $mods.FullName
     New-Item -ItemType Directory -Path (Join-Path $server 'config') | Out-Null
-    'allowSelfTeleportRequests = false' | Set-Content -LiteralPath "$server\config\ppe_essentials-common.toml"
+    $configPath = Join-Path $server 'config/ppe_essentials-common.toml'
+    @(
+        'allowSelfTeleportRequests = false',
+        'rtpMinDistance = 20',
+        'rtpMaxDistance = 28',
+        '',
+        '[commands.spawn]',
+        'enabled = false'
+    ) | Set-Content -LiteralPath $configPath
+    $legacyPath = Join-Path $server 'world/data/ppe_essentials_player_data.dat'
+    New-Item -ItemType Directory -Path (Split-Path -Parent $legacyPath) | Out-Null
+    & $clientPath -seed-legacy-data $legacyPath
+    if ($LASTEXITCODE) { throw 'Failed to seed legacy player data.' }
+    $legacyHash = (Get-FileHash -LiteralPath $legacyPath).Hash
     'eula=true' | Set-Content -LiteralPath "$server\eula.txt"
     @(
         'server-ip=127.0.0.1', "server-port=$Port", 'online-mode=false',
@@ -81,7 +94,14 @@ foreach ($target in $Loader | Select-Object -Unique) {
             }
             Start-Sleep -Milliseconds 400
         }
-        & $clientPath -address "127.0.0.1:$Port"
+        $process.StandardInput.WriteLine('list')
+        while (!(Select-String -LiteralPath $log -Pattern 'There are .* players online' -Quiet)) {
+            if ($process.HasExited -or [DateTime]::UtcNow -gt $deadline) {
+                throw "$target test server did not begin processing commands. See $log."
+            }
+            Start-Sleep -Milliseconds 400
+        }
+        & $clientPath -address "127.0.0.1:$Port" -config $configPath
         if ($LASTEXITCODE) { throw "$target headless test failed. See $log." }
     } finally {
         if (!$process.HasExited) {
@@ -89,5 +109,10 @@ foreach ($target in $Loader | Select-Object -Unique) {
             finally { if (!$process.WaitForExit(15000)) { $process.Kill(); $process.WaitForExit() } }
         }
         $process.Dispose()
+    }
+    $currentPath = Join-Path $server 'world/data/ppe_essentials/player_data.dat'
+    if (!(Test-Path -LiteralPath $currentPath -PathType Leaf) -or
+            (Get-FileHash -LiteralPath $legacyPath).Hash -ne $legacyHash) {
+        throw "$target did not persist migrated data while preserving the legacy file."
     }
 }
