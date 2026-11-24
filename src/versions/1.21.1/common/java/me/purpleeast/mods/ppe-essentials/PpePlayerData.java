@@ -13,10 +13,11 @@ public final class PpePlayerData extends PpePlayerDataStore {
 
     public static PpePlayerData get(MinecraftServer server) {
         var storage = server.overworld().getDataStorage();
-        var migrated = PpePlayerDataMigrations.loadForMigration(server, PpePlayerDataMigrations.legacyPath(server), null);
-        if (migrated == null) {
+        var migration = PpePlayerDataMigrations.loadForMigration(server, PpePlayerDataMigrations.legacyPath(server), null);
+        if (migration == null) {
             return storage.computeIfAbsent(FACTORY, NAME);
         }
+        var migrated = migration.data();
         storage.set(NAME, migrated);
         storage.save();
         return migrated;

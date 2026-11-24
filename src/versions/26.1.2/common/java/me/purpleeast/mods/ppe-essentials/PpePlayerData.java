@@ -13,12 +13,14 @@ public final class PpePlayerData extends PpePlayerDataStore {
     public static PpePlayerData get(MinecraftServer server) {
         var storage = server.getDataStorage();
         var current = server.getWorldPath(LevelResource.DATA).resolve(PpeEssentials.MODID).resolve("player_data.dat");
-        var migrated = PpePlayerDataMigrations.loadForMigration(server, current, PpePlayerDataMigrations.legacyPath(server));
-        if (migrated == null) {
+        var migration = PpePlayerDataMigrations.loadForMigration(server, current, PpePlayerDataMigrations.legacyPath(server));
+        if (migration == null) {
             return storage.computeIfAbsent(TYPE);
         }
+        var migrated = migration.data();
         storage.set(TYPE, migrated);
         storage.saveAndJoin();
+        migration.removeImportedFile(current);
         return migrated;
     }
 }
