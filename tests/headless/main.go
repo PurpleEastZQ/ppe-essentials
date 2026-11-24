@@ -163,7 +163,10 @@ func run(ctx context.Context, address string) error {
 	if err := target.expectMessage(ctx, "PPE_TestA wants to teleport to your location"); err != nil {
 		return err
 	}
-	if err := target.SendCommand("tpaa"); err != nil {
+	if err := target.commandExpect(ctx, "tpaa", "You accepted PPE_TestA's TPA request"); err != nil {
+		return err
+	}
+	if err := requester.expectMessage(ctx, "PPE_TestB accepted your TPA request"); err != nil {
 		return err
 	}
 	if err := requester.waitAt(ctx, targetX, z); err != nil {
@@ -201,10 +204,13 @@ func (p *player) commandExpect(ctx context.Context, command, message string) err
 }
 
 func checkCommands(ctx context.Context, operator, executor *player) error {
-	if err := operator.commandExpect(ctx, "execute as PPE_TestB run heal", "Healed PPE_TestB"); err != nil {
+	if err := operator.commandExpect(ctx, "heal PPE_TestB", "Healed PPE_TestB"); err != nil {
 		return err
 	}
 	if err := executor.expectMessage(ctx, "You were healed by PPE_TestA"); err != nil {
+		return err
+	}
+	if err := operator.commandExpect(ctx, "execute as PPE_TestB run heal", "Healed PPE_TestB"); err != nil {
 		return err
 	}
 	if err := executor.commandExpect(ctx, "execute as PPE_TestA run tellraw PPE_TestB "+fmt.Sprintf("%q", "execute check ready"), "execute check ready"); err != nil {
@@ -245,7 +251,19 @@ func checkCommands(ctx context.Context, operator, executor *player) error {
 	if err := executor.waitAt(ctx, 60.5, 36.5); err != nil {
 		return err
 	}
-	log.Print("PASS repeat preserves executor and position, grouped home commands use the executor's home")
+	if err := operator.SendCommand("tp @s 62.5 100 36.5"); err != nil {
+		return err
+	}
+	if err := operator.waitAt(ctx, 62.5, 36.5); err != nil {
+		return err
+	}
+	if err := operator.SendCommand("execute as PPE_TestB run repeat 1"); err != nil {
+		return err
+	}
+	if err := executor.waitAt(ctx, 62.5, 36.5); err != nil {
+		return err
+	}
+	log.Print("PASS repeat preserves executor and position, uses the sender's history, and grouped home commands use the executor's home")
 
 	const warpName = "主城 广场"
 	quoted := fmt.Sprintf("%q", warpName)

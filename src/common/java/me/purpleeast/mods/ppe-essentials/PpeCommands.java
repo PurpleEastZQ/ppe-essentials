@@ -12,6 +12,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import me.purpleeast.mods.ppe_essentials.mixin.CommandSourceStackAccessor;
 import net.minecraft.commands.CommandResultCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -263,16 +264,23 @@ public final class PpeCommands {
 
     public static void rememberCommand(ParseResults<CommandSourceStack> command) {
         var source = command.getContext().getSource();
-        ServerPlayer sender = PpeCommandContext.senderPlayer(source);
-        if (sender == null || PpeCommandContext.isSilent(source)
-                || !enabled("repeat") || !canUse(source, "repeat") || containsRepeat(command)) {
+        if (!enabled("repeat") || !canUse(source, "repeat")
+                || ((CommandSourceStackAccessor) source).ppe$isSilent() || containsRepeat(command)) {
             return;
         }
 
         String original = normalizeCommand(command.getReader().getString());
         if (!original.isBlank() && !command.getReader().canRead() && command.getContext().getLastChild().getCommand() != null) {
-            LAST_COMMANDS.put(sender.getUUID(), original);
+            ServerPlayer owner = repeatHistoryOwner(source);
+            if (owner != null) {
+                LAST_COMMANDS.put(owner.getUUID(), original);
+            }
         }
+    }
+
+    private static ServerPlayer repeatHistoryOwner(CommandSourceStack source) {
+        // execute as changes the execution entity while preserving the owner of the command history.
+        return PpeCompat.senderPlayer(source, ((CommandSourceStackAccessor) source).ppe$getSender());
     }
 
     public static boolean isFlyEnabled(ServerPlayer player) {
@@ -385,11 +393,11 @@ public final class PpeCommands {
         if (type == TeleportRequestType.TPA
                 && canAutoAcceptTpa(target)) {
             teleport(requester, PpeCompat.level(target), target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
-            notifyParticipants(
-                    target, "ppe_essentials.tpa.auto.target", requester.getName(),
-                    requester, "ppe_essentials.tpa.auto.sender", target.getName()
-            );
-            replyToOtherSender(source, requester, target, "ppe_essentials.tpa.auto.sender", target.getName());
+            if (requester != target) {
+                send(target, "ppe_essentials.tpa.auto.target", requester.getName());
+            }
+            reply(source, requester == target ? "ppe_essentials.tpa.auto.target" : "ppe_essentials.tpa.auto.sender",
+                    target.getName());
             teleportSounds(target, requester);
             return 1;
         }
@@ -411,7 +419,7 @@ public final class PpeCommands {
         sendRaw(target, prefixedRequestButtons(target, type.acceptCommand(), type.denyCommand()));
         send(target, type.key("request.commands"));
         bell(target);
-        if (!requester.getUUID().equals(target.getUUID()) || PpeCommandContext.senderPlayer(source) != target) {
+        if (requester != target) {
             reply(source, type.key("request.sender"), target.getName(), timeoutSeconds);
         }
         return 1;
@@ -442,11 +450,10 @@ public final class PpeCommands {
                 teleport(target, PpeCompat.level(requester), requester.getX(), requester.getY(), requester.getZ(), requester.getYRot(), requester.getXRot());
             }
         }
-        notifyParticipants(
-                target, type.key(action + ".target"), requester.getName(),
-                requester, type.key(action + ".sender"), target.getName()
-        );
-        replyToOtherSender(source, target, requester, type.key(action + ".target"), requester.getName());
+        reply(source, type.key(action + ".target"), requester.getName());
+        if (requester != target) {
+            send(requester, type.key(action + ".sender"), target.getName());
+        }
         if (accepted) {
             teleportSounds(target, requester);
         }
@@ -609,7 +616,7 @@ public final class PpeCommands {
     }
 
     private static void sendHelpLine(CommandSourceStack source, String titleKey, HelpCommand... commands) {
-        MutableComponent line = PpeLang.componentForLanguage(PpeCommandContext.language(source), titleKey);
+        MutableComponent line = PpeLang.component(source.getPlayer(), titleKey);
         for (int i = 0; i < commands.length; i++) {
             if (i > 0) {
                 line.append(Component.literal(" "));
@@ -657,10 +664,13 @@ public final class PpeCommands {
     }
 
     private static int repeat(CommandSourceStack source, int times, String command) throws CommandSyntaxException {
-        ServerPlayer sender = PpeCommandContext.senderPlayer(source);
-        String normalized = command == null
-                ? (sender == null ? null : LAST_COMMANDS.get(sender.getUUID()))
-                : normalizeCommand(command);
+        String normalized;
+        if (command == null) {
+            ServerPlayer owner = repeatHistoryOwner(source);
+            normalized = owner == null ? null : LAST_COMMANDS.get(owner.getUUID());
+        } else {
+            normalized = normalizeCommand(command);
+        }
         if (normalized == null || normalized.isBlank()) {
             return fail(source, "ppe_essentials.repeat.none");
         }
@@ -684,8 +694,8 @@ public final class PpeCommands {
         food.setFoodLevel(20);
         food.setSaturation(20.0F);
         reply(source, "ppe_essentials.heal.success", target.getName());
-        if (PpeCommandContext.senderPlayer(source) != target) {
-            send(target, "ppe_essentials.heal.target", senderName(source));
+        if (source.getPlayer() != target) {
+            send(target, "ppe_essentials.heal.target", source.getDisplayName());
         }
         return 1;
     }
@@ -694,8 +704,8 @@ public final class PpeCommands {
         boolean enabled = PpePlayerData.get(source.getServer()).toggleFly(target.getUUID());
         setMayFly(target, enabled || target.gameMode.getGameModeForPlayer() == GameType.CREATIVE);
         reply(source, enabled ? "ppe_essentials.fly.enabled" : "ppe_essentials.fly.disabled", target.getName());
-        if (PpeCommandContext.senderPlayer(source) != target) {
-            send(target, enabled ? "ppe_essentials.fly.target.enabled" : "ppe_essentials.fly.target.disabled", senderName(source));
+        if (source.getPlayer() != target) {
+            send(target, enabled ? "ppe_essentials.fly.target.enabled" : "ppe_essentials.fly.target.disabled", source.getDisplayName());
         }
         return 1;
     }
@@ -703,15 +713,10 @@ public final class PpeCommands {
     private static int god(CommandSourceStack source, ServerPlayer target) {
         boolean enabled = PpePlayerData.get(source.getServer()).toggleGod(target.getUUID());
         reply(source, enabled ? "ppe_essentials.god.enabled" : "ppe_essentials.god.disabled", target.getName());
-        if (PpeCommandContext.senderPlayer(source) != target) {
-            send(target, enabled ? "ppe_essentials.god.target.enabled" : "ppe_essentials.god.target.disabled", senderName(source));
+        if (source.getPlayer() != target) {
+            send(target, enabled ? "ppe_essentials.god.target.enabled" : "ppe_essentials.god.target.disabled", source.getDisplayName());
         }
         return 1;
-    }
-
-    private static Component senderName(CommandSourceStack source) {
-        ServerPlayer sender = PpeCommandContext.senderPlayer(source);
-        return sender == null ? Component.literal("Server") : sender.getName();
     }
 
     private static void expireRequests(MinecraftServer server, int tick, TeleportRequestType type) {
@@ -783,28 +788,6 @@ public final class PpeCommands {
         return enabled(command)
                 && PpeCompat.server(player).getCommands().getDispatcher().getRoot().getChild(command) != null
                 && canUse(source, command);
-    }
-
-    private static void notifyParticipants(
-            ServerPlayer first,
-            String firstKey,
-            Object firstArgument,
-            ServerPlayer second,
-            String secondKey,
-            Object secondArgument
-    ) {
-        send(first, firstKey, firstArgument);
-        if (!first.getUUID().equals(second.getUUID())) {
-            send(second, secondKey, secondArgument);
-        }
-    }
-
-    private static void replyToOtherSender(CommandSourceStack source, ServerPlayer first, ServerPlayer second,
-                                           String key, Object argument) {
-        ServerPlayer sender = PpeCommandContext.senderPlayer(source);
-        if (sender != first && sender != second) {
-            reply(source, key, argument);
-        }
     }
 
     private static void teleportSounds(ServerPlayer first, ServerPlayer second) {
