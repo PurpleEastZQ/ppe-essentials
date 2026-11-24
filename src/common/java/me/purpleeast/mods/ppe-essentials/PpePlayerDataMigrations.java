@@ -3,7 +3,6 @@ package me.purpleeast.mods.ppe_essentials;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
 
@@ -24,7 +23,7 @@ final class PpePlayerDataMigrations {
         return server.getWorldPath(LevelResource.ROOT).resolve("data").resolve(PpeEssentials.MODID + "_player_data.dat");
     }
 
-    static synchronized Migration loadForMigration(MinecraftServer server, Path current, Path legacy) {
+    static synchronized PpePlayerData loadForMigration(MinecraftServer server, Path current, Path legacy) {
         if (CHECKED.contains(server)) {
             return null;
         }
@@ -53,34 +52,12 @@ final class PpePlayerDataMigrations {
                 }
                 data.setDirty();
                 CHECKED.add(server);
-                return new Migration(data, importing ? source : null);
+                return data;
             }
             CHECKED.add(server);
             return null;
         } catch (IOException | RuntimeException exception) {
             throw new IllegalStateException("Failed to read PPE player data: " + source, exception);
-        }
-    }
-
-    record Migration(PpePlayerData data, Path importedFrom) {
-        void removeImportedFile(Path current) {
-            if (importedFrom == null) {
-                return;
-            }
-
-            try {
-                // Vanilla can log write errors without propagating them to the caller.
-                var file = NbtIo.readCompressed(current, NbtAccounter.unlimitedHeap());
-                var expected = PpePlayerDataCodec.CODEC.encodeStart(NbtOps.INSTANCE, data).getOrThrow();
-                if (!expected.equals(file.get("data"))) {
-                    throw new IOException("Saved player data differs from the imported data");
-                }
-                if (Files.deleteIfExists(importedFrom)) {
-                    PpeEssentials.LOGGER.info("Removed imported PPE player data file {}", importedFrom);
-                }
-            } catch (IOException | RuntimeException exception) {
-                PpeEssentials.LOGGER.warn("Could not clean up imported PPE player data file {}", importedFrom, exception);
-            }
         }
     }
 }

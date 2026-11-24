@@ -49,6 +49,7 @@ foreach ($target in $Loader | Select-Object -Unique) {
     New-Item -ItemType Directory -Path (Split-Path -Parent $legacyPath) | Out-Null
     & $clientPath -seed-legacy-data $legacyPath
     if ($LASTEXITCODE) { throw 'Failed to seed legacy player data.' }
+    $legacyHash = (Get-FileHash -LiteralPath $legacyPath).Hash
     'eula=true' | Set-Content -LiteralPath "$server\eula.txt"
     @(
         'server-ip=127.0.0.1', "server-port=$Port", 'online-mode=false',
@@ -110,7 +111,9 @@ foreach ($target in $Loader | Select-Object -Unique) {
         $process.Dispose()
     }
     $currentPath = Join-Path $server 'world/data/ppe_essentials/player_data.dat'
-    if (!(Test-Path -LiteralPath $currentPath -PathType Leaf) -or (Test-Path -LiteralPath $legacyPath)) {
-        throw "$target did not persist migrated data and remove the legacy file."
+    if (!(Test-Path -LiteralPath $currentPath -PathType Leaf) -or
+            !(Test-Path -LiteralPath $legacyPath -PathType Leaf) -or
+            (Get-FileHash -LiteralPath $legacyPath).Hash -ne $legacyHash -or (Test-Path -LiteralPath "$legacyPath.bak")) {
+        throw "$target did not persist migrated data while preserving the legacy file."
     }
 }
