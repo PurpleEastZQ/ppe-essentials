@@ -19,7 +19,7 @@ PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat
 
 ## Supported Versions
 
-- Fabric and NeoForge each have a JAR for 26.1.2, 26.2, and 26.3, plus a separate 1.21.1 JAR.
+- NeoForge / Fabric 1.21.1, 26.1.2, 26.2, 26.3
 
 ## Commands
 
@@ -45,5 +45,3 @@ To build a single target:
 .\gradlew.bat buildNeoForge --no-daemon --no-configuration-cache
 .\gradlew.bat buildFabric "-Ptarget_minecraft_version=26.3" --no-daemon --no-configuration-cache
 ```
-
-Built jars are generated under `build/libs/`.
