@@ -23,14 +23,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "möchte sich zu deiner Position teleportieren ", "color": "green"},
     {"text": "(nutze ", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "für automatisches Annehmen)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(oder ", "color": "gray"},
-    {"text": "/tpaa zum Annehmen", "color": "dark_green"},
+    {"text": "/tpa -a zum Annehmen", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad zum Ablehnen", "color": "red"},
+    {"text": "/tpa -d zum Ablehnen", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -104,9 +104,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(oder ", "color": "gray"},
-    {"text": "/tpaherea zum Annehmen", "color": "dark_green"},
+    {"text": "/tpahere -a zum Annehmen", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered zum Ablehnen", "color": "red"},
+    {"text": "/tpahere -d zum Ablehnen", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

@@ -23,14 +23,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "wants to teleport to your location ", "color": "green"},
     {"text": "(use ", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "to auto-accept)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(or ", "color": "gray"},
-    {"text": "/tpaa to accept", "color": "dark_green"},
+    {"text": "/tpa -a to accept", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad to deny", "color": "red"},
+    {"text": "/tpa -d to deny", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -105,9 +105,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(or ", "color": "gray"},
-    {"text": "/tpaherea to accept", "color": "dark_green"},
+    {"text": "/tpahere -a to accept", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered to deny", "color": "red"},
+    {"text": "/tpahere -d to deny", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

@@ -55,6 +55,9 @@ import static me.purpleeast.mods.ppe_essentials.PpeCommandContext.reply;
  * Registers PPE commands and owns their loader-independent runtime behavior.
  */
 public final class PpeCommands {
+    private static final String ACCEPT_OPTION = "-a";
+    private static final String DENY_OPTION = "-d";
+    private static final String AUTO_OPTION = "-auto";
     private static final int TELEPORT_SOUND_DELAY_TICKS = 1;
     private static final Map<UUID, Integer> RTP_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, String> LAST_COMMANDS = new HashMap<>();
@@ -68,7 +71,6 @@ public final class PpeCommands {
         for (TeleportRequestType type : TeleportRequestType.values()) {
             registerTeleportRequest(dispatcher, type);
         }
-        dispatcher.register(command("tpaauto").executes(playerAction(PpeCommands::tpaAuto)));
         dispatcher.register(command("rtp").executes(playerAction(PpeCommands::rtp)));
         dispatcher.register(command("spawn").executes(playerAction(PpeCommands::spawn)));
         dispatcher.register(command("back").executes(playerAction(PpeCommands::back)));
@@ -98,15 +100,19 @@ public final class PpeCommands {
     }
 
     private static void registerTeleportRequest(CommandDispatcher<CommandSourceStack> dispatcher, TeleportRequestType type) {
-        dispatcher.register(command(type.languagePrefix)
+        var request = command(type.languagePrefix)
                 .executes(context -> openTeleportMenu(context.getSource().getPlayerOrException(), type))
                 .then(Commands.argument("player", EntityArgument.player())
                         .executes(context -> sendTeleportRequest(context.getSource(), context.getSource().getPlayerOrException(),
-                                EntityArgument.getPlayer(context, "player"), type))));
-        dispatcher.register(command(type.acceptCommand())
-                .executes(playerAction((source, player) -> respondToTeleportRequest(source, player, type, true))));
-        dispatcher.register(command(type.denyCommand())
-                .executes(playerAction((source, player) -> respondToTeleportRequest(source, player, type, false))));
+                                EntityArgument.getPlayer(context, "player"), type)))
+                .then(Commands.literal(ACCEPT_OPTION)
+                        .executes(playerAction((source, player) -> respondToTeleportRequest(source, player, type, true))))
+                .then(Commands.literal(DENY_OPTION)
+                        .executes(playerAction((source, player) -> respondToTeleportRequest(source, player, type, false))));
+        if (type == TeleportRequestType.TPA) {
+            request.then(Commands.literal(AUTO_OPTION).executes(playerAction(PpeCommands::tpaAuto)));
+        }
+        dispatcher.register(request);
     }
 
     private static void registerHome(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -287,7 +293,7 @@ public final class PpeCommands {
     }
 
     static boolean canToggleTpaAutoFromMenu(ServerPlayer player) {
-        return commandAvailable(player, "tpaauto");
+        return commandAvailable(player, TeleportRequestType.TPA.languagePrefix);
     }
 
     static boolean isTpaAutoEnabled(ServerPlayer player) {
@@ -300,7 +306,7 @@ public final class PpeCommands {
     }
 
     static void toggleTpaAutoFromMenu(ServerPlayer player) {
-        if (commandAvailable(player, "tpaauto")) {
+        if (canToggleTpaAutoFromMenu(player)) {
             tpaAuto(player.createCommandSourceStack(), player);
         }
     }
@@ -322,7 +328,7 @@ public final class PpeCommands {
             return 1;
         }
 
-        if (!canRespondToTeleportRequest(target, type)) {
+        if (!commandAvailable(target, type.languagePrefix)) {
             return fail(source, "ppe_essentials.teleport.request.response_unavailable", target.getName());
         }
 
@@ -336,7 +342,7 @@ public final class PpeCommands {
                 new PendingRequest(requester.getUUID(), PpeCompat.server(requester).getTickCount() + secondsToTicks(timeoutSeconds))
         );
         send(target, type.key("request.target"), requester.getName());
-        sendRaw(target, prefixedRequestButtons(target, type.acceptCommand(), type.denyCommand()));
+        sendRaw(target, prefixedRequestButtons(target, type));
         send(target, type.key("request.commands"));
         bell(target);
         if (requester != target) {
@@ -524,8 +530,11 @@ public final class PpeCommands {
     private static int help(CommandSourceStack source) {
         reply(source, "ppe_essentials.help.header");
         sendHelpLine(source, "ppe_essentials.help.teleport",
-                playerHelpCommand("tpa"), playerHelpCommand("tpahere"), playerHelpCommand("tpaa"), playerHelpCommand("tpad"), playerHelpCommand("tpaauto"),
-                playerHelpCommand("tpaherea"), playerHelpCommand("tpahered"),
+                playerHelpCommand("tpa"), new HelpCommand("tpa", TeleportRequestType.TPA.commandWith(ACCEPT_OPTION), true),
+                new HelpCommand("tpa", TeleportRequestType.TPA.commandWith(DENY_OPTION), true),
+                new HelpCommand("tpa", TeleportRequestType.TPA.commandWith(AUTO_OPTION), true),
+                playerHelpCommand("tpahere"), new HelpCommand("tpahere", TeleportRequestType.TPAHERE.commandWith(ACCEPT_OPTION), true),
+                new HelpCommand("tpahere", TeleportRequestType.TPAHERE.commandWith(DENY_OPTION), true),
                 playerHelpCommand("back"), playerHelpCommand("dback"), playerHelpCommand("tback"), playerHelpCommand("spawn"), playerHelpCommand("rtp"));
         sendHelpLine(source, "ppe_essentials.help.home",
                 playerHelpCommand("home"), new HelpCommand("sethome", "/home set", true),
@@ -692,23 +701,18 @@ public final class PpeCommands {
         return true;
     }
 
-    private static MutableComponent prefixedRequestButtons(ServerPlayer player, String acceptCommand, String denyCommand) {
+    private static MutableComponent prefixedRequestButtons(ServerPlayer player, TeleportRequestType type) {
         MutableComponent message = Component.empty();
         message.append(PpeLang.component(player, "ppe_essentials.request.accept")
                 .withStyle(Style.EMPTY
-                        .withClickEvent(PpeCompat.runCommandClick("/" + acceptCommand))
+                        .withClickEvent(PpeCompat.runCommandClick(type.commandWith(ACCEPT_OPTION)))
                         .withHoverEvent(PpeCompat.showTextHover(PpeLang.component(player, "ppe_essentials.request.accept.tooltip")))));
         message.append(Component.literal(" "));
         message.append(PpeLang.component(player, "ppe_essentials.request.deny")
                 .withStyle(Style.EMPTY
-                        .withClickEvent(PpeCompat.runCommandClick("/" + denyCommand))
+                        .withClickEvent(PpeCompat.runCommandClick(type.commandWith(DENY_OPTION)))
                         .withHoverEvent(PpeCompat.showTextHover(PpeLang.component(player, "ppe_essentials.request.deny.tooltip")))));
         return PpeLang.prefixed(message);
-    }
-
-    private static boolean canRespondToTeleportRequest(ServerPlayer target, TeleportRequestType type) {
-        return commandAvailable(target, type.acceptCommand())
-                && commandAvailable(target, type.denyCommand());
     }
 
     private static boolean commandAvailable(ServerPlayer player, String command) {
@@ -847,19 +851,15 @@ public final class PpeCommands {
     }
 
     private enum TeleportRequestType {
-        TPA("tpa", "tpaa", "tpad", true),
-        TPAHERE("tpahere", "tpaherea", "tpahered", false);
+        TPA("tpa", true),
+        TPAHERE("tpahere", false);
 
         private final String languagePrefix;
-        private final String acceptCommand;
-        private final String denyCommand;
         private final boolean movesRequester;
         private final Map<UUID, PendingRequest> requests = new HashMap<>();
 
-        TeleportRequestType(String languagePrefix, String acceptCommand, String denyCommand, boolean movesRequester) {
+        TeleportRequestType(String languagePrefix, boolean movesRequester) {
             this.languagePrefix = languagePrefix;
-            this.acceptCommand = acceptCommand;
-            this.denyCommand = denyCommand;
             this.movesRequester = movesRequester;
         }
 
@@ -867,12 +867,8 @@ public final class PpeCommands {
             return "ppe_essentials." + languagePrefix + "." + suffix;
         }
 
-        private String acceptCommand() {
-            return acceptCommand;
-        }
-
-        private String denyCommand() {
-            return denyCommand;
+        private String commandWith(String option) {
+            return "/" + languagePrefix + " " + option;
         }
 
         private boolean movesRequester() {

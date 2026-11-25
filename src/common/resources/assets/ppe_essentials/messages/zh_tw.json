@@ -23,14 +23,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "請求傳送到你的位置 ", "color": "green"},
     {"text": "(你可以用 ", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "開啟自動接受)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(或 ", "color": "gray"},
-    {"text": "/tpaa 接受", "color": "dark_green"},
+    {"text": "/tpa -a 接受", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad 拒絕", "color": "red"},
+    {"text": "/tpa -d 拒絕", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -107,9 +107,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(或 ", "color": "gray"},
-    {"text": "/tpaherea 接受", "color": "dark_green"},
+    {"text": "/tpahere -a 接受", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered 拒絕", "color": "red"},
+    {"text": "/tpahere -d 拒絕", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

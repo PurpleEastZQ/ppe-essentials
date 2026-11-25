@@ -22,14 +22,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "님이 당신의 위치로 순간이동하려고 합니다 ", "color": "green"},
     {"text": "(", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "로 자동 수락 가능)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(또는 ", "color": "gray"},
-    {"text": "/tpaa 수락", "color": "dark_green"},
+    {"text": "/tpa -a 수락", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad 거절", "color": "red"},
+    {"text": "/tpa -d 거절", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -101,9 +101,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(또는 ", "color": "gray"},
-    {"text": "/tpaherea 수락", "color": "dark_green"},
+    {"text": "/tpahere -a 수락", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered 거절", "color": "red"},
+    {"text": "/tpahere -d 거절", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

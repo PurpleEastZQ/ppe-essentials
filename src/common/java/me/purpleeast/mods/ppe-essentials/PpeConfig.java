@@ -1,7 +1,6 @@
 package me.purpleeast.mods.ppe_essentials;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -119,10 +118,9 @@ public final class PpeConfig {
             " Command settings.",
             " enabled: whether the command is registered when the server starts. Changes require a server restart.",
             " permissionLevel: required OP permission level. Use 0 to allow everyone. Changes apply without restart.",
-            " Derived commands are not configured separately: tpaa, tpad, and tpaauto follow tpa;",
-            " tpaherea and tpahered follow tpahere; dback follows back.",
-            " TPA and TPAhere requests require the target to have access to both matching accept and deny commands.",
-            " Stored TPA auto-accept state only applies while the tpaauto command is enabled and accessible."
+            " Teleport request subcommands share their parent command's settings. /dback shares /back settings.",
+            " TPA and TPAhere requests require the target to have access to the corresponding command.",
+            " Stored TPA auto-accept state only applies while /tpa is enabled and accessible."
     );
 
     private static final List<CommandDefinition> COMMANDS = List.of(
@@ -149,15 +147,6 @@ public final class PpeConfig {
     );
     private static final Set<String> COMMAND_NAMES = Set.copyOf(
             COMMANDS.stream().map(CommandDefinition::name).toList()
-    );
-
-    private static final Map<String, String> DERIVED_COMMANDS = Map.of(
-            "tpaa", "tpa",
-            "tpad", "tpa",
-            "tpaauto", "tpa",
-            "tpaherea", "tpahere",
-            "tpahered", "tpahere",
-            "dback", "back"
     );
 
     private PpeConfig() {
@@ -293,7 +282,7 @@ public final class PpeConfig {
     }
 
     private static String configCommand(String command) {
-        return DERIVED_COMMANDS.getOrDefault(command, command);
+        return "dback".equals(command) ? "back" : command;
     }
 
     private static String defaultComment(Object value) {

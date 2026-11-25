@@ -4,7 +4,7 @@
 
 PPE Essentials is a lightweight mod that adds useful commands (like /tpa /repeat) and tweaks, with highly configurable options.
 
-![PPE Essentials command preview](https://raw.githubusercontent.com/PurpleEastZQ/ppe-essentials/master/artwork/ppe-essentials-help-preview.png)
+[![PPE Essentials command preview](artwork/ppe-essentials-help-preview.png)](https://github.com/PurpleEastZQ/ppe-essentials/blob/master/artwork/ppe-essentials-help-preview.png)
 
 ## Features
 

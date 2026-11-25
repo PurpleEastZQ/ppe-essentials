@@ -184,12 +184,12 @@ func run(ctx context.Context, address, configPath string) error {
 		return err
 	}
 	if err := target.expectChat(ctx, "styled TPA accept and deny buttons", func(message ns.TextComponent) bool {
-		return hasRequestButton(message, "[Click to accept]", "dark_green", "/tpaa") &&
-			hasRequestButton(message, "[Click to deny]", "red", "/tpad")
+		return hasRequestButton(message, "[Click to accept]", "dark_green", "/tpa -a") &&
+			hasRequestButton(message, "[Click to deny]", "red", "/tpa -d")
 	}); err != nil {
 		return err
 	}
-	if err := target.commandExpect(ctx, "tpaa", "You accepted PPE_TestA's TPA request"); err != nil {
+	if err := target.commandExpect(ctx, "tpa -a", "You accepted PPE_TestA's TPA request"); err != nil {
 		return err
 	}
 	if err := requester.expectMessage(ctx, "PPE_TestB accepted your TPA request"); err != nil {
@@ -212,13 +212,22 @@ func run(ctx context.Context, address, configPath string) error {
 	if err := target.expectMessage(ctx, "PPE_TestA wants you to teleport to their location"); err != nil {
 		return err
 	}
-	if err := target.SendCommand("tpaherea"); err != nil {
+	if err := target.expectChat(ctx, "styled TPAhere accept and deny buttons", func(message ns.TextComponent) bool {
+		return hasRequestButton(message, "[Click to accept]", "dark_green", "/tpahere -a") &&
+			hasRequestButton(message, "[Click to deny]", "red", "/tpahere -d")
+	}); err != nil {
+		return err
+	}
+	if err := target.SendCommand("tpahere -a"); err != nil {
 		return err
 	}
 	if err := target.waitAt(ctx, requesterX, z); err != nil {
 		return err
 	}
 	log.Print("PASS /tpahere menu, request, acceptance, and target teleport")
+	if err := checkTeleportOptions(ctx, requester, target); err != nil {
+		return err
+	}
 	if err := checkCommands(ctx, requester, target); err != nil {
 		return err
 	}
@@ -239,6 +248,65 @@ func (p *player) commandExpect(ctx context.Context, command, message string) err
 		return err
 	}
 	return p.expectMessage(ctx, message)
+}
+
+func checkTeleportOptions(ctx context.Context, requester, target *player) error {
+	commandChat := chat.From(target.Client)
+	commands, err := commandChat.Commands()
+	if err != nil {
+		return err
+	}
+	for _, old := range []string{"tpaa", "tpad", "tpaauto", "tpaherea", "tpahered"} {
+		if slices.Contains(commands, old) {
+			return fmt.Errorf("old teleport command is still available: /%s", old)
+		}
+	}
+	for _, request := range []struct {
+		command, label, hint string
+		options              []string
+	}{
+		{"tpa", "TPA", "wants to teleport to your location (use /tpa -auto to auto-accept)", []string{"-a", "-auto", "-d"}},
+		{"tpahere", "TPAhere", "wants you to teleport to their location", []string{"-a", "-d"}},
+	} {
+		reply, err := commandChat.SuggestCommandContext(ctx, nil, "/"+request.command+" -")
+		if err != nil {
+			return err
+		}
+		var options []string
+		for _, suggestion := range reply.Matches {
+			options = append(options, string(suggestion.Text))
+		}
+		slices.Sort(options)
+		if !slices.Equal(options, request.options) {
+			return fmt.Errorf("unexpected /%s options: %v", request.command, options)
+		}
+		if err := requester.SendCommand(request.command + " PPE_TestB"); err != nil {
+			return err
+		}
+		if err := target.expectMessage(ctx, request.hint); err != nil {
+			return err
+		}
+		if err := target.expectMessage(ctx, "/"+request.command+" -a to accept /"+request.command+" -d to deny"); err != nil {
+			return err
+		}
+		if err := target.commandExpect(ctx, request.command+" -d", "You denied PPE_TestA's "+request.label+" request"); err != nil {
+			return err
+		}
+	}
+	if err := target.commandExpect(ctx, "tpa -auto", "Auto-accepting TPA requests is now enabled"); err != nil {
+		return err
+	}
+	if err := requester.commandExpect(ctx, "tpa PPE_TestB", "PPE_TestB automatically accepted your TPA request"); err != nil {
+		return err
+	}
+	if err := target.commandExpect(ctx, "tpa -auto", "Auto-accepting TPA requests is now disabled"); err != nil {
+		return err
+	}
+	if err := target.commandExpect(ctx, "ppe-ess help", "/tpa /tpa -a /tpa -d /tpa -auto /tpahere /tpahere -a /tpahere -d"); err != nil {
+		return err
+	}
+	log.Print("PASS teleport command tree, Tab completion, denial, auto-accept, and help")
+	return nil
 }
 
 func checkCommands(ctx context.Context, operator, executor *player) error {

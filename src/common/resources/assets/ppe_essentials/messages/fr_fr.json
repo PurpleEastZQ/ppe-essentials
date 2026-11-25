@@ -21,14 +21,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "souhaite se téléporter à votre position ", "color": "green"},
     {"text": "(utilisez ", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "pour accepter automatiquement)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(ou ", "color": "gray"},
-    {"text": "/tpaa pour accepter", "color": "dark_green"},
+    {"text": "/tpa -a pour accepter", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad pour refuser", "color": "red"},
+    {"text": "/tpa -d pour refuser", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -101,9 +101,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(ou ", "color": "gray"},
-    {"text": "/tpaherea pour accepter", "color": "dark_green"},
+    {"text": "/tpahere -a pour accepter", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered pour refuser", "color": "red"},
+    {"text": "/tpahere -d pour refuser", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

@@ -22,14 +22,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "хочет телепортироваться к вам ", "color": "green"},
     {"text": "(используйте ", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "для автопринятия)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(или ", "color": "gray"},
-    {"text": "/tpaa принять", "color": "dark_green"},
+    {"text": "/tpa -a принять", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad отклонить", "color": "red"},
+    {"text": "/tpa -d отклонить", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -101,9 +101,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(или ", "color": "gray"},
-    {"text": "/tpaherea принять", "color": "dark_green"},
+    {"text": "/tpahere -a принять", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered отклонить", "color": "red"},
+    {"text": "/tpahere -d отклонить", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [

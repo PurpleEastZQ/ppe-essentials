@@ -22,14 +22,14 @@
     {"text": "%1$s ", "color": "aqua"},
     {"text": "があなたの場所へテレポートしたがっています ", "color": "green"},
     {"text": "(", "color": "gray"},
-    {"text": "/tpaauto ", "color": "gold"},
+    {"text": "/tpa -auto ", "color": "gold"},
     {"text": "で自動承認できます)", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.commands": {"text": "", "extra": [
     {"text": "(または ", "color": "gray"},
-    {"text": "/tpaa で承認", "color": "dark_green"},
+    {"text": "/tpa -a で承認", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpad で拒否", "color": "red"},
+    {"text": "/tpa -d で拒否", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpa.request.sender": {"text": "", "extra": [
@@ -102,9 +102,9 @@
   ]},
   "ppe_essentials.tpahere.request.commands": {"text": "", "extra": [
     {"text": "(または ", "color": "gray"},
-    {"text": "/tpaherea で承認", "color": "dark_green"},
+    {"text": "/tpahere -a で承認", "color": "dark_green"},
     {"text": " ", "color": "gray"},
-    {"text": "/tpahered で拒否", "color": "red"},
+    {"text": "/tpahere -d で拒否", "color": "red"},
     {"text": ")", "color": "gray"}
   ]},
   "ppe_essentials.tpahere.request.sender": {"text": "", "extra": [
